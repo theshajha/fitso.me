@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Package, Plane, Shirt, Trash2, Settings } from 'lucide-react';
+import { LayoutDashboard, Package, Plane, Shirt, Trash2, Settings, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: LayoutDashboard },
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Inventory', href: '/inventory', icon: Package },
+  { name: 'Showcase', href: '/showcase', icon: Sparkles },
   { name: 'Pack for Trip', href: '/packing', icon: Plane },
   { name: 'Outfits', href: '/outfits', icon: Shirt },
   { name: 'Phase Out', href: '/phase-out', icon: Trash2 },

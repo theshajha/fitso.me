@@ -1,5 +1,5 @@
-import Dexie, { type EntityTable } from 'dexie';
 import { type SizeInfo } from '@/lib/utils';
+import Dexie, { type EntityTable } from 'dexie';
 
 // Types
 export interface Item {
@@ -17,6 +17,7 @@ export interface Item {
     tags?: string[];
     location: string;
     isPhaseOut: boolean;
+    isFeatured: boolean; // For showcase feature
     climate?: string;
     occasion?: string;
     createdAt: string;
@@ -78,6 +79,14 @@ class WardrobeDatabase extends Dexie {
         // Version 2: Added size field (no schema change needed, just data)
         this.version(2).stores({
             items: 'id, name, category, condition, location, isPhaseOut, createdAt',
+            trips: 'id, name, status, createdAt',
+            tripItems: 'id, tripId, itemId',
+            outfits: 'id, name, occasion, createdAt',
+        });
+
+        // Version 3: Added isFeatured for showcase feature
+        this.version(3).stores({
+            items: 'id, name, category, condition, location, isPhaseOut, isFeatured, createdAt',
             trips: 'id, name, status, createdAt',
             tripItems: 'id, tripId, itemId',
             outfits: 'id, name, occasion, createdAt',
@@ -165,10 +174,10 @@ export async function importAllData(data: {
 // Storage estimation
 export async function getStorageStats() {
     const items = await db.items.toArray();
-    
+
     let totalImageSize = 0;
     let itemsWithImages = 0;
-    
+
     for (const item of items) {
         if (item.imageData) {
             itemsWithImages++;
@@ -177,10 +186,10 @@ export async function getStorageStats() {
             totalImageSize += Math.round(base64Data.length * 0.75);
         }
     }
-    
+
     // Estimate non-image data (rough: ~1KB per item for metadata)
     const metadataSize = items.length * 1024;
-    
+
     return {
         totalItems: items.length,
         itemsWithImages,

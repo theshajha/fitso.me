@@ -40,6 +40,7 @@ import {
   Ruler,
   Search,
   Shirt,
+  Star,
   Trash2,
   Watch,
 } from 'lucide-react'
@@ -264,6 +265,7 @@ export default function Inventory() {
     climate: '',
     occasion: '',
     isPhaseOut: false,
+    isFeatured: false,
     imageData: undefined as string | undefined,
     size: undefined as SizeInfo | undefined,
   })
@@ -336,6 +338,7 @@ export default function Inventory() {
       climate: '',
       occasion: '',
       isPhaseOut: false,
+      isFeatured: false,
       imageData: undefined,
       size: undefined,
     })
@@ -356,6 +359,7 @@ export default function Inventory() {
       climate: item.climate || '',
       occasion: item.occasion || '',
       isPhaseOut: item.isPhaseOut || false,
+      isFeatured: item.isFeatured || false,
       imageData: item.imageData,
       size: item.size,
     })
@@ -378,10 +382,18 @@ export default function Inventory() {
       climate: item.climate || '',
       occasion: item.occasion || '',
       isPhaseOut: false, // New items shouldn't be phased out
+      isFeatured: false, // New items aren't featured by default
       imageData: item.imageData, // Keep the image
       size: item.size, // Keep the size
     })
     setIsAddDialogOpen(true)
+  }
+
+  const toggleFeatured = async (item: Item, e: React.MouseEvent) => {
+    e.stopPropagation()
+    const updated = { ...item, isFeatured: !item.isFeatured, updatedAt: new Date().toISOString() }
+    await db.items.put(updated)
+    loadItems()
   }
 
   const filteredItems = items.filter((item) => {
@@ -481,49 +493,81 @@ export default function Inventory() {
             const sizeDisplay = formatSize(item.size)
 
             return (
-              <Card key={item.id} className="card-hover group relative overflow-hidden">
-                {item.imageData && (
-                  <div className="aspect-square overflow-hidden">
-                    <img src={item.imageData} alt={item.name} className="w-full h-full object-cover" />
-                  </div>
-                )}
-                <CardContent className={cn("p-4", item.imageData && "pt-3")}>
-                  <div className="flex items-start justify-between mb-2">
-                    {!item.imageData && (
-                      <div className={cn(
-                        "h-12 w-12 rounded-xl bg-gradient-to-br flex items-center justify-center",
-                        categoryColors[item.category] || 'from-gray-400 to-gray-500'
-                      )}>
-                        <Icon className="h-6 w-6 text-white" />
-                      </div>
-                    )}
-                    <div className={cn("flex-1", !item.imageData && "ml-3")}>
-                      <h3 className="font-semibold truncate">{item.name}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {item.subcategory || item.category}
-                        {item.brand && ` • ${item.brand}`}
-                      </p>
+              <Card key={item.id} className={cn(
+                "card-hover group relative overflow-hidden",
+                item.isFeatured && "ring-2 ring-amber-500/50"
+              )}>
+                {/* Image or placeholder with action buttons overlay */}
+                <div className="relative">
+                  {item.imageData ? (
+                    <div className="aspect-square overflow-hidden">
+                      <img src={item.imageData} alt={item.name} className="w-full h-full object-cover" />
                     </div>
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  ) : (
+                    <div className={cn(
+                      "aspect-square flex items-center justify-center bg-gradient-to-br",
+                      categoryColors[item.category] || 'from-gray-400 to-gray-500'
+                    )}>
+                      <Icon className="h-12 w-12 text-white/80" />
+                    </div>
+                  )}
+                  
+                  {/* Action buttons overlay - visible on hover */}
+                  <div className="absolute inset-x-0 top-0 p-2 flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity">
+                    {/* Left: Star button */}
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      className={cn(
+                        "h-8 w-8 bg-black/60 hover:bg-black/80 backdrop-blur-sm border-0",
+                        item.isFeatured && "bg-amber-500 hover:bg-amber-600 text-black"
+                      )}
+                      onClick={(e) => toggleFeatured(item, e)}
+                      title={item.isFeatured ? "Remove from showcase" : "Add to showcase"}
+                    >
+                      <Star className={cn("h-4 w-4", item.isFeatured && "fill-current")} />
+                    </Button>
+                    
+                    {/* Right: Copy and Edit buttons */}
+                    <div className="flex gap-1">
                       <Button
-                        variant="ghost"
+                        variant="secondary"
                         size="icon"
-                        className="h-8 w-8"
-                        onClick={() => handleDuplicate(item)}
+                        className="h-8 w-8 bg-black/60 hover:bg-black/80 backdrop-blur-sm border-0"
+                        onClick={(e) => { e.stopPropagation(); handleDuplicate(item); }}
                         title="Duplicate item"
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
                       <Button
-                        variant="ghost"
+                        variant="secondary"
                         size="icon"
-                        className="h-8 w-8"
-                        onClick={() => handleEdit(item)}
+                        className="h-8 w-8 bg-black/60 hover:bg-black/80 backdrop-blur-sm border-0"
+                        onClick={(e) => { e.stopPropagation(); handleEdit(item); }}
                         title="Edit item"
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
                     </div>
+                  </div>
+
+                  {/* Featured indicator (always visible when featured) */}
+                  {item.isFeatured && (
+                    <div className="absolute bottom-2 left-2">
+                      <div className="h-6 w-6 rounded-full bg-amber-500 flex items-center justify-center shadow-lg">
+                        <Star className="h-3.5 w-3.5 text-black fill-current" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <CardContent className="p-4">
+                  <div className="mb-2">
+                    <h3 className="font-semibold truncate">{item.name}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {item.subcategory || item.category}
+                      {item.brand && ` • ${item.brand}`}
+                    </p>
                   </div>
 
                   <div className="flex flex-wrap gap-1.5">
@@ -559,18 +603,28 @@ export default function Inventory() {
             return (
               <div
                 key={item.id}
-                className="flex items-center gap-4 p-4 rounded-lg border hover:bg-secondary/50 transition-colors group"
-              >
-                {item.imageData ? (
-                  <img src={item.imageData} alt={item.name} className="h-12 w-12 rounded-lg object-cover shrink-0" />
-                ) : (
-                  <div className={cn(
-                    "h-12 w-12 rounded-lg bg-gradient-to-br flex items-center justify-center shrink-0",
-                    categoryColors[item.category] || 'from-gray-400 to-gray-500'
-                  )}>
-                    <Icon className="h-6 w-6 text-white" />
-                  </div>
+                className={cn(
+                  "flex items-center gap-4 p-4 rounded-lg border hover:bg-secondary/50 transition-colors group",
+                  item.isFeatured && "border-amber-500/50 bg-amber-500/5"
                 )}
+              >
+                <div className="relative shrink-0">
+                  {item.imageData ? (
+                    <img src={item.imageData} alt={item.name} className="h-12 w-12 rounded-lg object-cover" />
+                  ) : (
+                    <div className={cn(
+                      "h-12 w-12 rounded-lg bg-gradient-to-br flex items-center justify-center",
+                      categoryColors[item.category] || 'from-gray-400 to-gray-500'
+                    )}>
+                      <Icon className="h-6 w-6 text-white" />
+                    </div>
+                  )}
+                  {item.isFeatured && (
+                    <div className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-amber-500 flex items-center justify-center">
+                      <Star className="h-3 w-3 text-black fill-current" />
+                    </div>
+                  )}
+                </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
@@ -594,6 +648,15 @@ export default function Inventory() {
                 <Badge variant="outline">{item.location}</Badge>
 
                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={(e) => toggleFeatured(item, e)}
+                    title={item.isFeatured ? "Remove from showcase" : "Add to showcase"}
+                    className={cn(item.isFeatured && "text-amber-500")}
+                  >
+                    <Star className={cn("h-4 w-4", item.isFeatured && "fill-current")} />
+                  </Button>
                   <Button variant="ghost" size="icon" onClick={() => handleDuplicate(item)} title="Duplicate item">
                     <Copy className="h-4 w-4" />
                   </Button>

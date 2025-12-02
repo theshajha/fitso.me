@@ -1,22 +1,23 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import {
-  Package,
-  Shirt,
-  Watch,
-  Laptop,
-  Briefcase,
-  Footprints,
-  AlertTriangle,
-  TrendingUp,
-  Calendar,
-  MapPin,
-} from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { db, type Item, type Trip } from '@/db'
-import { getItemAge, formatDate } from '@/lib/utils'
+import { formatDate, getItemAge } from '@/lib/utils'
+import {
+  AlertTriangle,
+  Briefcase,
+  Calendar,
+  Footprints,
+  Laptop,
+  MapPin,
+  Package,
+  Shirt,
+  TrendingUp,
+  Watch,
+} from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { getUserName } from './Landing'
 
 const categoryIcons: Record<string, typeof Package> = {
   clothing: Shirt,
@@ -38,6 +39,7 @@ export default function Dashboard() {
   const [items, setItems] = useState<Item[]>([])
   const [trips, setTrips] = useState<Trip[]>([])
   const [loading, setLoading] = useState(true)
+  const [userName, setUserName] = useState<string | null>(null)
 
   useEffect(() => {
     const loadData = async () => {
@@ -47,6 +49,7 @@ export default function Dashboard() {
       ])
       setItems(itemsData)
       setTrips(tripsData)
+      setUserName(getUserName())
       setLoading(false)
     }
     loadData()
@@ -94,11 +97,13 @@ export default function Dashboard() {
     })
     .slice(0, 5)
 
+  const greeting = userName ? `Welcome back, ${userName}` : 'Welcome back, Nomad'
+
   return (
     <div className="p-8 space-y-8 animate-fade-in">
       {/* Header */}
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight">Welcome back, Nomad</h1>
+        <h1 className="text-4xl font-bold tracking-tight">{greeting}</h1>
         <p className="text-muted-foreground text-lg">
           Your wardrobe at a glance. {items.length} items tracked.
         </p>
@@ -163,7 +168,7 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      {/* Categories Overview */}
+      {/* Categories Overview + Recently Added */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
@@ -197,40 +202,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Item Condition */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Item Condition
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-2xl font-bold text-emerald-500">{conditionCounts.new}</p>
-                <p className="text-sm text-muted-foreground">New</p>
-              </div>
-              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <p className="text-2xl font-bold text-blue-500">{conditionCounts.good}</p>
-                <p className="text-sm text-muted-foreground">Good</p>
-              </div>
-              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                <p className="text-2xl font-bold text-amber-500">{conditionCounts.worn}</p>
-                <p className="text-sm text-muted-foreground">Worn</p>
-              </div>
-              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                <p className="text-2xl font-bold text-red-500">{conditionCounts['needs-replacement']}</p>
-                <p className="text-sm text-muted-foreground">Replace</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Recent & Old Items */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recently Added */}
+        {/* Recently Added - Moved up */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -270,6 +242,39 @@ export default function Dashboard() {
                 })}
               </div>
             )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Item Condition + Consider Replacing */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Item Condition - Moved down */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" />
+              Item Condition
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <p className="text-2xl font-bold text-emerald-500">{conditionCounts.new}</p>
+                <p className="text-sm text-muted-foreground">New</p>
+              </div>
+              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <p className="text-2xl font-bold text-blue-500">{conditionCounts.good}</p>
+                <p className="text-sm text-muted-foreground">Good</p>
+              </div>
+              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                <p className="text-2xl font-bold text-amber-500">{conditionCounts.worn}</p>
+                <p className="text-sm text-muted-foreground">Worn</p>
+              </div>
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                <p className="text-2xl font-bold text-red-500">{conditionCounts['needs-replacement']}</p>
+                <p className="text-sm text-muted-foreground">Replace</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
