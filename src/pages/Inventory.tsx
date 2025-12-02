@@ -26,6 +26,7 @@ import {
   type SizeInfo,
   type SizeType,
 } from '@/lib/utils'
+import { getDefaultCurrency } from '@/pages/Settings'
 import {
   AlertTriangle,
   Briefcase,
@@ -42,7 +43,7 @@ import {
   Shirt,
   Star,
   Trash2,
-  Watch,
+  Watch
 } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -252,13 +253,15 @@ export default function Inventory() {
   const [editingItem, setEditingItem] = useState<Item | null>(null)
   const [deleteItem, setDeleteItem] = useState<Item | null>(null)
 
-  const [formData, setFormData] = useState({
+  const getInitialFormData = () => ({
     name: '',
     category: '',
     subcategory: '',
     color: '',
     brand: '',
     purchaseDate: '',
+    cost: undefined as number | undefined,
+    currency: getDefaultCurrency(),
     condition: 'good',
     notes: '',
     location: 'home',
@@ -270,18 +273,29 @@ export default function Inventory() {
     size: undefined as SizeInfo | undefined,
   })
 
+  const [formData, setFormData] = useState(getInitialFormData())
+
   // Determine size type based on current category/subcategory
   const currentSizeType = useMemo(() => {
     return getSizeType(formData.category, formData.subcategory)
   }, [formData.category, formData.subcategory])
 
+  // Track previous category/subcategory to detect actual changes
+  const [prevCategory, setPrevCategory] = useState({ category: '', subcategory: '' })
+
   useEffect(() => {
     loadItems()
   }, [])
 
-  // Reset size when category changes
+  // Reset size only when category/subcategory actually changes (not on initial load from edit)
   useEffect(() => {
-    setFormData(prev => ({ ...prev, size: undefined }))
+    // Only reset if this is a genuine change, not initial form population
+    if (prevCategory.category && prevCategory.subcategory !== undefined) {
+      if (prevCategory.category !== formData.category || prevCategory.subcategory !== formData.subcategory) {
+        setFormData(prev => ({ ...prev, size: undefined }))
+      }
+    }
+    setPrevCategory({ category: formData.category, subcategory: formData.subcategory })
   }, [formData.category, formData.subcategory])
 
   const loadItems = async () => {
@@ -325,23 +339,8 @@ export default function Inventory() {
   const handleCloseDialog = () => {
     setIsAddDialogOpen(false)
     setEditingItem(null)
-    setFormData({
-      name: '',
-      category: '',
-      subcategory: '',
-      color: '',
-      brand: '',
-      purchaseDate: '',
-      condition: 'good',
-      notes: '',
-      location: 'home',
-      climate: '',
-      occasion: '',
-      isPhaseOut: false,
-      isFeatured: false,
-      imageData: undefined,
-      size: undefined,
-    })
+    setPrevCategory({ category: '', subcategory: '' })
+    setFormData(getInitialFormData())
   }
 
   const handleEdit = (item: Item) => {
@@ -353,6 +352,8 @@ export default function Inventory() {
       color: item.color || '',
       brand: item.brand || '',
       purchaseDate: item.purchaseDate || '',
+      cost: item.cost,
+      currency: item.currency || getDefaultCurrency(),
       condition: item.condition || 'good',
       notes: item.notes || '',
       location: item.location || 'home',
@@ -376,6 +377,8 @@ export default function Inventory() {
       color: item.color || '',
       brand: item.brand || '',
       purchaseDate: '', // Don't copy purchase date - new item
+      cost: item.cost, // Keep the cost for similar items
+      currency: item.currency || getDefaultCurrency(),
       condition: item.condition || 'good',
       notes: item.notes || '',
       location: item.location || 'home',
@@ -511,7 +514,7 @@ export default function Inventory() {
                       <Icon className="h-12 w-12 text-white/80" />
                     </div>
                   )}
-                  
+
                   {/* Action buttons overlay - visible on hover */}
                   <div className="absolute inset-x-0 top-0 p-2 flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity">
                     {/* Left: Star button */}
@@ -527,7 +530,7 @@ export default function Inventory() {
                     >
                       <Star className={cn("h-4 w-4", item.isFeatured && "fill-current")} />
                     </Button>
-                    
+
                     {/* Right: Copy and Edit buttons */}
                     <div className="flex gap-1">
                       <Button
@@ -775,6 +778,43 @@ export default function Inventory() {
                   value={formData.purchaseDate}
                   onChange={(e) => setFormData({ ...formData, purchaseDate: e.target.value })}
                 />
+              </div>
+
+              {/* Cost Field */}
+              <div >
+                <Label htmlFor="cost">Cost</Label>
+                <div className="flex gap-2">
+                  <Select
+                    value={formData.currency}
+                    onValueChange={(value) => setFormData({ ...formData, currency: value })}
+                  >
+                    <SelectTrigger className="w-24">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="USD">USD</SelectItem>
+                      <SelectItem value="EUR">EUR</SelectItem>
+                      <SelectItem value="GBP">GBP</SelectItem>
+                      <SelectItem value="INR">INR</SelectItem>
+                      <SelectItem value="JPY">JPY</SelectItem>
+                      <SelectItem value="CAD">CAD</SelectItem>
+                      <SelectItem value="AUD">AUD</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    id="cost"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    value={formData.cost ?? ''}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      cost: e.target.value ? parseFloat(e.target.value) : undefined
+                    })}
+                    className="flex-1"
+                  />
+                </div>
               </div>
 
               <div>

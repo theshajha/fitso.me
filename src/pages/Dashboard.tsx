@@ -2,11 +2,12 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { db, type Item, type Trip } from '@/db'
-import { formatDate, getItemAge } from '@/lib/utils'
+import { formatCurrency, formatDate, getItemAge } from '@/lib/utils'
 import {
   AlertTriangle,
   Briefcase,
   Calendar,
+  DollarSign,
   Footprints,
   Laptop,
   MapPin,
@@ -67,12 +68,27 @@ export default function Dashboard() {
   const categoryCounts: Record<string, number> = {}
   let phaseOutCount = 0
   let needsReplacementCount = 0
+  const worthByCurrency: Record<string, number> = {}
+  let itemsWithCost = 0
 
   items.forEach((item) => {
     categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1
     if (item.isPhaseOut) phaseOutCount++
     if (item.condition === 'needs-replacement') needsReplacementCount++
+    if (item.cost && item.cost > 0) {
+      const currency = item.currency || 'USD'
+      worthByCurrency[currency] = (worthByCurrency[currency] || 0) + item.cost
+      itemsWithCost++
+    }
   })
+
+  // Format total worth - group by currency if multiple, otherwise show single value
+  const currencies = Object.keys(worthByCurrency)
+  const totalWorthDisplay = currencies.length === 0
+    ? '—'
+    : currencies.length === 1
+      ? formatCurrency(worthByCurrency[currencies[0]], currencies[0])
+      : currencies.map(c => formatCurrency(worthByCurrency[c], c)).join(' + ')
 
   const recentItems = [...items]
     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
@@ -143,11 +159,18 @@ export default function Dashboard() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Active Trips</p>
-                <p className="text-3xl font-bold">{activeTrips.length}</p>
+                <p className="text-sm text-muted-foreground">Total Worth</p>
+                <p className={`font-bold ${currencies.length > 1 ? 'text-xl' : 'text-3xl'}`}>
+                  {totalWorthDisplay}
+                </p>
+                {itemsWithCost > 0 && (
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {itemsWithCost} of {items.length} items priced
+                  </p>
+                )}
               </div>
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
-                <MapPin className="h-6 w-6 text-white" />
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-400 to-green-500 flex items-center justify-center">
+                <DollarSign className="h-6 w-6 text-white" />
               </div>
             </div>
           </CardContent>
@@ -157,11 +180,11 @@ export default function Dashboard() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground">Needs Attention</p>
-                <p className="text-3xl font-bold">{needsReplacementCount}</p>
+                <p className="text-sm text-muted-foreground">Active Trips</p>
+                <p className="text-3xl font-bold">{activeTrips.length}</p>
               </div>
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center">
-                <TrendingUp className="h-6 w-6 text-white" />
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
+                <MapPin className="h-6 w-6 text-white" />
               </div>
             </div>
           </CardContent>

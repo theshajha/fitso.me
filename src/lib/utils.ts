@@ -140,7 +140,7 @@ export const SHOE_SYSTEMS = [
 // Determine what size input to show based on category and subcategory
 export function getSizeType(category: string, subcategory?: string): SizeType {
     if (category === 'footwear') return 'shoe';
-    
+
     if (category === 'clothing') {
         const bottomsSubcategories = ['Pants', 'Shorts', 'Jeans', 'Skirts'];
         if (subcategory && bottomsSubcategories.includes(subcategory)) {
@@ -149,29 +149,29 @@ export function getSizeType(category: string, subcategory?: string): SizeType {
         // Tops and other clothing
         return 'letter';
     }
-    
+
     if (category === 'accessories') {
         if (subcategory === 'Watches') return 'watch';
         if (subcategory === 'Belts') return 'numeric';
         return 'none';
     }
-    
+
     if (category === 'bags') return 'dimensions';
-    
+
     if (category === 'gadgets') {
         if (subcategory && ['Laptops', 'Tablets', 'Phones'].includes(subcategory)) {
             return 'dimensions';
         }
         return 'none';
     }
-    
+
     return 'none';
 }
 
 // Format size for display
 export function formatSize(sizeData: SizeInfo | null | undefined): string {
     if (!sizeData) return '—';
-    
+
     switch (sizeData.type) {
         case 'letter':
         case 'numeric':
@@ -272,5 +272,26 @@ export function compressImage(file: File, maxWidth = 800, quality = 0.8): Promis
         reader.onerror = () => reject(new Error('Failed to read file'));
         reader.readAsDataURL(file);
     });
+}
+
+// Currency formatting
+export const CURRENCIES = [
+    { code: 'USD', symbol: '$', name: 'US Dollar' },
+    { code: 'EUR', symbol: '€', name: 'Euro' },
+    { code: 'GBP', symbol: '£', name: 'British Pound' },
+    { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
+    { code: 'JPY', symbol: '¥', name: 'Japanese Yen' },
+    { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar' },
+    { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
+] as const;
+
+export function formatCurrency(amount: number, currency: string = 'USD'): string {
+    const currencyInfo = CURRENCIES.find(c => c.code === currency);
+    const symbol = currencyInfo?.symbol || currency;
+
+    return `${symbol}${amount.toLocaleString(undefined, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+    })}`;
 }
 

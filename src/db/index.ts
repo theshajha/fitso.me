@@ -11,6 +11,8 @@ export interface Item {
     brand?: string;
     size?: SizeInfo; // Smart size based on category
     purchaseDate?: string;
+    cost?: number; // Purchase cost
+    currency?: string; // Currency code (USD, EUR, etc.)
     condition: string;
     imageData?: string; // base64 encoded image
     notes?: string;

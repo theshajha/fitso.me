@@ -1,15 +1,17 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Label } from '@/components/ui/label'
 import { Progress } from '@/components/ui/progress'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { exportAllData, getStorageStats, importAllData } from '@/db'
 import { formatBytes } from '@/lib/utils'
 import {
   AlertTriangle,
   Calendar,
   Check,
-  Clock,
   Database,
+  DollarSign,
   Download,
   FolderSync,
   HardDrive,
@@ -19,8 +21,45 @@ import {
   RefreshCw,
   Settings as SettingsIcon,
   Upload,
+  User,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+
+const PREFERENCES_KEY = 'nomad-wardrobe-preferences'
+
+const CURRENCIES = [
+  { id: 'USD', name: 'US Dollar', symbol: '$' },
+  { id: 'EUR', name: 'Euro', symbol: '€' },
+  { id: 'GBP', name: 'British Pound', symbol: '£' },
+  { id: 'INR', name: 'Indian Rupee', symbol: '₹' },
+  { id: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+  { id: 'CAD', name: 'Canadian Dollar', symbol: 'C$' },
+  { id: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+]
+
+export function getDefaultCurrency(): string {
+  try {
+    const prefs = localStorage.getItem(PREFERENCES_KEY)
+    if (prefs) {
+      const parsed = JSON.parse(prefs)
+      return parsed.defaultCurrency || 'USD'
+    }
+  } catch (e) {
+    console.error('Failed to load preferences:', e)
+  }
+  return 'USD'
+}
+
+export function setDefaultCurrency(currency: string): void {
+  try {
+    const prefs = localStorage.getItem(PREFERENCES_KEY)
+    const parsed = prefs ? JSON.parse(prefs) : {}
+    parsed.defaultCurrency = currency
+    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(parsed))
+  } catch (e) {
+    console.error('Failed to save preferences:', e)
+  }
+}
 
 interface StorageStats {
   totalItems: number
@@ -55,12 +94,13 @@ export default function Settings() {
     exportFolderName: null,
   })
   const [folderSupported, setFolderSupported] = useState(false)
+  const [defaultCurrency, setDefaultCurrencyState] = useState('USD')
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     loadStorageStats()
     loadExportSettings()
-    // Check if File System Access API is supported
+    setDefaultCurrencyState(getDefaultCurrency())
     setFolderSupported('showDirectoryPicker' in window)
   }, [])
 
@@ -272,6 +312,11 @@ export default function Settings() {
     return next.toLocaleDateString()
   }
 
+  const handleCurrencyChange = (currency: string) => {
+    setDefaultCurrencyState(currency)
+    setDefaultCurrency(currency)
+  }
+
   // Estimate capacity (conservative: 500MB usable for this app)
   const estimatedCapacity = 500 * 1024 * 1024 // 500 MB
   const usagePercentage = storageStats ? (storageStats.totalEstimatedSize / estimatedCapacity) * 100 : 0
@@ -280,317 +325,251 @@ export default function Settings() {
     : 5000
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-8 space-y-6 max-w-4xl">
+      {/* Header */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
           <SettingsIcon className="h-8 w-8" />
           Settings
         </h1>
-        <p className="text-muted-foreground mt-1">Manage your app settings and data</p>
+        <p className="text-muted-foreground mt-1">Manage preferences and data</p>
       </div>
 
-      {/* Quick Export Section */}
-      {folderSupported && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FolderSync className="h-5 w-5 text-primary" />
-              Quick Export to Folder
-            </CardTitle>
-            <CardDescription>
-              Select a folder (e.g., Google Drive, Dropbox, or any synced folder) for one-click exports
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1 p-4 rounded-lg bg-secondary/50">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <FolderSync className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Export Folder</p>
+      {/* Tabs for organized settings */}
+      <Tabs defaultValue="preferences" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="preferences">Preferences</TabsTrigger>
+          <TabsTrigger value="backup">Backup</TabsTrigger>
+          <TabsTrigger value="storage">Storage</TabsTrigger>
+        </TabsList>
+
+        {/* Preferences Tab */}
+        <TabsContent value="preferences" className="space-y-4 mt-4">
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <User className="h-4 w-4" />
+                General
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="currency" className="flex items-center gap-2">
+                  <DollarSign className="h-4 w-4 text-muted-foreground" />
+                  Default Currency
+                </Label>
+                <Select value={defaultCurrency} onValueChange={handleCurrencyChange}>
+                  <SelectTrigger id="currency" className="w-full max-w-xs">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CURRENCIES.map((curr) => (
+                      <SelectItem key={curr.id} value={curr.id}>
+                        {curr.symbol} {curr.name} ({curr.id})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  Used as default when adding new items
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg">About</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-1 text-sm text-muted-foreground">
+                <p><strong className="text-foreground">Nomad Wardrobe</strong> v2.2.0</p>
+                <p>Personal wardrobe management for nomads</p>
+                <p className="text-xs mt-2">Built with React, Vite, IndexedDB & Tailwind</p>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Backup Tab */}
+        <TabsContent value="backup" className="space-y-4 mt-4">
+          {/* Quick Export */}
+          {folderSupported && (
+            <Card>
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <FolderSync className="h-4 w-4" />
+                  Auto Backup
+                </CardTitle>
+                <CardDescription>Set up automatic backups to a folder</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Export Folder</p>
                     <p className="text-sm text-muted-foreground">
                       {exportSettings.exportFolderName || 'No folder selected'}
                     </p>
                   </div>
-                </div>
-                <div className="flex gap-2">
-                  <Button variant="outline" onClick={handleSelectFolder}>
-                    {exportSettings.exportFolderName ? 'Change Folder' : 'Select Folder'}
+                  <Button variant="outline" size="sm" onClick={handleSelectFolder}>
+                    {exportSettings.exportFolderName ? 'Change' : 'Select Folder'}
                   </Button>
-                  {exportSettings.exportFolderName && (
-                    <Button onClick={handleQuickExport} disabled={exporting}>
-                      {exporting ? (
-                        <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Exporting...
-                        </>
-                      ) : (
-                        <>
-                          <Download className="h-4 w-4 mr-2" />
-                          Export Now
-                        </>
-                      )}
+                </div>
+
+                {exportSettings.exportFolderName && (
+                  <>
+                    <div className="h-px bg-border" />
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">Schedule</p>
+                        <p className="text-sm text-muted-foreground">
+                          {exportSettings.autoExportEnabled ? `Next: ${getNextExportDate()}` : 'Disabled'}
+                        </p>
+                      </div>
+                      <Select
+                        value={exportSettings.autoExportInterval}
+                        onValueChange={(value) => saveExportSettings({ autoExportInterval: value })}
+                      >
+                        <SelectTrigger className="w-28">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="daily">Daily</SelectItem>
+                          <SelectItem value="weekly">Weekly</SelectItem>
+                          <SelectItem value="monthly">Monthly</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Button
+                        size="sm"
+                        variant={exportSettings.autoExportEnabled ? "default" : "outline"}
+                        onClick={() => saveExportSettings({
+                          autoExportEnabled: !exportSettings.autoExportEnabled,
+                          lastExportDate: exportSettings.autoExportEnabled ? exportSettings.lastExportDate : new Date().toISOString()
+                        })}
+                      >
+                        {exportSettings.autoExportEnabled ? <><Check className="h-3 w-3 mr-1" />On</> : <><RefreshCw className="h-3 w-3 mr-1" />Off</>}
+                      </Button>
+                    </div>
+
+                    <Button onClick={handleQuickExport} disabled={exporting} className="w-full">
+                      {exporting ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Exporting...</> : <><Download className="h-4 w-4 mr-2" />Export Now</>}
                     </Button>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex-1 p-4 rounded-lg bg-secondary/50">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Auto-Export Schedule</p>
-                    <p className="text-sm text-muted-foreground">
-                      {exportSettings.autoExportEnabled ? `Next: ${getNextExportDate()}` : 'Disabled'}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Select
-                    value={exportSettings.autoExportInterval}
-                    onValueChange={(value) => saveExportSettings({ autoExportInterval: value })}
-                  >
-                    <SelectTrigger className="w-32">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="daily">Daily</SelectItem>
-                      <SelectItem value="weekly">Weekly</SelectItem>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button
-                    variant={exportSettings.autoExportEnabled ? "default" : "outline"}
-                    onClick={() => saveExportSettings({
-                      autoExportEnabled: !exportSettings.autoExportEnabled,
-                      lastExportDate: exportSettings.autoExportEnabled ? exportSettings.lastExportDate : new Date().toISOString()
-                    })}
-                    disabled={!exportSettings.exportFolderName}
-                  >
-                    {exportSettings.autoExportEnabled ? (
-                      <>
-                        <Check className="h-4 w-4 mr-1" />
-                        Enabled
-                      </>
-                    ) : (
-                      <>
-                        <RefreshCw className="h-4 w-4 mr-1" />
-                        Enable
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {exportSettings.lastExportDate && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4" />
-                Last export: {new Date(exportSettings.lastExportDate).toLocaleString()}
-              </div>
-            )}
-
-            {exportResult && (
-              <div className={`p-3 rounded-lg flex items-start gap-2 ${exportResult.success ? 'bg-emerald-500/10 text-emerald-600' : 'bg-red-500/10 text-red-600'}`}>
-                {exportResult.success ? <Check className="h-5 w-5 shrink-0" /> : <AlertTriangle className="h-5 w-5 shrink-0" />}
-                <p className="text-sm">{exportResult.message}</p>
-              </div>
-            )}
-
-            <div className="p-3 rounded-lg border border-blue-500/20 bg-blue-500/5 text-sm">
-              <p className="text-muted-foreground">
-                <strong className="text-blue-500">Tip:</strong> Select your Google Drive, Dropbox, or iCloud folder to automatically sync backups to the cloud. The auto-export will run when the app is open.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Manual Export/Import */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Database className="h-5 w-5" />
-            Data Management
-          </CardTitle>
-          <CardDescription>Export and import your wardrobe data for backup or migration</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-secondary/50">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Download className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-medium">Export Data</p>
-                  <p className="text-sm text-muted-foreground">
-                    Download as JSON file
-                  </p>
-                </div>
-              </div>
-              <Button onClick={handleExport} disabled={exporting} className="w-full">
-                {exporting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Exporting...
-                  </>
-                ) : (
-                  <>
-                    <Download className="h-4 w-4 mr-2" />
-                    Download Backup
                   </>
                 )}
-              </Button>
-            </div>
 
-            <div className="p-4 rounded-lg bg-secondary/50">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                  <Upload className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <p className="font-medium">Import Data</p>
-                  <p className="text-sm text-muted-foreground">
-                    Restore from backup file
-                  </p>
-                </div>
+                {exportSettings.lastExportDate && (
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Calendar className="h-3 w-3" />
+                    Last: {new Date(exportSettings.lastExportDate).toLocaleString()}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Manual Export/Import */}
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Database className="h-4 w-4" />
+                Manual Backup
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <Button onClick={handleExport} disabled={exporting} variant="outline">
+                  {exporting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Download className="h-4 w-4 mr-2" />}
+                  Download
+                </Button>
+                <Button onClick={handleImportClick} disabled={importing} variant="outline">
+                  {importing ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Upload className="h-4 w-4 mr-2" />}
+                  Import
+                </Button>
               </div>
               <input ref={fileInputRef} type="file" accept=".json" onChange={handleFileChange} className="hidden" />
-              <Button onClick={handleImportClick} variant="outline" disabled={importing} className="w-full">
-                {importing ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Importing...
-                  </>
-                ) : (
-                  <>
-                    <Upload className="h-4 w-4 mr-2" />
-                    Import Backup
-                  </>
-                )}
-              </Button>
-            </div>
-          </div>
 
-          {importResult && (
-            <div className={`p-3 rounded-lg flex items-start gap-2 ${importResult.success ? 'bg-emerald-500/10 text-emerald-600' : 'bg-red-500/10 text-red-600'}`}>
-              {importResult.success ? <Check className="h-5 w-5 shrink-0" /> : <AlertTriangle className="h-5 w-5 shrink-0" />}
-              <p className="text-sm">{importResult.message}</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Storage Information */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <HardDrive className="h-5 w-5" />
-            Storage Information
-          </CardTitle>
-          <CardDescription>Your data is stored locally in your browser</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {storageStats && (
-              <>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="p-4 rounded-lg bg-secondary/50">
-                    <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                      <Package className="h-4 w-4" />
-                      <span className="text-sm">Total Items</span>
-                    </div>
-                    <p className="text-2xl font-bold">{storageStats.totalItems}</p>
-                  </div>
-                  <div className="p-4 rounded-lg bg-secondary/50">
-                    <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                      <ImageIcon className="h-4 w-4" />
-                      <span className="text-sm">With Images</span>
-                    </div>
-                    <p className="text-2xl font-bold">{storageStats.itemsWithImages}</p>
-                  </div>
-                  <div className="p-4 rounded-lg bg-secondary/50">
-                    <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                      <HardDrive className="h-4 w-4" />
-                      <span className="text-sm">Image Storage</span>
-                    </div>
-                    <p className="text-2xl font-bold">{formatBytes(storageStats.totalImageSize)}</p>
-                  </div>
-                  <div className="p-4 rounded-lg bg-secondary/50">
-                    <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                      <Database className="h-4 w-4" />
-                      <span className="text-sm">Avg/Image</span>
-                    </div>
-                    <p className="text-2xl font-bold">{formatBytes(storageStats.averageImageSize)}</p>
-                  </div>
+              {(exportResult || importResult) && (
+                <div className={`p-2 rounded text-xs flex items-center gap-2 ${(exportResult?.success || importResult?.success) ? 'bg-emerald-500/10 text-emerald-600' : 'bg-red-500/10 text-red-600'}`}>
+                  {(exportResult?.success || importResult?.success) ? <Check className="h-3 w-3" /> : <AlertTriangle className="h-3 w-3" />}
+                  {exportResult?.message || importResult?.message}
                 </div>
+              )}
+            </CardContent>
+          </Card>
 
-                <div className="p-4 rounded-lg bg-secondary/50">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">Storage Used</span>
-                    <span className="text-sm font-medium">
-                      {formatBytes(storageStats.totalEstimatedSize)} / ~500 MB
-                    </span>
-                  </div>
-                  <Progress value={Math.min(usagePercentage, 100)} className="h-2" />
-                </div>
-
-                <div className="p-4 rounded-lg border border-blue-500/20 bg-blue-500/5">
-                  <p className="font-medium text-blue-500 mb-1">Capacity Estimate</p>
-                  <p className="text-sm text-muted-foreground">
-                    Based on your average image size of {formatBytes(storageStats.averageImageSize)},
-                    you can store approximately <strong className="text-foreground">{estimatedItemsCapacity.toLocaleString()}</strong> items
-                    with images before reaching browser limits.
-                  </p>
-                </div>
-              </>
-            )}
-
-            <div className="p-3 rounded-lg bg-secondary/50">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">Storage Type</p>
-                  <p className="text-sm text-muted-foreground font-mono">IndexedDB (Browser Local Storage)</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-lg border border-amber-500/20 bg-amber-500/5">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-amber-600">Backup Reminder</p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Your data is stored locally in your browser. If you clear your browser data, you'll lose everything.
-                    Set up auto-export above to keep your data safe!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* About */}
-      <Card>
-        <CardHeader>
-          <CardTitle>About</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p>
-              <strong className="text-foreground">Nomad Wardrobe</strong> - Personal wardrobe and accessories management for the nomadic lifestyle.
+          {/* Backup Warning */}
+          <div className="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5 flex items-start gap-3">
+            <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+            <p className="text-xs text-muted-foreground">
+              Data is stored in your browser. Clearing browser data deletes everything. Regular backups recommended.
             </p>
-            <p>Version 2.2.0 (React + Vite + Auto-Export)</p>
-            <p>Built with React, Vite, IndexedDB (Dexie.js), and Tailwind CSS. All your data stays in your browser.</p>
           </div>
-        </CardContent>
-      </Card>
+        </TabsContent>
+
+        {/* Storage Tab */}
+        <TabsContent value="storage" className="space-y-4 mt-4">
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <HardDrive className="h-4 w-4" />
+                Usage
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {storageStats && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-secondary/50">
+                      <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                        <Package className="h-3 w-3" />
+                        <span className="text-xs">Items</span>
+                      </div>
+                      <p className="text-xl font-bold">{storageStats.totalItems}</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-secondary/50">
+                      <div className="flex items-center gap-2 text-muted-foreground mb-1">
+                        <ImageIcon className="h-3 w-3" />
+                        <span className="text-xs">With Images</span>
+                      </div>
+                      <p className="text-xl font-bold">{storageStats.itemsWithImages}</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">Storage Used</span>
+                      <span className="font-medium">{formatBytes(storageStats.totalEstimatedSize)} / ~500 MB</span>
+                    </div>
+                    <Progress value={Math.min(usagePercentage, 100)} className="h-1.5" />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3 text-xs">
+                    <div className="p-2 rounded bg-secondary/30">
+                      <span className="text-muted-foreground">Images:</span>{' '}
+                      <span className="font-medium">{formatBytes(storageStats.totalImageSize)}</span>
+                    </div>
+                    <div className="p-2 rounded bg-secondary/30">
+                      <span className="text-muted-foreground">Avg/Image:</span>{' '}
+                      <span className="font-medium">{formatBytes(storageStats.averageImageSize)}</span>
+                    </div>
+                  </div>
+
+                  <div className="p-3 rounded-lg border border-blue-500/20 bg-blue-500/5">
+                    <p className="text-xs text-muted-foreground">
+                      <strong className="text-blue-500">Capacity:</strong> ~{estimatedItemsCapacity.toLocaleString()} items with images
+                    </p>
+                  </div>
+                </>
+              )}
+
+              <div className="p-2 rounded bg-secondary/30 text-xs">
+                <span className="text-muted-foreground">Type:</span>{' '}
+                <span className="font-mono">IndexedDB (Browser)</span>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
