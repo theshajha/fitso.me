@@ -1,0 +1,17 @@
+.next/
+.env
+
+node_modules/
+
+dist/
+build/
+out/
+
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+bun.lock
+bun.lock.json
+bun.lock.yaml
+bun.lock.json

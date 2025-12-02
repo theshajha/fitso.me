@@ -1,0 +1,320 @@
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import {
+  Package,
+  Shirt,
+  Watch,
+  Laptop,
+  Briefcase,
+  Footprints,
+  AlertTriangle,
+  TrendingUp,
+  Calendar,
+  MapPin,
+} from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Progress } from '@/components/ui/progress'
+import { db, type Item, type Trip } from '@/db'
+import { getItemAge, formatDate } from '@/lib/utils'
+
+const categoryIcons: Record<string, typeof Package> = {
+  clothing: Shirt,
+  accessories: Watch,
+  gadgets: Laptop,
+  bags: Briefcase,
+  footwear: Footprints,
+}
+
+const categoryColors: Record<string, string> = {
+  clothing: 'from-blue-500 to-cyan-500',
+  accessories: 'from-purple-500 to-pink-500',
+  gadgets: 'from-emerald-500 to-green-500',
+  bags: 'from-amber-500 to-orange-500',
+  footwear: 'from-red-500 to-rose-500',
+}
+
+export default function Dashboard() {
+  const [items, setItems] = useState<Item[]>([])
+  const [trips, setTrips] = useState<Trip[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const loadData = async () => {
+      const [itemsData, tripsData] = await Promise.all([
+        db.items.toArray(),
+        db.trips.toArray(),
+      ])
+      setItems(itemsData)
+      setTrips(tripsData)
+      setLoading(false)
+    }
+    loadData()
+  }, [])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
+      </div>
+    )
+  }
+
+  // Calculate stats
+  const categoryCounts: Record<string, number> = {}
+  let phaseOutCount = 0
+  let needsReplacementCount = 0
+
+  items.forEach((item) => {
+    categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1
+    if (item.isPhaseOut) phaseOutCount++
+    if (item.condition === 'needs-replacement') needsReplacementCount++
+  })
+
+  const recentItems = [...items]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 5)
+
+  const activeTrips = trips.filter(
+    (trip) => trip.status === 'planning' || trip.status === 'packing'
+  )
+
+  const conditionCounts = {
+    new: items.filter((i) => i.condition === 'new').length,
+    good: items.filter((i) => i.condition === 'good').length,
+    worn: items.filter((i) => i.condition === 'worn').length,
+    'needs-replacement': needsReplacementCount,
+  }
+
+  const oldItems = items
+    .filter((item) => {
+      if (!item.purchaseDate) return false
+      const age = getItemAge(item.purchaseDate)
+      return age.status === 'old' || age.status === 'aging'
+    })
+    .slice(0, 5)
+
+  return (
+    <div className="p-8 space-y-8 animate-fade-in">
+      {/* Header */}
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold tracking-tight">Welcome back, Nomad</h1>
+        <p className="text-muted-foreground text-lg">
+          Your wardrobe at a glance. {items.length} items tracked.
+        </p>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="card-hover">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Total Items</p>
+                <p className="text-3xl font-bold">{items.length}</p>
+              </div>
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
+                <Package className="h-6 w-6 text-black" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-hover">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Phase Out</p>
+                <p className="text-3xl font-bold">{phaseOutCount}</p>
+              </div>
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-red-400 to-rose-500 flex items-center justify-center">
+                <AlertTriangle className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-hover">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Active Trips</p>
+                <p className="text-3xl font-bold">{activeTrips.length}</p>
+              </div>
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
+                <MapPin className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="card-hover">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Needs Attention</p>
+                <p className="text-3xl font-bold">{needsReplacementCount}</p>
+              </div>
+              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-purple-400 to-violet-500 flex items-center justify-center">
+                <TrendingUp className="h-6 w-6 text-white" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Categories Overview */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Package className="h-5 w-5" />
+              By Category
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {Object.entries(categoryIcons).map(([category, Icon]) => {
+              const count = categoryCounts[category] || 0
+              const percentage = items.length > 0 ? (count / items.length) * 100 : 0
+
+              return (
+                <Link key={category} to={`/inventory?category=${category}`} className="block group">
+                  <div className="flex items-center gap-4 p-3 rounded-lg transition-colors hover:bg-secondary">
+                    <div className={`h-10 w-10 rounded-lg bg-gradient-to-br ${categoryColors[category]} flex items-center justify-center`}>
+                      <Icon className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium capitalize">{category}</span>
+                        <span className="text-sm text-muted-foreground">{count} items</span>
+                      </div>
+                      <Progress value={percentage} className="h-2" />
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+          </CardContent>
+        </Card>
+
+        {/* Item Condition */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" />
+              Item Condition
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <p className="text-2xl font-bold text-emerald-500">{conditionCounts.new}</p>
+                <p className="text-sm text-muted-foreground">New</p>
+              </div>
+              <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <p className="text-2xl font-bold text-blue-500">{conditionCounts.good}</p>
+                <p className="text-sm text-muted-foreground">Good</p>
+              </div>
+              <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                <p className="text-2xl font-bold text-amber-500">{conditionCounts.worn}</p>
+                <p className="text-sm text-muted-foreground">Worn</p>
+              </div>
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
+                <p className="text-2xl font-bold text-red-500">{conditionCounts['needs-replacement']}</p>
+                <p className="text-sm text-muted-foreground">Replace</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent & Old Items */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Recently Added */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Calendar className="h-5 w-5" />
+              Recently Added
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {recentItems.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <Package className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                <p>No items yet</p>
+                <Link to="/inventory" className="text-primary hover:underline text-sm">
+                  Add your first item
+                </Link>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {recentItems.map((item) => {
+                  const Icon = categoryIcons[item.category] || Package
+                  return (
+                    <div key={item.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-secondary transition-colors">
+                      {item.imageData ? (
+                        <img src={item.imageData} alt={item.name} className="h-10 w-10 rounded-lg object-cover" />
+                      ) : (
+                        <div className={`h-10 w-10 rounded-lg bg-gradient-to-br ${categoryColors[item.category] || 'from-gray-400 to-gray-500'} flex items-center justify-center`}>
+                          <Icon className="h-5 w-5 text-white" />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">{item.name}</p>
+                        <p className="text-sm text-muted-foreground">{item.subcategory || item.category}</p>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{formatDate(item.createdAt)}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Consider Replacing */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-amber-500" />
+              Consider Replacing
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {oldItems.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                <TrendingUp className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                <p>All items are in good shape!</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {oldItems.map((item) => {
+                  const age = getItemAge(item.purchaseDate)
+                  const Icon = categoryIcons[item.category] || Package
+                  return (
+                    <div key={item.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-secondary transition-colors">
+                      {item.imageData ? (
+                        <img src={item.imageData} alt={item.name} className="h-10 w-10 rounded-lg object-cover" />
+                      ) : (
+                        <div className={`h-10 w-10 rounded-lg bg-gradient-to-br ${categoryColors[item.category] || 'from-gray-400 to-gray-500'} flex items-center justify-center`}>
+                          <Icon className="h-5 w-5 text-white" />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">{item.name}</p>
+                        <p className="text-sm text-muted-foreground">{item.subcategory || item.category}</p>
+                      </div>
+                      <Badge variant={age.status}>{age.label} old</Badge>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  )
+}
+

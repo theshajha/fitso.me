@@ -1,0 +1,251 @@
+import { useState, useEffect } from 'react'
+import { Package, Shirt, Watch, Laptop, Briefcase, Footprints, AlertTriangle, Clock, Trash2, RefreshCw, Check } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
+import { db, type Item } from '@/db'
+import { cn, getItemAge, formatDate } from '@/lib/utils'
+
+const categoryIcons: Record<string, typeof Package> = {
+  clothing: Shirt,
+  accessories: Watch,
+  gadgets: Laptop,
+  bags: Briefcase,
+  footwear: Footprints,
+}
+
+const categoryColors: Record<string, string> = {
+  clothing: 'from-blue-500 to-cyan-500',
+  accessories: 'from-purple-500 to-pink-500',
+  gadgets: 'from-emerald-500 to-green-500',
+  bags: 'from-amber-500 to-orange-500',
+  footwear: 'from-red-500 to-rose-500',
+}
+
+export default function PhaseOut() {
+  const [items, setItems] = useState<Item[]>([])
+  const [loading, setLoading] = useState(true)
+  const [deleteItem, setDeleteItem] = useState<Item | null>(null)
+
+  useEffect(() => {
+    loadItems()
+  }, [])
+
+  const loadItems = async () => {
+    const data = await db.items.toArray()
+    setItems(data)
+    setLoading(false)
+  }
+
+  const handleTogglePhaseOut = async (item: Item) => {
+    await db.items.update(item.id, { isPhaseOut: !item.isPhaseOut, updatedAt: new Date().toISOString() })
+    loadItems()
+  }
+
+  const handleDelete = async () => {
+    if (!deleteItem) return
+    await db.items.delete(deleteItem.id)
+    loadItems()
+    setDeleteItem(null)
+  }
+
+  const phaseOutItems = items.filter((item) => item.isPhaseOut)
+  const needsReplacementItems = items.filter((item) => item.condition === 'needs-replacement' && !item.isPhaseOut)
+  const agingItems = items.filter((item) => {
+    if (item.isPhaseOut || item.condition === 'needs-replacement') return false
+    const age = getItemAge(item.purchaseDate)
+    return age.status === 'old' || age.status === 'aging'
+  })
+
+  const renderItemCard = (item: Item, showRemoveFromList = false) => {
+    const Icon = categoryIcons[item.category] || Package
+    const age = getItemAge(item.purchaseDate)
+
+    return (
+      <div key={item.id} className="flex items-center gap-4 p-4 rounded-lg border hover:bg-secondary/50 transition-colors group">
+        {item.imageData ? (
+          <img src={item.imageData} alt={item.name} className="h-12 w-12 rounded-xl object-cover" />
+        ) : (
+          <div className={cn('h-12 w-12 rounded-xl bg-gradient-to-br flex items-center justify-center shrink-0', categoryColors[item.category] || 'from-gray-400 to-gray-500')}>
+            <Icon className="h-6 w-6 text-white" />
+          </div>
+        )}
+
+        <div className="flex-1 min-w-0">
+          <p className="font-medium truncate">{item.name}</p>
+          <p className="text-sm text-muted-foreground">
+            {item.subcategory || item.category}
+            {item.brand && ` • ${item.brand}`}
+          </p>
+          {item.purchaseDate && (
+            <p className="text-xs text-muted-foreground mt-1">
+              <Clock className="h-3 w-3 inline mr-1" />
+              Purchased {formatDate(item.purchaseDate)}
+            </p>
+          )}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Badge variant={age.status}>{age.label} old</Badge>
+
+          {showRemoveFromList ? (
+            <Button variant="outline" size="sm" onClick={() => handleTogglePhaseOut(item)} className="opacity-0 group-hover:opacity-100 transition-opacity">
+              <RefreshCw className="h-4 w-4 mr-1" />
+              Keep
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" onClick={() => handleTogglePhaseOut(item)} className="opacity-0 group-hover:opacity-100 transition-opacity">
+              <AlertTriangle className="h-4 w-4 mr-1" />
+              Phase Out
+            </Button>
+          )}
+
+          <Button variant="ghost" size="icon" onClick={() => setDeleteItem(item)} className="opacity-0 group-hover:opacity-100 transition-opacity text-destructive">
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[calc(100vh-4rem)]">
+        <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="p-8 space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
+          <AlertTriangle className="h-8 w-8 text-amber-500" />
+          Phase Out Tracker
+        </h1>
+        <p className="text-muted-foreground mt-1">Track items that need replacement and manage your wardrobe lifecycle</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="bg-red-500/5 border-red-500/20">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-xl bg-red-500/20 flex items-center justify-center">
+                <AlertTriangle className="h-6 w-6 text-red-500" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Ready to Replace</p>
+                <p className="text-3xl font-bold text-red-500">{phaseOutItems.length}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-amber-500/5 border-amber-500/20">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-xl bg-amber-500/20 flex items-center justify-center">
+                <Clock className="h-6 w-6 text-amber-500" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Needs Replacement</p>
+                <p className="text-3xl font-bold text-amber-500">{needsReplacementItems.length}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-orange-500/5 border-orange-500/20">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-xl bg-orange-500/20 flex items-center justify-center">
+                <RefreshCw className="h-6 w-6 text-orange-500" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Aging Items</p>
+                <p className="text-3xl font-bold text-orange-500">{agingItems.length}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-red-500" />
+            Items to Phase Out
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {phaseOutItems.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              <Check className="h-12 w-12 mx-auto mb-2 opacity-50" />
+              <p>No items marked for phase out</p>
+              <p className="text-sm">Mark items from your inventory when you're ready to replace them</p>
+            </div>
+          ) : (
+            <div className="space-y-2">{phaseOutItems.map((item) => renderItemCard(item, true))}</div>
+          )}
+        </CardContent>
+      </Card>
+
+      {needsReplacementItems.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-amber-500" />
+              Condition: Needs Replacement
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">{needsReplacementItems.map((item) => renderItemCard(item))}</div>
+          </CardContent>
+        </Card>
+      )}
+
+      {agingItems.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <RefreshCw className="h-5 w-5 text-orange-500" />
+              Aging Items (3+ years old)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">{agingItems.map((item) => renderItemCard(item))}</div>
+          </CardContent>
+        </Card>
+      )}
+
+      {phaseOutItems.length === 0 && needsReplacementItems.length === 0 && agingItems.length === 0 && (
+        <Card>
+          <CardContent className="py-16 text-center">
+            <Check className="h-16 w-16 mx-auto mb-4 text-emerald-500" />
+            <h3 className="text-xl font-semibold mb-2">Everything looks good!</h3>
+            <p className="text-muted-foreground">All your items are in great condition. No replacements needed right now.</p>
+          </CardContent>
+        </Card>
+      )}
+
+      <AlertDialog open={!!deleteItem} onOpenChange={() => setDeleteItem(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Item</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to permanently delete "{deleteItem?.name}"? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  )
+}
+
