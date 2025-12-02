@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
-import { Shirt, Plus, Sparkles, Package, Watch, Laptop, Briefcase, Footprints, Trash2 } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/dialog'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { db, generateId, type Item, type Outfit } from '@/db'
 import { cn, OCCASIONS } from '@/lib/utils'
+import { Briefcase, Footprints, Laptop, Package, Plus, Shirt, Sparkles, Trash2, Watch } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 const categoryIcons: Record<string, typeof Package> = {
   clothing: Shirt,
@@ -196,45 +196,100 @@ export default function Outfits() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {outfits.map((outfit) => {
             const outfitItems = items.filter((i) => outfit.itemIds.includes(i.id))
+            const itemsWithImages = outfitItems.filter(i => i.imageData)
+            const itemsWithoutImages = outfitItems.filter(i => !i.imageData)
+
             return (
-              <Card key={outfit.id} className="card-hover group">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <CardTitle className="text-lg">{outfit.name}</CardTitle>
-                      {outfit.occasion && (
-                        <Badge variant="outline" className="mt-1">
-                          {OCCASIONS.find((o) => o.id === outfit.occasion)?.name || outfit.occasion}
-                        </Badge>
+              <Card key={outfit.id} className="card-hover group overflow-hidden">
+                {/* Visual Preview Grid */}
+                <div className="relative bg-gradient-to-br from-secondary/50 to-secondary">
+                  {itemsWithImages.length > 0 ? (
+                    <div className={cn(
+                      "grid gap-0.5 p-2",
+                      itemsWithImages.length === 1 && "grid-cols-1",
+                      itemsWithImages.length === 2 && "grid-cols-2",
+                      itemsWithImages.length === 3 && "grid-cols-2",
+                      itemsWithImages.length >= 4 && "grid-cols-2"
+                    )}>
+                      {itemsWithImages.slice(0, 4).map((item, index) => (
+                        <div
+                          key={item.id}
+                          className={cn(
+                            "relative overflow-hidden rounded-lg bg-card",
+                            itemsWithImages.length === 1 && "aspect-[4/3]",
+                            itemsWithImages.length === 2 && "aspect-square",
+                            itemsWithImages.length === 3 && index === 0 && "row-span-2 aspect-[2/3]",
+                            itemsWithImages.length === 3 && index > 0 && "aspect-square",
+                            itemsWithImages.length >= 4 && "aspect-square"
+                          )}
+                        >
+                          <img
+                            src={item.imageData}
+                            alt={item.name}
+                            className="w-full h-full object-cover"
+                          />
+                          {/* Item label overlay */}
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                            <p className="text-[10px] text-white font-medium truncate">{item.name}</p>
+                          </div>
+                        </div>
+                      ))}
+                      {/* More items indicator */}
+                      {itemsWithImages.length > 4 && (
+                        <div className="absolute bottom-2 right-2 px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm text-white text-xs font-medium">
+                          +{itemsWithImages.length - 4} more
+                        </div>
                       )}
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => setDeleteOutfit(outfit)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                  ) : (
+                    <div className="flex items-center justify-center h-32 text-muted-foreground">
+                      <Shirt className="h-12 w-12 opacity-30" />
+                    </div>
+                  )}
+
+                  {/* Delete button overlay */}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 h-8 w-8 bg-black/50 hover:bg-black/70 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={() => setDeleteOutfit(outfit)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+
+                {/* Outfit Info */}
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h3 className="font-semibold text-base leading-tight">{outfit.name}</h3>
+                    {outfit.occasion && (
+                      <Badge variant="outline" className="shrink-0 text-xs">
+                        {OCCASIONS.find((o) => o.id === outfit.occasion)?.name || outfit.occasion}
+                      </Badge>
+                    )}
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {outfitItems.map((item) => {
-                      const Icon = categoryIcons[item.category] || Package
-                      return (
-                        <div key={item.id} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-sm">
-                          {item.imageData ? (
-                            <img src={item.imageData} alt={item.name} className="h-4 w-4 rounded-full object-cover" />
-                          ) : (
-                            <Icon className="h-3.5 w-3.5" />
-                          )}
-                          <span className="truncate max-w-[120px]">{item.name}</span>
-                        </div>
-                      )
-                    })}
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-3">{outfitItems.length} items</p>
+
+                  {/* Items without images shown as chips */}
+                  {itemsWithoutImages.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {itemsWithoutImages.map((item) => {
+                        const Icon = categoryIcons[item.category] || Package
+                        return (
+                          <div key={item.id} className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-secondary text-xs">
+                            <Icon className="h-3 w-3 text-muted-foreground" />
+                            <span className="truncate max-w-[100px]">{item.name}</span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+
+                  <p className="text-xs text-muted-foreground">
+                    {outfitItems.length} item{outfitItems.length !== 1 ? 's' : ''}
+                    {itemsWithImages.length > 0 && itemsWithImages.length < outfitItems.length &&
+                      ` • ${itemsWithImages.length} with photos`
+                    }
+                  </p>
                 </CardContent>
               </Card>
             )

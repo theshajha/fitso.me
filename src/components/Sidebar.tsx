@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, Menu, Package, Plane, Settings, Shirt, Sparkles, Trash2, X } from 'lucide-react';
+import { LayoutDashboard, Menu, Package, Plane, Settings, Shirt, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // Navigation grouped by workflow
 const navGroups = [
   {
-    label: 'Wardrobe',
+    label: 'Collection',
     items: [
       { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
       { name: 'Inventory', href: '/inventory', icon: Package },
@@ -28,6 +28,7 @@ const navGroups = [
   {
     label: 'Manage',
     items: [
+      { name: 'Wishlist', href: '/wishlist', icon: ShoppingBag },
       { name: 'Phase Out', href: '/phase-out', icon: Trash2 },
     ],
   },
@@ -41,12 +42,12 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       {/* Logo */}
       <div className="p-4 md:p-6 shrink-0">
         <Link to="/dashboard" className="flex items-center gap-3" onClick={onNavigate}>
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-            <Package className="h-5 w-5 text-black" />
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+            <Package className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-lg tracking-tight">Nomad</h1>
-            <p className="text-xs text-muted-foreground">Wardrobe Manager</p>
+            <h1 className="font-bold text-lg tracking-tight">Capsule</h1>
+            <p className="text-xs text-muted-foreground">Manage Everything</p>
           </div>
         </Link>
       </div>
@@ -129,10 +130,10 @@ export function Sidebar() {
           <Menu className="h-5 w-5" />
         </button>
         <div className="flex items-center gap-2 ml-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-            <Package className="h-4 w-4 text-black" />
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+            <Package className="h-4 w-4 text-white" />
           </div>
-          <span className="font-bold">Nomad</span>
+          <span className="font-bold">Capsule</span>
         </div>
       </div>
 

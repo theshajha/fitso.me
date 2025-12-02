@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { db, generateId, type WishlistItem } from '@/db'
-import { CATEGORIES, cn, formatCurrency } from '@/lib/utils'
+import { CATEGORIES, CURRENCIES, cn, formatCurrency } from '@/lib/utils'
 import { getDefaultCurrency } from '@/pages/Settings'
 import {
   Check,
@@ -18,7 +18,7 @@ import {
   Plus,
   ShoppingBag,
   Trash2,
-  X,
+  X
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -394,14 +394,14 @@ export default function Wishlist() {
             <div className="space-y-2">
               <Label>Category</Label>
               <Select
-                value={formData.category}
-                onValueChange={(value) => setFormData({ ...formData, category: value })}
+                value={formData.category || 'none'}
+                onValueChange={(value) => setFormData({ ...formData, category: value === 'none' ? '' : value })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">None</SelectItem>
+                  <SelectItem value="none">None</SelectItem>
                   {CATEGORIES.map((cat) => (
                     <SelectItem key={cat.id} value={cat.id}>{cat.name}</SelectItem>
                   ))}
@@ -420,11 +420,9 @@ export default function Wishlist() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="USD">USD</SelectItem>
-                    <SelectItem value="EUR">EUR</SelectItem>
-                    <SelectItem value="GBP">GBP</SelectItem>
-                    <SelectItem value="INR">INR</SelectItem>
-                    <SelectItem value="JPY">JPY</SelectItem>
+                    {CURRENCIES.map((curr) => (
+                      <SelectItem key={curr.id} value={curr.id}>{curr.id}</SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <Input
