@@ -421,7 +421,7 @@ export default function Wishlist() {
                   </SelectTrigger>
                   <SelectContent>
                     {CURRENCIES.map((curr) => (
-                      <SelectItem key={curr.id} value={curr.id}>{curr.id}</SelectItem>
+                      <SelectItem key={curr.code} value={curr.code}>{curr.code}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
