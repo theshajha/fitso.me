@@ -19,7 +19,7 @@ export function initAnalytics() {
         // Capture page leaves
         capture_pageleave: true,
         // Disable in development if needed
-        loaded: (posthog) => {
+        loaded: (_posthog) => {
             if (import.meta.env.DEV) {
                 console.log('PostHog initialized in development mode')
             }
