@@ -85,7 +85,7 @@ class WardrobeDatabase extends Dexie {
     wishlist!: EntityTable<WishlistItem, 'id'>;
 
     constructor() {
-        super('NomadWardrobe');
+        super('FitSoMeDB');
 
         // Version 1: Initial schema
         this.version(1).stores({
@@ -308,7 +308,7 @@ export async function exportWithImages(folderHandle: FileSystemDirectoryHandle) 
     };
 
     // Write JSON file
-    const jsonFileName = `capsule-backup-${new Date().toISOString().split('T')[0]}.json`;
+    const jsonFileName = `fitsome-backup-${new Date().toISOString().split('T')[0]}.json`;
     const jsonHandle = await folderHandle.getFileHandle(jsonFileName, { create: true });
     const jsonWritable = await jsonHandle.createWritable();
     await jsonWritable.write(JSON.stringify(exportData, null, 2));

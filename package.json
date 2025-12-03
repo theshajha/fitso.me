@@ -1,13 +1,25 @@
 {
-  "name": "nomad-wardrobe",
+  "name": "fitsome",
   "version": "1.0.0",
-  "description": "Personal wardrobe and accessories management for nomadic lifestyle",
+  "description": "FITSO.ME - Your stuff. Your style. Your way. Personal wardrobe and belongings manager.",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "keywords": [
+    "wardrobe",
+    "closet",
+    "organizer",
+    "inventory",
+    "outfit",
+    "fashion",
+    "packing",
+    "travel",
+    "accessories"
+  ],
+  "author": "FITSO.ME",
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.1",

@@ -56,7 +56,7 @@ function generateShortCode(data: object): string {
 }
 
 // Store share data in localStorage with short code
-const SHARE_STORAGE_KEY = 'capsule-shared-showcases'
+const SHARE_STORAGE_KEY = 'fitsome-shared-showcases'
 
 function storeShareData(code: string, data: object): void {
     try {
@@ -164,7 +164,7 @@ function generateShowcaseHTML(items: Item[], title: string, description: string)
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} - Wardrobe Showcase</title>
+  <title>${title} - FITSO.ME Showcase</title>
   <style>
     :root {
       --bg: #0a0a0a;
@@ -322,7 +322,7 @@ function generateShowcaseHTML(items: Item[], title: string, description: string)
     </div>
     
     <footer>
-      <p>Created with <a href="#">Capsule</a> • ${new Date().toLocaleDateString()}</p>
+      <p>Created with <a href="https://fitso.me">FITSO.ME</a> • ${new Date().toLocaleDateString()}</p>
     </footer>
   </div>
 </body>

@@ -26,7 +26,7 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-const PREFERENCES_KEY = 'nomad-wardrobe-preferences'
+const PREFERENCES_KEY = 'fitsome-preferences'
 
 const CURRENCIES = [
   { id: 'USD', name: 'US Dollar', symbol: '$' },
@@ -79,7 +79,7 @@ interface ExportSettings {
   exportFolderName: string | null
 }
 
-const STORAGE_KEY = 'nomad-wardrobe-export-settings'
+const STORAGE_KEY = 'fitsome-export-settings'
 
 export default function Settings() {
   const [exporting, setExporting] = useState(false)
@@ -188,7 +188,7 @@ export default function Settings() {
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `wardrobe-backup-${new Date().toISOString().split('T')[0]}.json`
+      a.download = `fitsome-backup-${new Date().toISOString().split('T')[0]}.json`
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
@@ -233,7 +233,7 @@ export default function Settings() {
     setExportResult(null)
     try {
       const data = await exportAllData()
-      const fileName = `wardrobe-backup-${new Date().toISOString().split('T')[0]}.json`
+      const fileName = `fitsome-backup-${new Date().toISOString().split('T')[0]}.json`
 
       // Create file in selected folder
       const fileHandle = await exportSettings.exportFolderHandle.getFileHandle(fileName, { create: true })
@@ -436,10 +436,19 @@ export default function Settings() {
               <CardTitle className="text-lg">About</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-1 text-sm text-muted-foreground">
-                <p><strong className="text-foreground">Capsule</strong> v3.0.0</p>
-                <p>Manage everything you own, without the overwhelm</p>
-                <p className="text-xs mt-2">Built with React, Vite, IndexedDB & Tailwind</p>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <p className="flex items-center gap-2">
+                  <span className="font-extrabold">
+                    <span className="text-amber-400">FIT</span>
+                    <span className="text-pink-400">·</span>
+                    <span className="text-pink-400">SO</span>
+                    <span className="text-violet-400">·</span>
+                    <span className="text-violet-400">ME</span>
+                  </span>
+                  <span className="text-xs bg-secondary px-2 py-0.5 rounded">v3.0.0</span>
+                </p>
+                <p>Your stuff. Your style. Your way.</p>
+                <p className="text-xs mt-2 text-muted-foreground/70">Built with React, Vite, IndexedDB & Tailwind</p>
               </div>
             </CardContent>
           </Card>

@@ -34,6 +34,32 @@ const navGroups = [
   },
 ];
 
+// Compact logo for sidebar
+function FitSomeLogo({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <span className="font-extrabold text-lg tracking-tight">
+        <span className="text-amber-400">F</span>
+        <span className="text-pink-400">S</span>
+        <span className="text-violet-400">M</span>
+      </span>
+    );
+  }
+
+  return (
+    <div className="flex flex-col">
+      <h1 className="font-extrabold text-lg tracking-tight flex items-center">
+        <span className="text-amber-400">FIT</span>
+        <span className="text-pink-400 text-xs mx-0.5">·</span>
+        <span className="text-pink-400">SO</span>
+        <span className="text-violet-400 text-xs mx-0.5">·</span>
+        <span className="text-violet-400">ME</span>
+      </h1>
+      <p className="text-[10px] text-muted-foreground -mt-0.5">Your stuff. Your style.</p>
+    </div>
+  );
+}
+
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const location = useLocation();
 
@@ -42,13 +68,10 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       {/* Logo */}
       <div className="p-4 md:p-6 shrink-0">
         <Link to="/dashboard" className="flex items-center gap-3" onClick={onNavigate}>
-          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500 via-pink-500 to-violet-600 flex items-center justify-center shadow-lg shadow-pink-500/20">
             <Package className="h-5 w-5 text-white" />
           </div>
-          <div>
-            <h1 className="font-bold text-lg tracking-tight">Capsule</h1>
-            <p className="text-xs text-muted-foreground">Manage Everything</p>
-          </div>
+          <FitSomeLogo />
         </Link>
       </div>
 
@@ -75,11 +98,11 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                     className={cn(
                       'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all',
                       isActive
-                        ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
+                        ? 'bg-gradient-to-r from-amber-500/20 via-pink-500/20 to-violet-500/20 text-foreground border border-pink-500/30 shadow-lg shadow-pink-500/10'
                         : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
                     )}
                   >
-                    <item.icon className="h-4 w-4" />
+                    <item.icon className={cn('h-4 w-4', isActive && 'text-pink-400')} />
                     {item.name}
                   </Link>
                 );
@@ -104,11 +127,11 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           className={cn(
             'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all',
             location.pathname === '/settings'
-              ? 'bg-primary text-primary-foreground'
+              ? 'bg-gradient-to-r from-amber-500/20 via-pink-500/20 to-violet-500/20 text-foreground border border-pink-500/30'
               : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
           )}
         >
-          <Settings className="h-4 w-4" />
+          <Settings className={cn('h-4 w-4', location.pathname === '/settings' && 'text-pink-400')} />
           Settings
         </Link>
       </div>
@@ -130,10 +153,14 @@ export function Sidebar() {
           <Menu className="h-5 w-5" />
         </button>
         <div className="flex items-center gap-2 ml-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-amber-500 via-pink-500 to-violet-600 flex items-center justify-center">
             <Package className="h-4 w-4 text-white" />
           </div>
-          <span className="font-bold">Capsule</span>
+          <span className="font-extrabold">
+            <span className="text-amber-400">FIT</span>
+            <span className="text-pink-400">SO</span>
+            <span className="text-violet-400">ME</span>
+          </span>
         </div>
       </div>
 
