@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from 'react-router-dom'
+import { AnalyticsProvider } from './components/AnalyticsProvider'
 import { Sidebar } from './components/Sidebar'
 import Dashboard from './pages/Dashboard'
 import Inventory from './pages/Inventory'
@@ -30,27 +31,31 @@ export default function App() {
     // Landing page without sidebar
     if (isLandingPage) {
         return (
-            <div className="min-h-screen pattern-dots">
-                <Routes>
-                    <Route path="/" element={<Landing />} />
-                </Routes>
-            </div>
+            <AnalyticsProvider>
+                <div className="min-h-screen pattern-dots">
+                    <Routes>
+                        <Route path="/" element={<Landing />} />
+                    </Routes>
+                </div>
+            </AnalyticsProvider>
         )
     }
 
     // All other pages with sidebar
     return (
-        <AppLayout>
-            <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/inventory" element={<Inventory />} />
-                <Route path="/showcase" element={<Showcase />} />
-                <Route path="/packing" element={<Packing />} />
-                <Route path="/outfits" element={<Outfits />} />
-                <Route path="/phase-out" element={<PhaseOut />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/settings" element={<Settings />} />
-            </Routes>
-        </AppLayout>
+        <AnalyticsProvider>
+            <AppLayout>
+                <Routes>
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/inventory" element={<Inventory />} />
+                    <Route path="/showcase" element={<Showcase />} />
+                    <Route path="/packing" element={<Packing />} />
+                    <Route path="/outfits" element={<Outfits />} />
+                    <Route path="/phase-out" element={<PhaseOut />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
+                    <Route path="/settings" element={<Settings />} />
+                </Routes>
+            </AppLayout>
+        </AnalyticsProvider>
     )
 }

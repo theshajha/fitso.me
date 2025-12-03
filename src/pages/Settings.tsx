@@ -5,9 +5,11 @@ import { Progress } from '@/components/ui/progress'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { exportAllData, exportWithImages, getStorageStats, importAllData, importWithImages } from '@/db'
+import { hasOptedOut, isAnalyticsEnabled, optIn, optOut } from '@/lib/analytics'
 import { formatBytes } from '@/lib/utils'
 import {
   AlertTriangle,
+  BarChart3,
   Calendar,
   Check,
   Database,
@@ -431,6 +433,45 @@ export default function Settings() {
             </CardContent>
           </Card>
 
+          {isAnalyticsEnabled() && (
+            <Card>
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  Privacy & Analytics
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <p className="text-sm font-medium">Usage Analytics</p>
+                    <p className="text-xs text-muted-foreground">
+                      Help improve FITSO.ME by sharing anonymous usage data
+                    </p>
+                  </div>
+                  <Button
+                    variant={hasOptedOut() ? 'outline' : 'default'}
+                    size="sm"
+                    onClick={() => {
+                      if (hasOptedOut()) {
+                        optIn()
+                      } else {
+                        optOut()
+                      }
+                      // Force re-render
+                      window.location.reload()
+                    }}
+                  >
+                    {hasOptedOut() ? 'Enable' : 'Disable'}
+                  </Button>
+                </div>
+                <p className="text-xs text-muted-foreground/70">
+                  We only collect anonymous usage patterns. Your inventory data never leaves your device.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+
           <Card>
             <CardHeader className="pb-4">
               <CardTitle className="text-lg">About</CardTitle>
@@ -445,7 +486,7 @@ export default function Settings() {
                     <span className="text-violet-400">·</span>
                     <span className="text-violet-400">ME</span>
                   </span>
-                  <span className="text-xs bg-secondary px-2 py-0.5 rounded">v3.0.0</span>
+                  <span className="text-xs bg-secondary px-2 py-0.5 rounded">v1.0.0</span>
                 </p>
                 <p>Your stuff. Your style. Your way.</p>
                 <p className="text-xs mt-2 text-muted-foreground/70">Built with React, Vite, IndexedDB & Tailwind</p>

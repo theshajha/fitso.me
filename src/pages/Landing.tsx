@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { db } from '@/db'
+import { identifyUser, trackEvent, trackPageView } from '@/lib/analytics'
 import { ArrowRight, Laptop, Lock, MapPin, Package, Shirt, Sparkles, Star, Watch, Zap } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -49,6 +50,9 @@ export default function Landing() {
     const [isChecking, setIsChecking] = useState(true)
 
     useEffect(() => {
+        // Track landing page view
+        trackPageView('landing')
+
         // Check if user already has data or has set their name
         const checkExistingUser = async () => {
             const existingName = getUserName()
@@ -56,6 +60,7 @@ export default function Landing() {
 
             if (existingName || items.length > 0) {
                 // User already exists, redirect to dashboard
+                trackEvent('returning_user_redirect')
                 navigate('/dashboard', { replace: true })
             } else {
                 setIsChecking(false)
@@ -65,17 +70,23 @@ export default function Landing() {
     }, [navigate])
 
     const handleGetStarted = () => {
+        trackEvent('get_started_clicked')
         setShowOnboarding(true)
     }
 
     const handleSubmitName = () => {
         if (name.trim()) {
             setUserName(name.trim())
+            // Identify user in PostHog with their name
+            identifyUser(name.trim())
+        } else {
+            trackEvent('onboarding_skipped')
         }
         navigate('/dashboard')
     }
 
     const handleSkip = () => {
+        trackEvent('onboarding_skipped')
         navigate('/dashboard')
     }
 
@@ -157,7 +168,7 @@ export default function Landing() {
                             Get Started
                             <ArrowRight className="h-5 w-5" />
                         </Button>
-                        
+
                         {/* Privacy note */}
                         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                             <Lock className="h-4 w-4" />
@@ -222,8 +233,8 @@ export default function Landing() {
                         <Button variant="ghost" onClick={handleSkip}>
                             Skip for now
                         </Button>
-                        <Button 
-                            onClick={handleSubmitName} 
+                        <Button
+                            onClick={handleSubmitName}
                             className="gap-2 bg-gradient-to-r from-amber-500 via-pink-500 to-violet-600 hover:from-amber-600 hover:via-pink-600 hover:to-violet-700"
                         >
                             Let's Go!
