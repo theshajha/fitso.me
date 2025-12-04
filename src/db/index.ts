@@ -566,16 +566,28 @@ export async function getUnsyncedChanges(): Promise<ChangeLog[]> {
 
 // Mark changes as synced
 export async function markChangesSynced(changeIds: string[]): Promise<void> {
+    if (changeIds.length === 0) return;
+
     const now = new Date().toISOString();
-    await db.changeLog.bulkUpdate(
-        changeIds.map(id => ({
-            key: id,
-            changes: { synced: true, syncedAt: now }
-        }))
-    );
+    let updatedCount = 0;
+
+    // Use transaction with individual updates for reliability
+    await db.transaction('rw', db.changeLog, async () => {
+        for (const id of changeIds) {
+            const result = await db.changeLog.update(id, { synced: true, syncedAt: now });
+            if (result === 1) {
+                updatedCount++;
+            } else {
+                console.warn(`[DB] Failed to update changeLog entry: ${id}`);
+            }
+        }
+    });
+
+    console.log(`[DB] Successfully updated ${updatedCount}/${changeIds.length} changeLog entries`);
 
     // Update pending count
     const pendingCount = await getPendingChangesCount();
+    console.log(`[DB] Pending changes count: ${pendingCount}`);
     await updateSyncMeta({ pendingChanges: pendingCount });
 }
 
@@ -647,16 +659,30 @@ export async function updateImageSyncStatus(
     itemId: string,
     status: ImageSyncStatus,
     imageRef?: string,
-    imageHash?: string
+    imageHash?: string,
+    skipTracking: boolean = true // Skip change tracking by default - this is an internal sync operation
 ): Promise<void> {
-    const updates: Partial<Item> = {
-        imageSyncStatus: status,
-        updatedAt: new Date().toISOString(),
-    };
-    if (imageRef) updates.imageRef = imageRef;
-    if (imageHash) updates.imageHash = imageHash;
+    const { setTrackingEnabled } = await import('@/lib/sync/changeTracker');
+    const wasTracking = skipTracking;
 
-    await db.items.update(itemId, updates);
+    if (skipTracking) {
+        setTrackingEnabled(false);
+    }
+
+    try {
+        const updates: Partial<Item> = {
+            imageSyncStatus: status,
+            // Don't update updatedAt for sync status changes - it's an internal field
+        };
+        if (imageRef) updates.imageRef = imageRef;
+        if (imageHash) updates.imageHash = imageHash;
+
+        await db.items.update(itemId, updates);
+    } finally {
+        if (wasTracking) {
+            setTrackingEnabled(true);
+        }
+    }
 }
 
 // Clear pending changes only (without logging out)

@@ -241,6 +241,8 @@ export async function downloadMissingImages(
     downloaded: number;
     failed: number;
 }> {
+    const { setTrackingEnabled } = await import('./changeTracker');
+
     // Find items with cloud refs but no local image data
     const items = await db.items
         .filter(item =>
@@ -254,26 +256,33 @@ export async function downloadMissingImages(
     let downloaded = 0;
     let failed = 0;
 
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        onProgress?.(i + 1, total);
+    // Disable tracking for internal sync operations
+    setTrackingEnabled(false);
 
-        if (!item.imageRef) continue;
+    try {
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            onProgress?.(i + 1, total);
 
-        const result = await downloadImage(item.imageRef);
-        if (result.success && result.data) {
-            // Store downloaded image
-            await db.items.update(item.id, {
-                imageData: result.data,
-                imageSyncStatus: 'synced' as ImageSyncStatus,
-            });
-            downloaded++;
-        } else {
-            await db.items.update(item.id, {
-                imageSyncStatus: 'error' as ImageSyncStatus,
-            });
-            failed++;
+            if (!item.imageRef) continue;
+
+            const result = await downloadImage(item.imageRef);
+            if (result.success && result.data) {
+                // Store downloaded image
+                await db.items.update(item.id, {
+                    imageData: result.data,
+                    imageSyncStatus: 'synced' as ImageSyncStatus,
+                });
+                downloaded++;
+            } else {
+                await db.items.update(item.id, {
+                    imageSyncStatus: 'error' as ImageSyncStatus,
+                });
+                failed++;
+            }
         }
+    } finally {
+        setTrackingEnabled(true);
     }
 
     return { downloaded, failed };

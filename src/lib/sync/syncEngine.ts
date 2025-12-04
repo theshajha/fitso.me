@@ -168,12 +168,17 @@ class SyncEngine {
             // Step 2: PUSH - Send local changes to server
             this.emit({ type: 'sync:progress', data: { step: 'pushing' } });
             const localChanges = await getUnsyncedChanges();
+            console.log(`[Sync] Found ${localChanges.length} local changes to push`);
             
             if (localChanges.length > 0) {
                 const pushResult = await this.pushToServer(meta.lastSyncVersion, localChanges);
+                console.log('[Sync] Push result:', JSON.stringify(pushResult));
                 
                 if (pushResult.success) {
-                    await markChangesSynced(localChanges.map(c => c.id));
+                    console.log(`[Sync] Push successful, marking ${localChanges.length} changes as synced`);
+                    const changeIds = localChanges.map(c => c.id);
+                    console.log('[Sync] Change IDs to mark:', changeIds.slice(0, 5), '...');
+                    await markChangesSynced(changeIds);
                     pushed = localChanges.length;
                     
                     // Update sync version from push response
@@ -181,6 +186,7 @@ class SyncEngine {
                 } else if (pushResult.conflictIds && pushResult.conflictIds.length > 0) {
                     // Some items had conflicts - they were resolved by server
                     conflicts += pushResult.conflictIds.length;
+                    console.log(`[Sync] ${conflicts} conflicts detected, re-pulling`);
                     
                     // Re-pull to get resolved state
                     const repullResult = await this.pullFromServer(meta.lastSyncVersion);
@@ -188,6 +194,8 @@ class SyncEngine {
                         await this.applyPulledChanges(repullResult.changes);
                         await updateSyncMeta({ lastSyncVersion: repullResult.version });
                     }
+                } else {
+                    console.log('[Sync] Push failed:', pushResult.error);
                 }
             }
 
@@ -326,6 +334,7 @@ class SyncEngine {
         }));
 
         try {
+            console.log(`[Sync] Pushing ${transformedChanges.length} changes to server, lastSyncVersion: ${lastSyncVersion}`);
             const response = await fetch(`${apiUrl}/sync`, {
                 method: 'POST',
                 headers: {
@@ -340,11 +349,15 @@ class SyncEngine {
 
             if (!response.ok) {
                 const error = await response.text();
+                console.error('[Sync] Push failed with status:', response.status, error);
                 return { success: false, version: lastSyncVersion, error };
             }
 
-            return await response.json();
+            const result = await response.json();
+            console.log('[Sync] Server push response:', result);
+            return result;
         } catch (error) {
+            console.error('[Sync] Push error:', error);
             return { success: false, version: lastSyncVersion, error: String(error) };
         }
     }

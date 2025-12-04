@@ -10,22 +10,30 @@ import { exportAllData, exportWithImages, getStorageStats, importAllData, import
 import { hasOptedOut, isAnalyticsEnabled, optIn, optOut, trackDataExported, trackDataImported, trackDemoEntered } from '@/lib/analytics'
 import { enterDemoMode, exitDemoMode, getDemoType, getDemoTypeLabel, isDemoMode, type DemoType } from '@/lib/demo'
 import { formatBytes } from '@/lib/utils'
+import { useShowcase } from '@/hooks/useShowcase'
+import { useSync } from '@/hooks/useSync'
 import {
   AlertTriangle,
   BarChart3,
   Calendar,
   Check,
   Cloud,
+  Copy,
   Database,
   DollarSign,
   Download,
+  ExternalLink,
+  Eye,
+  EyeOff,
   FlaskConical,
   FolderOpen,
   HardDrive,
   ImageIcon,
+  Info,
   Loader2,
   Package,
   Settings as SettingsIcon,
+  Star,
   Upload,
   User,
 } from 'lucide-react'
@@ -109,6 +117,12 @@ export default function Settings() {
   const [showDemoDialog, setShowDemoDialog] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // Showcase (Public Profile) state
+  const [syncState] = useSync()
+  const showcase = useShowcase(syncState.isAuthenticated)
+  const [showcaseCopied, setShowcaseCopied] = useState(false)
+  const [showShowcaseInfo, setShowShowcaseInfo] = useState(false)
+
   useEffect(() => {
     loadStorageStats()
     loadExportSettings()
@@ -143,6 +157,15 @@ export default function Settings() {
       window.location.reload()
     }
     setDemoLoading(false)
+  }
+
+  const handleCopyShowcaseUrl = () => {
+    const url = showcase.getPublicUrl()
+    if (url) {
+      navigator.clipboard.writeText(url)
+      setShowcaseCopied(true)
+      setTimeout(() => setShowcaseCopied(false), 2000)
+    }
   }
 
   // Auto-export check on mount and interval
@@ -576,6 +599,187 @@ export default function Settings() {
               </CardContent>
             </Card>
           )}
+
+          {/* Public Profile Card */}
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                {showcase.enabled ? (
+                  <Eye className="h-4 w-4 text-emerald-500" />
+                ) : (
+                  <EyeOff className="h-4 w-4" />
+                )}
+                Public Profile
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-5 w-5 ml-auto"
+                  onClick={() => setShowShowcaseInfo(true)}
+                >
+                  <Info className="h-4 w-4 text-muted-foreground" />
+                </Button>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {!syncState.isAuthenticated ? (
+                <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="font-medium text-amber-600">Sync Required</p>
+                    <p className="text-muted-foreground text-xs mt-1">
+                      Enable Cloud Sync in the Storage & Backup tab to use Public Profile
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5 flex-1">
+                      <p className="text-sm font-medium">Share Your Showcase</p>
+                      <p className="text-xs text-muted-foreground">
+                        {showcase.enabled
+                          ? 'Your featured items are visible to anyone with the link'
+                          : 'Let others see your featured items via a public link'
+                        }
+                      </p>
+                    </div>
+                    <Button
+                      variant={showcase.enabled ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={showcase.toggle}
+                      disabled={showcase.loading}
+                    >
+                      {showcase.loading ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : showcase.enabled ? (
+                        'Disable'
+                      ) : (
+                        'Enable'
+                      )}
+                    </Button>
+                  </div>
+
+                  {showcase.enabled && showcase.username && (
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2 p-2.5 rounded-lg bg-secondary/50 border">
+                        <code className="flex-1 text-xs truncate">
+                          {showcase.getPublicUrl()}
+                        </code>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 px-2"
+                          onClick={handleCopyShowcaseUrl}
+                        >
+                          {showcaseCopied ? (
+                            <Check className="h-3 w-3 text-emerald-500" />
+                          ) : (
+                            <Copy className="h-3 w-3" />
+                          )}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 px-2"
+                          asChild
+                        >
+                          <a
+                            href={`/${showcase.username}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                          </a>
+                        </Button>
+                      </div>
+                      <div className="flex items-start gap-2 p-2 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                        <Star className="h-3.5 w-3.5 text-blue-500 shrink-0 mt-0.5" />
+                        <p className="text-xs text-muted-foreground">
+                          Only items you've marked as <strong>Featured</strong> in your Showcase are visible
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {showcase.error && (
+                    <div className="flex items-start gap-2 p-2 rounded-lg bg-red-500/10 border border-red-500/20">
+                      <AlertTriangle className="h-3.5 w-3.5 text-red-500 shrink-0 mt-0.5" />
+                      <p className="text-xs text-red-600">{showcase.error}</p>
+                    </div>
+                  )}
+                </>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Public Profile Info Modal */}
+          <Dialog open={showShowcaseInfo} onOpenChange={setShowShowcaseInfo}>
+            <DialogContent className="sm:max-w-lg">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  <Eye className="h-5 w-5 text-emerald-500" />
+                  How Public Profile Works
+                </DialogTitle>
+                <DialogDescription>
+                  Share your style with a public showcase link
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0">
+                    <Star className="h-4 w-4 text-emerald-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">Only Showcase Items</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Only items you've explicitly marked as <strong>Featured</strong> in your Showcase page are visible to others. Your entire inventory remains private.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-full bg-blue-500/10 flex items-center justify-center shrink-0">
+                    <EyeOff className="h-4 w-4 text-blue-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">What's Private</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Purchase costs, purchase dates, locations, notes, and condition details are never shared. Only item names, photos, categories, and brands are visible.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-full bg-violet-500/10 flex items-center justify-center shrink-0">
+                    <ExternalLink className="h-4 w-4 text-violet-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">Share Anytime</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      You get a unique URL (e.g., <code className="text-xs bg-secondary px-1 py-0.5 rounded">fitso.me/yourname</code>) that you can share with anyone. Enable or disable at any time.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="h-8 w-8 rounded-full bg-amber-500/10 flex items-center justify-center shrink-0">
+                    <AlertTriangle className="h-4 w-4 text-amber-600" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">Empty by Default</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      If you haven't featured any items, visitors will see an empty showcase - not your entire inventory. You're in control of what's shared.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <Button onClick={() => setShowShowcaseInfo(false)}>
+                  Got it
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
 
           <Card>
             <CardHeader className="pb-4">
