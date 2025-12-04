@@ -1,6 +1,10 @@
+import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { AnalyticsProvider } from './components/AnalyticsProvider'
+import { DemoBanner } from './components/DemoBanner'
 import { Sidebar } from './components/Sidebar'
+import { useAnalytics } from './hooks/useAnalytics'
+import { isDemoMode } from './lib/demo'
 import Dashboard from './pages/Dashboard'
 import Inventory from './pages/Inventory'
 import Landing from './pages/Landing'
@@ -11,11 +15,18 @@ import Settings from './pages/Settings'
 import Showcase from './pages/Showcase'
 import Wishlist from './pages/Wishlist'
 
-function AppLayout({ children }: { children: React.ReactNode }) {
+function AppLayout({ children, isDemo }: { children: React.ReactNode; isDemo: boolean }) {
+    const { checkMilestones } = useAnalytics()
+
+    // Check milestones on mount and when navigating
+    useEffect(() => {
+        checkMilestones()
+    }, [checkMilestones])
+
     return (
-        <div className="flex min-h-screen">
+        <div className={`flex min-h-screen ${isDemo ? 'pt-10' : ''}`}>
             <Sidebar />
-            <main className="flex-1 overflow-auto pt-14 md:pt-0">
+            <main className={`flex-1 overflow-auto ${isDemo ? 'pt-14 md:pt-10' : 'pt-14 md:pt-0'}`}>
                 <div className="pattern-dots min-h-screen">
                     {children}
                 </div>
@@ -27,6 +38,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 export default function App() {
     const location = useLocation()
     const isLandingPage = location.pathname === '/'
+    const isDemo = isDemoMode()
 
     // Landing page without sidebar
     if (isLandingPage) {
@@ -44,7 +56,8 @@ export default function App() {
     // All other pages with sidebar
     return (
         <AnalyticsProvider>
-            <AppLayout>
+            <DemoBanner />
+            <AppLayout isDemo={isDemo}>
                 <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/inventory" element={<Inventory />} />

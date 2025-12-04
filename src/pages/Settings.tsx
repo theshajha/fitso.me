@@ -1,11 +1,13 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { Progress } from '@/components/ui/progress'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { exportAllData, exportWithImages, getStorageStats, importAllData, importWithImages } from '@/db'
-import { hasOptedOut, isAnalyticsEnabled, optIn, optOut } from '@/lib/analytics'
+import { hasOptedOut, isAnalyticsEnabled, optIn, optOut, trackAutoExportEnabled, trackDataExported, trackDataImported, trackDemoEntered } from '@/lib/analytics'
+import { enterDemoMode, exitDemoMode, getDemoType, getDemoTypeLabel, isDemoMode, type DemoType } from '@/lib/demo'
 import { formatBytes } from '@/lib/utils'
 import {
   AlertTriangle,
@@ -15,6 +17,7 @@ import {
   Database,
   DollarSign,
   Download,
+  FlaskConical,
   FolderOpen,
   FolderSync,
   HardDrive,
@@ -27,6 +30,7 @@ import {
   User,
 } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const PREFERENCES_KEY = 'fitsome-preferences'
 
@@ -84,6 +88,7 @@ interface ExportSettings {
 const STORAGE_KEY = 'fitsome-export-settings'
 
 export default function Settings() {
+  const navigate = useNavigate()
   const [exporting, setExporting] = useState(false)
   const [importing, setImporting] = useState(false)
   const [importResult, setImportResult] = useState<{ success: boolean; message: string } | null>(null)
@@ -98,6 +103,10 @@ export default function Settings() {
   })
   const [folderSupported, setFolderSupported] = useState(false)
   const [defaultCurrency, setDefaultCurrencyState] = useState('USD')
+  const [isDemo, setIsDemo] = useState(false)
+  const [currentDemoType, setCurrentDemoType] = useState<DemoType | null>(null)
+  const [demoLoading, setDemoLoading] = useState(false)
+  const [showDemoDialog, setShowDemoDialog] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -105,7 +114,36 @@ export default function Settings() {
     loadExportSettings()
     setDefaultCurrencyState(getDefaultCurrency())
     setFolderSupported('showDirectoryPicker' in window)
+    setIsDemo(isDemoMode())
+    setCurrentDemoType(getDemoType())
   }, [])
+
+  const handleDemoToggle = async () => {
+    if (isDemo) {
+      setDemoLoading(true)
+      const success = await exitDemoMode()
+      if (success) {
+        navigate('/', { replace: true })
+        window.location.reload()
+      }
+      setDemoLoading(false)
+    } else {
+      // Show selection dialog
+      setShowDemoDialog(true)
+    }
+  }
+
+  const handleSelectDemoType = async (type: DemoType) => {
+    setShowDemoDialog(false)
+    setDemoLoading(true)
+    trackDemoEntered(type)
+    const success = await enterDemoMode(type)
+    if (success) {
+      navigate('/dashboard', { replace: true })
+      window.location.reload()
+    }
+    setDemoLoading(false)
+  }
 
   // Auto-export check on mount and interval
   useEffect(() => {
@@ -338,6 +376,9 @@ export default function Settings() {
       })
       saveExportSettings({ lastExportDate: new Date().toISOString() })
       loadStorageStats()
+      
+      // Track export
+      trackDataExported(true)
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {
         setExportResult({ success: false, message: 'Export failed: ' + (e as Error).message })
@@ -364,6 +405,9 @@ export default function Settings() {
         message: `Imported: ${results.items} items, ${results.trips} trips, ${results.outfits} outfits, ${results.images} images`
       })
       loadStorageStats()
+      
+      // Track import
+      trackDataImported(results.items, results.images > 0)
     } catch (e) {
       if ((e as Error).name !== 'AbortError') {
         setImportResult({ success: false, message: 'Import failed: ' + (e as Error).message })
@@ -432,6 +476,105 @@ export default function Settings() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Demo Mode Card */}
+          <Card className={isDemo ? 'border-pink-500/50 bg-gradient-to-r from-amber-500/5 via-pink-500/5 to-violet-500/5' : ''}>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <FlaskConical className={isDemo ? 'h-4 w-4 text-pink-400' : 'h-4 w-4'} />
+                Demo Mode
+                {isDemo && currentDemoType && (
+                  <span className="text-[10px] bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded-full font-normal">
+                    {getDemoTypeLabel(currentDemoType).emoji} {getDemoTypeLabel(currentDemoType).title.toUpperCase()}
+                  </span>
+                )}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <p className="text-sm font-medium">
+                    {isDemo && currentDemoType
+                      ? `Viewing ${getDemoTypeLabel(currentDemoType).title} collection`
+                      : 'Explore with sample data'
+                    }
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {isDemo
+                      ? 'Exit to return to your own inventory'
+                      : 'Choose a demo to see the app in action'
+                    }
+                  </p>
+                </div>
+                <Button
+                  variant={isDemo ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={handleDemoToggle}
+                  disabled={demoLoading}
+                  className={isDemo ? 'bg-gradient-to-r from-amber-500 via-pink-500 to-violet-600 hover:from-amber-600 hover:via-pink-600 hover:to-violet-700' : ''}
+                >
+                  {demoLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : isDemo ? (
+                    'Exit Demo'
+                  ) : (
+                    'Enter Demo'
+                  )}
+                </Button>
+              </div>
+              {isDemo && (
+                <p className="text-xs text-amber-600 bg-amber-500/10 p-2 rounded">
+                  Changes made in demo mode are temporary and won't affect your real data.
+                </p>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Demo Selection Dialog */}
+          <Dialog open={showDemoDialog} onOpenChange={setShowDemoDialog}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="text-center">Choose Your Demo</DialogTitle>
+                <DialogDescription className="text-center">
+                  Pick a collection style to explore the app
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid grid-cols-2 gap-4 py-4">
+                {/* For Him */}
+                <button
+                  onClick={() => handleSelectDemoType('him')}
+                  className="group relative flex flex-col items-center gap-3 p-6 rounded-xl border-2 border-transparent hover:border-blue-500/50 bg-gradient-to-br from-blue-500/5 to-slate-500/5 hover:from-blue-500/10 hover:to-slate-500/10 transition-all"
+                >
+                  <div className="text-4xl">⌚</div>
+                  <div className="text-center">
+                    <p className="font-semibold text-foreground">For Him</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Tech, gear & everyday essentials
+                    </p>
+                  </div>
+                  <div className="absolute inset-0 rounded-xl ring-2 ring-transparent group-hover:ring-blue-500/30 transition-all" />
+                </button>
+
+                {/* For Her */}
+                <button
+                  onClick={() => handleSelectDemoType('her')}
+                  className="group relative flex flex-col items-center gap-3 p-6 rounded-xl border-2 border-transparent hover:border-pink-500/50 bg-gradient-to-br from-pink-500/5 to-rose-500/5 hover:from-pink-500/10 hover:to-rose-500/10 transition-all"
+                >
+                  <div className="text-4xl">👠</div>
+                  <div className="text-center">
+                    <p className="font-semibold text-foreground">For Her</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Fashion, accessories & style
+                    </p>
+                  </div>
+                  <div className="absolute inset-0 rounded-xl ring-2 ring-transparent group-hover:ring-pink-500/30 transition-all" />
+                </button>
+              </div>
+              <p className="text-xs text-center text-muted-foreground">
+                Your data will be safely backed up and restored when you exit demo mode
+              </p>
+            </DialogContent>
+          </Dialog>
 
           {isAnalyticsEnabled() && (
             <Card>
@@ -610,10 +753,16 @@ export default function Settings() {
                       <Button
                         size="sm"
                         variant={exportSettings.autoExportEnabled ? "default" : "outline"}
-                        onClick={() => saveExportSettings({
-                          autoExportEnabled: !exportSettings.autoExportEnabled,
-                          lastExportDate: exportSettings.autoExportEnabled ? exportSettings.lastExportDate : new Date().toISOString()
-                        })}
+                        onClick={() => {
+                          const willBeEnabled = !exportSettings.autoExportEnabled
+                          saveExportSettings({
+                            autoExportEnabled: willBeEnabled,
+                            lastExportDate: exportSettings.autoExportEnabled ? exportSettings.lastExportDate : new Date().toISOString()
+                          })
+                          if (willBeEnabled) {
+                            trackAutoExportEnabled()
+                          }
+                        }}
                       >
                         {exportSettings.autoExportEnabled ? <><Check className="h-3 w-3 mr-1" />On</> : <><RefreshCw className="h-3 w-3 mr-1" />Off</>}
                       </Button>

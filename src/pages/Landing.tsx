@@ -3,8 +3,16 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { db } from '@/db'
-import { identifyUser, trackEvent, trackPageView } from '@/lib/analytics'
-import { ArrowRight, Laptop, Lock, MapPin, Package, Shirt, Sparkles, Star, Watch, Zap } from 'lucide-react'
+import { 
+    identifyUser, 
+    trackDemoEntered, 
+    trackGetStartedClicked, 
+    trackLandingPageViewed, 
+    trackOnboardingCompleted, 
+    trackOnboardingSkipped 
+} from '@/lib/analytics'
+import { enterDemoMode, type DemoType } from '@/lib/demo'
+import { ArrowRight, FlaskConical, Laptop, Lock, MapPin, Package, Shirt, Sparkles, Star, Watch, Zap } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -46,12 +54,14 @@ function FitSomeLogo({ size = 'lg' }: { size?: 'sm' | 'md' | 'lg' }) {
 export default function Landing() {
     const navigate = useNavigate()
     const [showOnboarding, setShowOnboarding] = useState(false)
+    const [showDemoDialog, setShowDemoDialog] = useState(false)
     const [name, setName] = useState('')
     const [isChecking, setIsChecking] = useState(true)
+    const [demoLoading, setDemoLoading] = useState(false)
 
     useEffect(() => {
         // Track landing page view
-        trackPageView('landing')
+        trackLandingPageViewed()
 
         // Check if user already has data or has set their name
         const checkExistingUser = async () => {
@@ -60,7 +70,6 @@ export default function Landing() {
 
             if (existingName || items.length > 0) {
                 // User already exists, redirect to dashboard
-                trackEvent('returning_user_redirect')
                 navigate('/dashboard', { replace: true })
             } else {
                 setIsChecking(false)
@@ -70,7 +79,7 @@ export default function Landing() {
     }, [navigate])
 
     const handleGetStarted = () => {
-        trackEvent('get_started_clicked')
+        trackGetStartedClicked()
         setShowOnboarding(true)
     }
 
@@ -79,15 +88,32 @@ export default function Landing() {
             setUserName(name.trim())
             // Identify user in PostHog with their name
             identifyUser(name.trim())
+            trackOnboardingCompleted(true)
         } else {
-            trackEvent('onboarding_skipped')
+            trackOnboardingSkipped()
         }
         navigate('/dashboard')
     }
 
     const handleSkip = () => {
-        trackEvent('onboarding_skipped')
+        trackOnboardingSkipped()
         navigate('/dashboard')
+    }
+
+    const handleTryDemo = () => {
+        setShowDemoDialog(true)
+    }
+
+    const handleSelectDemoType = async (type: DemoType) => {
+        setShowDemoDialog(false)
+        setDemoLoading(true)
+        trackDemoEntered(type)
+        const success = await enterDemoMode(type)
+        if (success) {
+            navigate('/dashboard', { replace: true })
+            window.location.reload()
+        }
+        setDemoLoading(false)
     }
 
     if (isChecking) {
@@ -158,16 +184,31 @@ export default function Landing() {
                         ))}
                     </div>
 
-                    {/* CTA Button */}
-                    <div className="pt-4 space-y-4">
-                        <Button
-                            size="lg"
-                            onClick={handleGetStarted}
-                            className="text-lg px-10 py-7 gap-3 bg-gradient-to-r from-amber-500 via-pink-500 to-violet-600 hover:from-amber-600 hover:via-pink-600 hover:to-violet-700 text-white font-bold shadow-2xl shadow-pink-500/25 hover:shadow-pink-500/40 hover:scale-105 transition-all"
-                        >
-                            Get Started
-                            <ArrowRight className="h-5 w-5" />
-                        </Button>
+                    {/* CTA Buttons */}
+                    <div className="pt-4 space-y-6">
+                        <div className="flex flex-col items-center gap-4">
+                            <Button
+                                size="lg"
+                                onClick={handleGetStarted}
+                                className="text-lg px-10 py-7 gap-3 bg-gradient-to-r from-amber-500 via-pink-500 to-violet-600 hover:from-amber-600 hover:via-pink-600 hover:to-violet-700 text-white font-bold shadow-2xl shadow-pink-500/25 hover:shadow-pink-500/40 hover:scale-105 transition-all"
+                            >
+                                Get Started
+                                <ArrowRight className="h-5 w-5" />
+                            </Button>
+
+                            {/* Try Demo - subtle link style */}
+                            <button
+                                onClick={handleTryDemo}
+                                disabled={demoLoading}
+                                className="group flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <span className="text-sm">or</span>
+                                <span className="flex items-center gap-1.5 text-sm font-medium underline underline-offset-4 decoration-dashed decoration-muted-foreground/50 group-hover:decoration-foreground/50">
+                                    <FlaskConical className="h-3.5 w-3.5" />
+                                    {demoLoading ? 'Loading demo...' : 'explore with sample data'}
+                                </span>
+                            </button>
+                        </div>
 
                         {/* Privacy note */}
                         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
@@ -241,6 +282,62 @@ export default function Landing() {
                             <ArrowRight className="h-4 w-4" />
                         </Button>
                     </DialogFooter>
+                </DialogContent>
+            </Dialog>
+
+            {/* Demo Selection Dialog */}
+            <Dialog open={showDemoDialog} onOpenChange={setShowDemoDialog}>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <DialogTitle className="text-center text-xl">
+                            Choose Your Demo
+                        </DialogTitle>
+                        <DialogDescription className="text-center">
+                            Pick a collection style to explore the app
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid grid-cols-2 gap-4 py-6">
+                        {/* For Him */}
+                        <button
+                            onClick={() => handleSelectDemoType('him')}
+                            disabled={demoLoading}
+                            className="group relative flex flex-col items-center gap-4 p-6 rounded-xl border-2 border-transparent hover:border-blue-500/50 bg-gradient-to-br from-blue-500/10 to-slate-500/10 hover:from-blue-500/20 hover:to-slate-500/20 transition-all disabled:opacity-50"
+                        >
+                            <div className="text-5xl">⌚</div>
+                            <div className="text-center">
+                                <p className="font-bold text-lg text-foreground">For Him</p>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                    Tech, gear & everyday essentials
+                                </p>
+                            </div>
+                            <div className="absolute inset-0 rounded-xl ring-2 ring-transparent group-hover:ring-blue-500/30 transition-all" />
+                        </button>
+
+                        {/* For Her */}
+                        <button
+                            onClick={() => handleSelectDemoType('her')}
+                            disabled={demoLoading}
+                            className="group relative flex flex-col items-center gap-4 p-6 rounded-xl border-2 border-transparent hover:border-pink-500/50 bg-gradient-to-br from-pink-500/10 to-rose-500/10 hover:from-pink-500/20 hover:to-rose-500/20 transition-all disabled:opacity-50"
+                        >
+                            <div className="text-5xl">👠</div>
+                            <div className="text-center">
+                                <p className="font-bold text-lg text-foreground">For Her</p>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                    Fashion, accessories & style
+                                </p>
+                            </div>
+                            <div className="absolute inset-0 rounded-xl ring-2 ring-transparent group-hover:ring-pink-500/30 transition-all" />
+                        </button>
+                    </div>
+                    {demoLoading && (
+                        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                            <div className="animate-spin h-4 w-4 border-2 border-primary border-t-transparent rounded-full" />
+                            Loading demo...
+                        </div>
+                    )}
+                    <p className="text-xs text-center text-muted-foreground">
+                        Explore freely — your data stays safe
+                    </p>
                 </DialogContent>
             </Dialog>
         </div>
