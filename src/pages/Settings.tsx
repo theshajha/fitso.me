@@ -1,3 +1,4 @@
+import { SyncSettings } from '@/components/SyncSettings'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -14,6 +15,7 @@ import {
   BarChart3,
   Calendar,
   Check,
+  Cloud,
   Database,
   DollarSign,
   Download,
@@ -376,7 +378,7 @@ export default function Settings() {
       })
       saveExportSettings({ lastExportDate: new Date().toISOString() })
       loadStorageStats()
-      
+
       // Track export
       trackDataExported(true)
     } catch (e) {
@@ -405,7 +407,7 @@ export default function Settings() {
         message: `Imported: ${results.items} items, ${results.trips} trips, ${results.outfits} outfits, ${results.images} images`
       })
       loadStorageStats()
-      
+
       // Track import
       trackDataImported(results.items, results.images > 0)
     } catch (e) {
@@ -439,8 +441,11 @@ export default function Settings() {
       <Tabs defaultValue="preferences" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
+          <TabsTrigger value="storage" className="gap-1">
+            <Cloud className="h-3 w-3" />
+            Storage & Sync
+          </TabsTrigger>
           <TabsTrigger value="backup">Backup</TabsTrigger>
-          <TabsTrigger value="storage">Storage</TabsTrigger>
         </TabsList>
 
         {/* Preferences Tab */}
@@ -786,14 +791,21 @@ export default function Settings() {
           </div>
         </TabsContent>
 
-        {/* Storage Tab */}
+        {/* Storage & Sync Tab */}
         <TabsContent value="storage" className="space-y-4 mt-4">
+          {/* Cloud Sync Section */}
+          <SyncSettings />
+
+          {/* Local Storage Section */}
           <Card>
             <CardHeader className="pb-4">
               <CardTitle className="text-lg flex items-center gap-2">
                 <HardDrive className="h-4 w-4" />
-                Usage
+                Local Storage
               </CardTitle>
+              <CardDescription>
+                Data stored in your browser
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {storageStats && (

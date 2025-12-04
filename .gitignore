@@ -1,8 +1,5 @@
 .next/
-.env
-
 node_modules/
-
 dist/
 build/
 out/
@@ -15,3 +12,12 @@ bun.lock
 bun.lock.json
 bun.lock.yaml
 bun.lock.json
+
+.env
+.env.local
+.dev.vars
+workers/.env
+workers/.dev.vars
+
+.DS_Store
+*.log

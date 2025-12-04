@@ -132,7 +132,7 @@ export function useAnalytics() {
             }
 
             // Update aggregate metrics
-            const itemsWithImages = items.filter(i => i.image).length
+            const itemsWithImages = items.filter(i => i.imageData).length
             const totalWorth = items.reduce((sum, item) => sum + (item.cost || 0), 0)
             const categories: Record<string, number> = {}
             items.forEach(item => {

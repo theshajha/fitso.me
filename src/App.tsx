@@ -5,6 +5,7 @@ import { DemoBanner } from './components/DemoBanner'
 import { Sidebar } from './components/Sidebar'
 import { useAnalytics } from './hooks/useAnalytics'
 import { isDemoMode } from './lib/demo'
+import AuthVerify from './pages/AuthVerify'
 import Dashboard from './pages/Dashboard'
 import Inventory from './pages/Inventory'
 import Landing from './pages/Landing'
@@ -38,6 +39,7 @@ function AppLayout({ children, isDemo }: { children: React.ReactNode; isDemo: bo
 export default function App() {
     const location = useLocation()
     const isLandingPage = location.pathname === '/'
+    const isAuthPage = location.pathname.startsWith('/auth')
     const isDemo = isDemoMode()
 
     // Landing page without sidebar
@@ -49,6 +51,17 @@ export default function App() {
                         <Route path="/" element={<Landing />} />
                     </Routes>
                 </div>
+            </AnalyticsProvider>
+        )
+    }
+
+    // Auth pages without sidebar
+    if (isAuthPage) {
+        return (
+            <AnalyticsProvider>
+                <Routes>
+                    <Route path="/auth/verify" element={<AuthVerify />} />
+                </Routes>
             </AnalyticsProvider>
         )
     }

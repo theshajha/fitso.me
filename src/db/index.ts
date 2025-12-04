@@ -1,6 +1,10 @@
 import { type SizeInfo } from '@/lib/utils';
 import Dexie, { type EntityTable } from 'dexie';
 
+// Sync status types
+export type ImageSyncStatus = 'local' | 'uploading' | 'synced' | 'cloud-only' | 'error';
+export type SyncStatus = 'pending' | 'syncing' | 'synced' | 'error';
+
 // Types
 export interface Item {
     id: string;
@@ -14,7 +18,10 @@ export interface Item {
     cost?: number; // Purchase cost
     currency?: string; // Currency code (USD, EUR, etc.)
     condition: string;
-    imageData?: string; // base64 encoded image
+    imageData?: string; // base64 encoded image (local storage)
+    imageRef?: string; // Cloud reference path (e.g., "images/{hash}.jpg")
+    imageHash?: string; // SHA-256 hash for deduplication
+    imageSyncStatus?: ImageSyncStatus; // Track image sync state
     notes?: string;
     tags?: string[];
     location: string;
@@ -24,6 +31,8 @@ export interface Item {
     occasion?: string;
     createdAt: string;
     updatedAt: string;
+    _deleted?: boolean; // Soft delete for sync
+    _syncVersion?: number; // Version when last synced
 }
 
 export interface Trip {
@@ -38,6 +47,8 @@ export interface Trip {
     status: string;
     createdAt: string;
     updatedAt: string;
+    _deleted?: boolean;
+    _syncVersion?: number;
 }
 
 export interface TripItem {
@@ -46,6 +57,8 @@ export interface TripItem {
     itemId: string;
     packed: boolean;
     quantity: number;
+    _deleted?: boolean;
+    _syncVersion?: number;
 }
 
 export interface Outfit {
@@ -58,6 +71,9 @@ export interface Outfit {
     lastWorn?: string;
     itemIds: string[];
     createdAt: string;
+    updatedAt?: string;
+    _deleted?: boolean;
+    _syncVersion?: number;
 }
 
 export interface WishlistItem {
@@ -74,6 +90,48 @@ export interface WishlistItem {
     purchasedAt?: string;
     createdAt: string;
     updatedAt: string;
+    _deleted?: boolean;
+    _syncVersion?: number;
+}
+
+// Sync-related types
+export type ChangeOperation = 'create' | 'update' | 'delete';
+export type SyncTable = 'items' | 'trips' | 'tripItems' | 'outfits' | 'wishlist';
+
+export interface ChangeLog {
+    id: string;
+    table: SyncTable;
+    recordId: string;
+    operation: ChangeOperation;
+    timestamp: string;
+    payload?: string; // JSON stringified data
+    synced: boolean;
+    syncedAt?: string;
+    error?: string;
+}
+
+export interface SyncMeta {
+    id: string; // 'sync-state'
+    userId?: string;
+    email?: string;
+    sessionToken?: string;
+    lastSyncAt?: string;
+    lastSyncVersion: number;
+    syncEnabled: boolean;
+    pendingChanges: number;
+    lastError?: string;
+    lastErrorAt?: string;
+}
+
+export interface ImageUpload {
+    id: string; // Same as item id
+    hash: string; // SHA-256 of image data
+    status: ImageSyncStatus;
+    cloudRef?: string; // R2 path
+    localData?: string; // base64 (temporary during upload)
+    uploadAttempts: number;
+    lastAttemptAt?: string;
+    error?: string;
 }
 
 // Database class
@@ -83,6 +141,9 @@ class WardrobeDatabase extends Dexie {
     tripItems!: EntityTable<TripItem, 'id'>;
     outfits!: EntityTable<Outfit, 'id'>;
     wishlist!: EntityTable<WishlistItem, 'id'>;
+    changeLog!: EntityTable<ChangeLog, 'id'>;
+    syncMeta!: EntityTable<SyncMeta, 'id'>;
+    imageUploads!: EntityTable<ImageUpload, 'id'>;
 
     constructor() {
         super('FitSoMeDB');
@@ -118,6 +179,18 @@ class WardrobeDatabase extends Dexie {
             tripItems: 'id, tripId, itemId',
             outfits: 'id, name, occasion, createdAt',
             wishlist: 'id, name, category, priority, isPurchased, createdAt',
+        });
+
+        // Version 5: Added cloud sync support
+        this.version(5).stores({
+            items: 'id, name, category, condition, location, isPhaseOut, isFeatured, createdAt, updatedAt, _deleted, imageSyncStatus',
+            trips: 'id, name, status, createdAt, updatedAt, _deleted',
+            tripItems: 'id, tripId, itemId, _deleted',
+            outfits: 'id, name, occasion, createdAt, _deleted',
+            wishlist: 'id, name, category, priority, isPurchased, createdAt, updatedAt, _deleted',
+            changeLog: 'id, table, recordId, operation, timestamp, synced',
+            syncMeta: 'id',
+            imageUploads: 'id, hash, status',
         });
     }
 }
@@ -420,5 +493,193 @@ export async function importWithImages(folderHandle: FileSystemDirectoryHandle) 
     }
 
     return results;
+}
+
+// ============================================
+// SYNC HELPER FUNCTIONS
+// ============================================
+
+const SYNC_META_ID = 'sync-state';
+
+// Get or create sync metadata
+export async function getSyncMeta(): Promise<SyncMeta> {
+    let meta = await db.syncMeta.get(SYNC_META_ID);
+    if (!meta) {
+        meta = {
+            id: SYNC_META_ID,
+            lastSyncVersion: 0,
+            syncEnabled: false,
+            pendingChanges: 0,
+        };
+        await db.syncMeta.add(meta);
+    }
+    return meta;
+}
+
+// Update sync metadata
+export async function updateSyncMeta(updates: Partial<SyncMeta>): Promise<void> {
+    await db.syncMeta.update(SYNC_META_ID, updates);
+}
+
+// Check if sync is enabled
+export async function isSyncEnabled(): Promise<boolean> {
+    const meta = await getSyncMeta();
+    return meta.syncEnabled && !!meta.sessionToken;
+}
+
+// Get pending changes count
+export async function getPendingChangesCount(): Promise<number> {
+    return await db.changeLog.filter(log => log.synced === false).count();
+}
+
+// Add a change to the log (called by Dexie hooks)
+export async function logChange(
+    table: SyncTable,
+    recordId: string,
+    operation: ChangeOperation,
+    payload?: unknown
+): Promise<void> {
+    const meta = await getSyncMeta();
+    if (!meta.syncEnabled) return;
+
+    await db.changeLog.add({
+        id: generateId(),
+        table,
+        recordId,
+        operation,
+        timestamp: new Date().toISOString(),
+        payload: payload ? JSON.stringify(payload) : undefined,
+        synced: false,
+    });
+
+    // Update pending count
+    const pendingCount = await getPendingChangesCount();
+    await updateSyncMeta({ pendingChanges: pendingCount });
+}
+
+// Get unsynced changes
+export async function getUnsyncedChanges(): Promise<ChangeLog[]> {
+    return await db.changeLog.filter(log => log.synced === false).toArray();
+}
+
+// Mark changes as synced
+export async function markChangesSynced(changeIds: string[]): Promise<void> {
+    const now = new Date().toISOString();
+    await db.changeLog.bulkUpdate(
+        changeIds.map(id => ({
+            key: id,
+            changes: { synced: true, syncedAt: now }
+        }))
+    );
+
+    // Update pending count
+    const pendingCount = await getPendingChangesCount();
+    await updateSyncMeta({ pendingChanges: pendingCount });
+}
+
+// Clear old synced changes (keep last 1000)
+export async function cleanupSyncedChanges(): Promise<number> {
+    const syncedChanges = await db.changeLog
+        .filter(log => log.synced === true)
+        .sortBy('timestamp');
+    
+    if (syncedChanges.length <= 1000) return 0;
+
+    const toDelete = syncedChanges.slice(0, syncedChanges.length - 1000);
+    await db.changeLog.bulkDelete(toDelete.map(c => c.id));
+    return toDelete.length;
+}
+
+// Compute SHA-256 hash of image data
+export async function computeImageHash(base64Data: string): Promise<string> {
+    // Remove data URL prefix if present
+    const cleanData = base64Data.includes(',') 
+        ? base64Data.split(',')[1] 
+        : base64Data;
+    
+    const binaryString = atob(cleanData);
+    const bytes = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    
+    const hashBuffer = await crypto.subtle.digest('SHA-256', bytes);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Get all data for sync (excluding soft-deleted)
+export async function getDataForSync() {
+    const [items, trips, tripItems, outfits, wishlist] = await Promise.all([
+        db.items.filter(i => !i._deleted).toArray(),
+        db.trips.filter(t => !t._deleted).toArray(),
+        db.tripItems.filter(ti => !ti._deleted).toArray(),
+        db.outfits.filter(o => !o._deleted).toArray(),
+        db.wishlist.filter(w => !w._deleted).toArray(),
+    ]);
+
+    // Strip imageData from items for metadata sync (images synced separately)
+    const itemsWithoutImages = items.map(({ imageData, ...rest }) => rest);
+
+    return {
+        items: itemsWithoutImages,
+        trips,
+        tripItems,
+        outfits,
+        wishlist,
+    };
+}
+
+// Get items with pending image uploads
+export async function getItemsNeedingImageSync(): Promise<Item[]> {
+    return await db.items
+        .filter(item => 
+            !!item.imageData && 
+            (!item.imageSyncStatus || item.imageSyncStatus === 'local' || item.imageSyncStatus === 'error')
+        )
+        .toArray();
+}
+
+// Update item's image sync status
+export async function updateImageSyncStatus(
+    itemId: string, 
+    status: ImageSyncStatus, 
+    imageRef?: string,
+    imageHash?: string
+): Promise<void> {
+    const updates: Partial<Item> = { 
+        imageSyncStatus: status,
+        updatedAt: new Date().toISOString(),
+    };
+    if (imageRef) updates.imageRef = imageRef;
+    if (imageHash) updates.imageHash = imageHash;
+    
+    await db.items.update(itemId, updates);
+}
+
+// Sign out - clear sync data but keep user data
+export async function clearSyncData(): Promise<void> {
+    await db.changeLog.clear();
+    await db.imageUploads.clear();
+    await db.syncMeta.update(SYNC_META_ID, {
+        userId: undefined,
+        email: undefined,
+        sessionToken: undefined,
+        lastSyncAt: undefined,
+        lastSyncVersion: 0,
+        syncEnabled: false,
+        pendingChanges: 0,
+        lastError: undefined,
+        lastErrorAt: undefined,
+    });
+    
+    // Reset image sync status on all items
+    const items = await db.items.toArray();
+    await db.items.bulkUpdate(
+        items.map(item => ({
+            key: item.id,
+            changes: { imageSyncStatus: 'local' as ImageSyncStatus }
+        }))
+    );
 }
 
