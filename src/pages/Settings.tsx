@@ -7,7 +7,7 @@ import { Progress } from '@/components/ui/progress'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { exportAllData, exportWithImages, getStorageStats, importAllData, importWithImages } from '@/db'
-import { hasOptedOut, isAnalyticsEnabled, optIn, optOut, trackAutoExportEnabled, trackDataExported, trackDataImported, trackDemoEntered } from '@/lib/analytics'
+import { hasOptedOut, isAnalyticsEnabled, optIn, optOut, trackDataExported, trackDataImported, trackDemoEntered } from '@/lib/analytics'
 import { enterDemoMode, exitDemoMode, getDemoType, getDemoTypeLabel, isDemoMode, type DemoType } from '@/lib/demo'
 import { formatBytes } from '@/lib/utils'
 import {
@@ -21,12 +21,10 @@ import {
   Download,
   FlaskConical,
   FolderOpen,
-  FolderSync,
   HardDrive,
   ImageIcon,
   Loader2,
   Package,
-  RefreshCw,
   Settings as SettingsIcon,
   Upload,
   User,
@@ -246,25 +244,6 @@ export default function Settings() {
     }
   }
 
-  const handleSelectFolder = async () => {
-    try {
-      // @ts-ignore - File System Access API
-      const handle = await window.showDirectoryPicker({
-        mode: 'readwrite',
-      })
-      saveExportSettings({
-        exportFolderHandle: handle,
-        exportFolderName: handle.name,
-      })
-      setExportSettings(prev => ({ ...prev, exportFolderHandle: handle }))
-      setExportResult({ success: true, message: `Folder "${handle.name}" selected for exports` })
-    } catch (e) {
-      if ((e as Error).name !== 'AbortError') {
-        setExportResult({ success: false, message: 'Failed to select folder' })
-      }
-    }
-  }
-
   const handleQuickExport = async () => {
     if (!exportSettings.exportFolderHandle) {
       setExportResult({ success: false, message: 'Please select a folder first' })
@@ -332,27 +311,6 @@ export default function Settings() {
         fileInputRef.current.value = ''
       }
     }
-  }
-
-  const getNextExportDate = () => {
-    if (!exportSettings.lastExportDate) return 'Not scheduled'
-
-    const last = new Date(exportSettings.lastExportDate)
-    let next = new Date(last)
-
-    switch (exportSettings.autoExportInterval) {
-      case 'daily':
-        next.setDate(next.getDate() + 1)
-        break
-      case 'weekly':
-        next.setDate(next.getDate() + 7)
-        break
-      case 'monthly':
-        next.setMonth(next.getMonth() + 1)
-        break
-    }
-
-    return next.toLocaleDateString()
   }
 
   const handleCurrencyChange = (currency: string) => {
@@ -439,13 +397,12 @@ export default function Settings() {
 
       {/* Tabs for organized settings */}
       <Tabs defaultValue="preferences" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
           <TabsTrigger value="storage" className="gap-1">
             <Cloud className="h-3 w-3" />
-            Storage & Sync
+            Storage & Backup
           </TabsTrigger>
-          <TabsTrigger value="backup">Backup</TabsTrigger>
         </TabsList>
 
         {/* Preferences Tab */}
@@ -643,155 +600,7 @@ export default function Settings() {
           </Card>
         </TabsContent>
 
-        {/* Backup Tab */}
-        <TabsContent value="backup" className="space-y-4 mt-4">
-          {/* Main Backup Card */}
-          <Card className="border-primary/20">
-            <CardHeader className="pb-4">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Database className="h-4 w-4 text-primary" />
-                Backup & Restore
-              </CardTitle>
-              <CardDescription>
-                Export your data with images for complete backup
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="p-3 rounded-lg bg-secondary/50 text-sm space-y-1">
-                <p className="flex items-center gap-2">
-                  <Package className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Items with images:</span>
-                  <strong>{storageStats?.itemsWithImages || 0}</strong>
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Creates JSON backup + images folder for complete data portability
-                </p>
-              </div>
-
-              {folderSupported ? (
-                <div className="grid grid-cols-2 gap-3">
-                  <Button onClick={handleExportWithImages} disabled={exporting} className="gap-2">
-                    {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
-                    Export
-                  </Button>
-                  <Button onClick={handleImportFromFolder} disabled={importing} variant="outline" className="gap-2">
-                    {importing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FolderOpen className="h-4 w-4" />}
-                    Import
-                  </Button>
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-3">
-                  <Button onClick={handleExport} disabled={exporting} variant="outline">
-                    {exporting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Download className="h-4 w-4 mr-2" />}
-                    Export JSON
-                  </Button>
-                  <Button onClick={handleImportClick} disabled={importing} variant="outline">
-                    {importing ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Upload className="h-4 w-4 mr-2" />}
-                    Import JSON
-                  </Button>
-                </div>
-              )}
-              <input ref={fileInputRef} type="file" accept=".json" onChange={handleFileChange} className="hidden" />
-
-              {(exportResult || importResult) && (
-                <div className={`p-2 rounded text-xs flex items-center gap-2 ${(exportResult?.success || importResult?.success) ? 'bg-emerald-500/10 text-emerald-600' : 'bg-red-500/10 text-red-600'}`}>
-                  {(exportResult?.success || importResult?.success) ? <Check className="h-3 w-3" /> : <AlertTriangle className="h-3 w-3" />}
-                  {exportResult?.message || importResult?.message}
-                </div>
-              )}
-
-              {exportSettings.lastExportDate && (
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Calendar className="h-3 w-3" />
-                  Last export: {new Date(exportSettings.lastExportDate).toLocaleString()}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Auto Backup */}
-          {folderSupported && (
-            <Card>
-              <CardHeader className="pb-4">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <FolderSync className="h-4 w-4" />
-                  Auto Backup
-                </CardTitle>
-                <CardDescription>Schedule automatic backups to a folder</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">Export Folder</p>
-                    <p className="text-sm text-muted-foreground">
-                      {exportSettings.exportFolderName || 'No folder selected'}
-                    </p>
-                  </div>
-                  <Button variant="outline" size="sm" onClick={handleSelectFolder}>
-                    {exportSettings.exportFolderName ? 'Change' : 'Select Folder'}
-                  </Button>
-                </div>
-
-                {exportSettings.exportFolderName && (
-                  <>
-                    <div className="h-px bg-border" />
-                    <div className="flex items-center gap-4">
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">Schedule</p>
-                        <p className="text-sm text-muted-foreground">
-                          {exportSettings.autoExportEnabled ? `Next: ${getNextExportDate()}` : 'Disabled'}
-                        </p>
-                      </div>
-                      <Select
-                        value={exportSettings.autoExportInterval}
-                        onValueChange={(value) => saveExportSettings({ autoExportInterval: value })}
-                      >
-                        <SelectTrigger className="w-28">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="daily">Daily</SelectItem>
-                          <SelectItem value="weekly">Weekly</SelectItem>
-                          <SelectItem value="monthly">Monthly</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <Button
-                        size="sm"
-                        variant={exportSettings.autoExportEnabled ? "default" : "outline"}
-                        onClick={() => {
-                          const willBeEnabled = !exportSettings.autoExportEnabled
-                          saveExportSettings({
-                            autoExportEnabled: willBeEnabled,
-                            lastExportDate: exportSettings.autoExportEnabled ? exportSettings.lastExportDate : new Date().toISOString()
-                          })
-                          if (willBeEnabled) {
-                            trackAutoExportEnabled()
-                          }
-                        }}
-                      >
-                        {exportSettings.autoExportEnabled ? <><Check className="h-3 w-3 mr-1" />On</> : <><RefreshCw className="h-3 w-3 mr-1" />Off</>}
-                      </Button>
-                    </div>
-
-                    <Button onClick={handleQuickExport} disabled={exporting} className="w-full">
-                      {exporting ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Exporting...</> : <><Download className="h-4 w-4 mr-2" />Export Now</>}
-                    </Button>
-                  </>
-                )}
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Backup Warning */}
-          <div className="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5 flex items-start gap-3">
-            <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
-            <p className="text-xs text-muted-foreground">
-              Data is stored in your browser. Clearing browser data deletes everything. Regular backups recommended.
-            </p>
-          </div>
-        </TabsContent>
-
-        {/* Storage & Sync Tab */}
+        {/* Storage & Backup Tab */}
         <TabsContent value="storage" className="space-y-4 mt-4">
           {/* Cloud Sync Section */}
           <SyncSettings />
@@ -860,6 +669,67 @@ export default function Settings() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Backup & Restore Section */}
+          <Card>
+            <CardHeader className="pb-4">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Database className="h-4 w-4" />
+                Backup & Restore
+              </CardTitle>
+              <CardDescription>
+                Export your data with images for complete backup
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {folderSupported ? (
+                <div className="grid grid-cols-2 gap-3">
+                  <Button onClick={handleExportWithImages} disabled={exporting} className="gap-2">
+                    {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                    Export All
+                  </Button>
+                  <Button onClick={handleImportFromFolder} disabled={importing} variant="outline" className="gap-2">
+                    {importing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FolderOpen className="h-4 w-4" />}
+                    Import
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <Button onClick={handleExport} disabled={exporting} variant="outline" className="gap-2">
+                    {exporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                    Export JSON
+                  </Button>
+                  <Button onClick={handleImportClick} disabled={importing} variant="outline" className="gap-2">
+                    {importing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                    Import JSON
+                  </Button>
+                </div>
+              )}
+              <input ref={fileInputRef} type="file" accept=".json" onChange={handleFileChange} className="hidden" />
+
+              {(exportResult || importResult) && (
+                <div className={`p-2 rounded text-xs flex items-center gap-2 ${(exportResult?.success || importResult?.success) ? 'bg-emerald-500/10 text-emerald-600' : 'bg-red-500/10 text-red-600'}`}>
+                  {(exportResult?.success || importResult?.success) ? <Check className="h-3 w-3" /> : <AlertTriangle className="h-3 w-3" />}
+                  {exportResult?.message || importResult?.message}
+                </div>
+              )}
+
+              {exportSettings.lastExportDate && (
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Calendar className="h-3 w-3" />
+                  Last export: {new Date(exportSettings.lastExportDate).toLocaleString()}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Warning about local storage */}
+          <div className="p-3 rounded-lg border border-amber-500/20 bg-amber-500/5 flex items-start gap-3">
+            <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
+            <p className="text-xs text-muted-foreground">
+              Local data is stored in your browser. Clearing browser data deletes everything. Use Cloud Sync or regular backups to protect your data.
+            </p>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

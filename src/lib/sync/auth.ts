@@ -98,6 +98,7 @@ export async function verifyMagicLink(token: string): Promise<VerifyTokenRespons
         const session = data.session as AuthSession;
         await updateSyncMeta({
             userId: session.userId,
+            username: session.username,
             email: session.email,
             sessionToken: session.sessionToken,
             syncEnabled: true,
@@ -125,6 +126,7 @@ export async function getCurrentSession(): Promise<AuthSession | null> {
 
     return {
         userId: meta.userId,
+        username: meta.username || '',
         email: meta.email || '',
         sessionToken: meta.sessionToken,
         expiresAt: '', // We don't store expiry locally, server validates

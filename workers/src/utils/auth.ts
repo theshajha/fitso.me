@@ -20,7 +20,7 @@ export function generateToken(): string {
 }
 
 /**
- * Generate a user ID from email (deterministic)
+ * Generate a user ID from email (deterministic hash for internal use)
  */
 export async function generateUserId(email: string): Promise<string> {
   const encoder = new TextEncoder();
@@ -31,10 +31,113 @@ export async function generateUserId(email: string): Promise<string> {
 }
 
 /**
+ * Generate a username from email (human-readable, for storage and URLs)
+ * Takes local part of email, sanitizes it, and ensures uniqueness
+ */
+export function generateBaseUsername(email: string): string {
+  const localPart = email.toLowerCase().trim().split('@')[0];
+  // Remove non-alphanumeric chars, limit to 20 chars
+  const sanitized = localPart.replace(/[^a-z0-9]/g, '').slice(0, 20);
+  // Ensure at least 3 chars
+  return sanitized.length >= 3 ? sanitized : sanitized.padEnd(3, '0');
+}
+
+/**
+ * Get or create a unique username for an email
+ * Stores mapping in KV: email:{email} -> {username, userId, createdAt}
+ * Also stores reverse: username:{username} -> {email, userId}
+ */
+export async function getOrCreateUsername(
+  email: string,
+  userId: string,
+  env: Env
+): Promise<string> {
+  const normalizedEmail = email.toLowerCase().trim();
+  const emailKey = `email:${normalizedEmail}`;
+
+  // Check if user already has a username
+  const existingMapping = await env.AUTH_KV.get(emailKey);
+  if (existingMapping) {
+    const data = JSON.parse(existingMapping);
+    return data.username;
+  }
+
+  // Generate new username
+  const baseUsername = generateBaseUsername(email);
+  let username = baseUsername;
+  let counter = 1;
+
+  // Check for collisions and find unique username
+  while (true) {
+    const usernameKey = `username:${username}`;
+    const existing = await env.AUTH_KV.get(usernameKey);
+    if (!existing) {
+      // Username is available
+      break;
+    }
+    // Try next number
+    counter++;
+    username = `${baseUsername}${counter}`;
+  }
+
+  // Store mappings
+  const now = new Date().toISOString();
+
+  // email -> username mapping
+  await env.AUTH_KV.put(emailKey, JSON.stringify({
+    username,
+    userId,
+    email: normalizedEmail,
+    createdAt: now,
+  }));
+
+  // username -> email mapping (for public lookups)
+  await env.AUTH_KV.put(`username:${username}`, JSON.stringify({
+    email: normalizedEmail,
+    userId,
+    createdAt: now,
+    showcaseEnabled: false,  // Default: showcase disabled
+  }));
+
+  return username;
+}
+
+/**
+ * Get user info by username (for public showcase)
+ */
+export async function getUserByUsername(
+  username: string,
+  env: Env
+): Promise<{ email: string; userId: string; showcaseEnabled: boolean } | null> {
+  const data = await env.AUTH_KV.get(`username:${username.toLowerCase()}`);
+  if (!data) return null;
+  return JSON.parse(data);
+}
+
+/**
+ * Update showcase setting for a user
+ */
+export async function updateShowcaseSetting(
+  username: string,
+  enabled: boolean,
+  env: Env
+): Promise<boolean> {
+  const key = `username:${username.toLowerCase()}`;
+  const data = await env.AUTH_KV.get(key);
+  if (!data) return false;
+
+  const userData = JSON.parse(data);
+  userData.showcaseEnabled = enabled;
+  await env.AUTH_KV.put(key, JSON.stringify(userData));
+  return true;
+}
+
+/**
  * Create a JWT session token
  */
 export async function createSessionToken(
   userId: string,
+  username: string,
   email: string,
   env: Env
 ): Promise<string> {
@@ -45,6 +148,7 @@ export async function createSessionToken(
 
   const jwt = await new jose.SignJWT({
     userId,
+    username,
     email,
     createdAt: new Date().toISOString(),
   })
@@ -71,6 +175,7 @@ export async function verifySession(
 
     return {
       userId: payload.userId as string,
+      username: payload.username as string,
       email: payload.email as string,
       createdAt: payload.createdAt as string,
       expiresAt: new Date((payload.exp || 0) * 1000).toISOString(),

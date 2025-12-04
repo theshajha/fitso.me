@@ -12,6 +12,7 @@ import Landing from './pages/Landing'
 import Outfits from './pages/Outfits'
 import Packing from './pages/Packing'
 import PhaseOut from './pages/PhaseOut'
+import PublicShowcase from './pages/PublicShowcase'
 import Settings from './pages/Settings'
 import Showcase from './pages/Showcase'
 import Wishlist from './pages/Wishlist'
@@ -40,6 +41,10 @@ export default function App() {
     const location = useLocation()
     const isLandingPage = location.pathname === '/'
     const isAuthPage = location.pathname.startsWith('/auth')
+    // Check if this is a public profile page (single path segment that's not a known route)
+    const knownRoutes = ['dashboard', 'inventory', 'showcase', 'packing', 'outfits', 'phase-out', 'wishlist', 'settings', 'auth']
+    const pathSegments = location.pathname.split('/').filter(Boolean)
+    const isPublicProfile = pathSegments.length === 1 && !knownRoutes.includes(pathSegments[0])
     const isDemo = isDemoMode()
 
     // Landing page without sidebar
@@ -61,6 +66,17 @@ export default function App() {
             <AnalyticsProvider>
                 <Routes>
                     <Route path="/auth/verify" element={<AuthVerify />} />
+                </Routes>
+            </AnalyticsProvider>
+        )
+    }
+
+    // Public profile pages without sidebar (e.g., /username)
+    if (isPublicProfile) {
+        return (
+            <AnalyticsProvider>
+                <Routes>
+                    <Route path="/:username" element={<PublicShowcase />} />
                 </Routes>
             </AnalyticsProvider>
         )

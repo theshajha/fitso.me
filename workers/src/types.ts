@@ -114,6 +114,7 @@ export interface SyncWishlistItem {
 // Auth types
 export interface Session {
   userId: string;
+  username: string;  // Human-readable, used for R2 storage and showcase URLs
   email: string;
   createdAt: string;
   expiresAt: string;

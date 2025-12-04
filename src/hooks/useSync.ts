@@ -209,6 +209,8 @@ export function useSync(): [SyncState, SyncActions] {
             await refresh();
             // Start auto-sync after authentication
             syncEngine.startAutoSync();
+            // Trigger immediate sync to restore data from cloud
+            syncEngine.sync().catch(console.error);
         }
         return {
             success: result.success,

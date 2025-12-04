@@ -9,6 +9,7 @@ import type { Env, Session } from './types';
 import { authRouter } from './routes/auth';
 import { syncRouter } from './routes/sync';
 import { imagesRouter } from './routes/images';
+import { publicRouter } from './routes/public';
 import { verifySession } from './utils/auth';
 
 // Create Hono app with Env type
@@ -37,8 +38,9 @@ app.get('/', (c) => {
   });
 });
 
-// Public routes - auth
+// Public routes - auth and showcase
 app.route('/auth', authRouter);
+app.route('/public', publicRouter);
 
 // Protected routes middleware
 app.use('/sync/*', async (c, next) => {

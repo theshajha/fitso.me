@@ -113,12 +113,14 @@ export interface ChangeLog {
 export interface SyncMeta {
     id: string; // 'sync-state'
     userId?: string;
+    username?: string;  // Human-readable username for storage and showcase
     email?: string;
     sessionToken?: string;
     lastSyncAt?: string;
     lastSyncVersion: number;
     syncEnabled: boolean;
     pendingChanges: number;
+    showcaseEnabled?: boolean;
     lastError?: string;
     lastErrorAt?: string;
 }

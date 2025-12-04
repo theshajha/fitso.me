@@ -10,8 +10,10 @@ import {
   createSessionToken,
   generateToken,
   generateUserId,
+  getOrCreateUsername,
   sendMagicLinkEmail,
   storeMagicLinkToken,
+  updateShowcaseSetting,
   verifyMagicLinkToken,
   verifySession,
 } from '../utils/auth';
@@ -81,12 +83,15 @@ authRouter.post('/verify', async (c) => {
       return c.json({ success: false, error: 'Invalid or expired token' }, 401);
     }
 
-    // Generate user ID and session token
+    // Generate user ID and get/create username
     const userId = await generateUserId(email);
-    const sessionToken = await createSessionToken(userId, email, c.env);
+    const username = await getOrCreateUsername(email, userId, c.env);
 
-    // Initialize user data in R2 if needed - stored at {userId}/data.json
-    const userDataKey = `${userId}/data.json`;
+    // Create session token with username
+    const sessionToken = await createSessionToken(userId, username, email, c.env);
+
+    // Initialize user data in R2 if needed - stored at {username}/data.json
+    const userDataKey = `${username}/data.json`;
     const existingData = await c.env.R2_BUCKET.get(userDataKey);
 
     if (!existingData) {
@@ -102,7 +107,7 @@ authRouter.post('/verify', async (c) => {
       };
 
       await c.env.R2_BUCKET.put(userDataKey, JSON.stringify(initialData), {
-        customMetadata: { userId, email },
+        customMetadata: { userId, username, email },
       });
     }
 
@@ -110,6 +115,7 @@ authRouter.post('/verify', async (c) => {
       success: true,
       session: {
         userId,
+        username,
         email,
         sessionToken,
         expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
@@ -139,7 +145,7 @@ authRouter.get('/validate', async (c) => {
       return c.json({ valid: false }, 401);
     }
 
-    return c.json({ valid: true, userId: session.userId, email: session.email });
+    return c.json({ valid: true, userId: session.userId, username: session.username, email: session.email });
   } catch (error) {
     console.error('Session validation error:', error);
     return c.json({ valid: false }, 500);
@@ -155,5 +161,77 @@ authRouter.post('/logout', async (c) => {
   // without maintaining a blacklist. For now, the client handles logout
   // by deleting the local session.
   return c.json({ success: true });
+});
+
+/**
+ * POST /auth/showcase
+ * Enable or disable public showcase for authenticated user
+ */
+authRouter.post('/showcase', async (c) => {
+  try {
+    const authHeader = c.req.header('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ success: false, error: 'Unauthorized' }, 401);
+    }
+
+    const token = authHeader.slice(7);
+    const session = await verifySession(token, c.env);
+
+    if (!session) {
+      return c.json({ success: false, error: 'Invalid session' }, 401);
+    }
+
+    const body = await c.req.json<{ enabled: boolean }>();
+    const enabled = !!body.enabled;
+
+    const success = await updateShowcaseSetting(session.username, enabled, c.env);
+
+    if (!success) {
+      return c.json({ success: false, error: 'Failed to update setting' }, 500);
+    }
+
+    return c.json({
+      success: true,
+      showcaseEnabled: enabled,
+      showcaseUrl: enabled ? `/${session.username}` : null,
+    });
+  } catch (error) {
+    console.error('Showcase toggle error:', error);
+    return c.json({ success: false, error: 'Server error' }, 500);
+  }
+});
+
+/**
+ * GET /auth/showcase
+ * Get current showcase status for authenticated user
+ */
+authRouter.get('/showcase', async (c) => {
+  try {
+    const authHeader = c.req.header('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return c.json({ success: false, error: 'Unauthorized' }, 401);
+    }
+
+    const token = authHeader.slice(7);
+    const session = await verifySession(token, c.env);
+
+    if (!session) {
+      return c.json({ success: false, error: 'Invalid session' }, 401);
+    }
+
+    // Get user info from KV
+    const userInfo = await c.env.AUTH_KV.get(`username:${session.username}`);
+    const data = userInfo ? JSON.parse(userInfo) : { showcaseEnabled: false };
+
+    return c.json({
+      success: true,
+      username: session.username,
+      showcaseEnabled: data.showcaseEnabled || false,
+      showcaseUrl: data.showcaseEnabled ? `/${session.username}` : null,
+    });
+  } catch (error) {
+    console.error('Showcase status error:', error);
+    return c.json({ success: false, error: 'Server error' }, 500);
+  }
 });
 

@@ -14,6 +14,7 @@ export type SyncState = 'idle' | 'syncing' | 'error' | 'offline';
 // Auth Types
 export interface AuthSession {
     userId: string;
+    username: string;  // Human-readable, used for storage and showcase URLs
     email: string;
     sessionToken: string;
     expiresAt: string;

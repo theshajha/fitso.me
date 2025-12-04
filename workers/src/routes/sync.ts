@@ -35,8 +35,8 @@ syncRouter.get('/', async (c) => {
     const session = c.get('session');
     const sinceVersion = parseInt(c.req.query('since') || '0', 10);
 
-    // Get user data from R2 - stored at {userId}/data.json
-    const userDataKey = `${session.userId}/data.json`;
+    // Get user data from R2 - stored at {username}/data.json
+    const userDataKey = `${session.username}/data.json`;
     const dataObject = await c.env.R2_BUCKET.get(userDataKey);
 
     if (!dataObject) {
@@ -123,8 +123,8 @@ syncRouter.post('/', async (c) => {
       return c.json({ success: false, error: 'Invalid changes format' } as SyncPushResponse, 400);
     }
 
-    // Get current user data from R2 - stored at {userId}/data.json
-    const userDataKey = `${session.userId}/data.json`;
+    // Get current user data from R2 - stored at {username}/data.json
+    const userDataKey = `${session.username}/data.json`;
     const dataObject = await c.env.R2_BUCKET.get(userDataKey);
 
     let userData: UserData;
@@ -168,6 +168,7 @@ syncRouter.post('/', async (c) => {
     await c.env.R2_BUCKET.put(userDataKey, JSON.stringify(userData), {
       customMetadata: {
         userId: session.userId,
+        username: session.username,
         version: String(userData.version),
         updatedAt: userData.updatedAt,
       },

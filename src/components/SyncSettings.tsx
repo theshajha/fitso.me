@@ -10,11 +10,16 @@ import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { requeueAllForSync } from '@/db';
 import { useSync } from '@/hooks/useSync';
+import { SYNC_API_URL } from '@/lib/sync/types';
 import {
     AlertTriangle,
     Check,
     Cloud,
     CloudOff,
+    Copy,
+    ExternalLink,
+    Eye,
+    EyeOff,
     ImageIcon,
     Loader2,
     LogOut,
@@ -25,7 +30,7 @@ import {
     WifiOff,
     Wrench,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function SyncSettings() {
     const [state, actions] = useSync();
@@ -34,6 +39,68 @@ export function SyncSettings() {
     const [emailError, setEmailError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isRepairing, setIsRepairing] = useState(false);
+
+    // Showcase state
+    const [showcaseEnabled, setShowcaseEnabled] = useState(false);
+    const [showcaseUsername, setShowcaseUsername] = useState<string | null>(null);
+    const [showcaseLoading, setShowcaseLoading] = useState(false);
+    const [copied, setCopied] = useState(false);
+
+    // Fetch showcase status when authenticated
+    useEffect(() => {
+        if (state.isAuthenticated) {
+            fetchShowcaseStatus();
+        }
+    }, [state.isAuthenticated]);
+
+    const fetchShowcaseStatus = async () => {
+        try {
+            const meta = await import('@/db').then(m => m.getSyncMeta());
+            if (!meta.sessionToken) return;
+
+            const response = await fetch(`${SYNC_API_URL}/auth/showcase`, {
+                headers: { 'Authorization': `Bearer ${meta.sessionToken}` },
+            });
+            const data = await response.json();
+            if (data.success) {
+                setShowcaseEnabled(data.showcaseEnabled);
+                setShowcaseUsername(data.username);
+            }
+        } catch (error) {
+            console.error('Failed to fetch showcase status:', error);
+        }
+    };
+
+    const toggleShowcase = async () => {
+        setShowcaseLoading(true);
+        try {
+            const meta = await import('@/db').then(m => m.getSyncMeta());
+            if (!meta.sessionToken) return;
+
+            const response = await fetch(`${SYNC_API_URL}/auth/showcase`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${meta.sessionToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ enabled: !showcaseEnabled }),
+            });
+            const data = await response.json();
+            if (data.success) {
+                setShowcaseEnabled(data.showcaseEnabled);
+            }
+        } catch (error) {
+            console.error('Failed to toggle showcase:', error);
+        }
+        setShowcaseLoading(false);
+    };
+
+    const copyShowcaseUrl = () => {
+        const url = `${window.location.origin}/${showcaseUsername}`;
+        navigator.clipboard.writeText(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
     // Handle repair sync (re-queue all changes without imageData)
     const handleRepairSync = async () => {
@@ -345,6 +412,73 @@ export function SyncSettings() {
                         </div>
                     </div>
                 )}
+
+                {/* Public Showcase */}
+                <div className="pt-3 border-t space-y-3">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            {showcaseEnabled ? (
+                                <Eye className="h-4 w-4 text-emerald-500" />
+                            ) : (
+                                <EyeOff className="h-4 w-4 text-muted-foreground" />
+                            )}
+                            <div>
+                                <p className="text-sm font-medium">Public Showcase</p>
+                                <p className="text-xs text-muted-foreground">
+                                    {showcaseEnabled ? 'Your wardrobe is visible to others' : 'Share your wardrobe publicly'}
+                                </p>
+                            </div>
+                        </div>
+                        <Button
+                            variant={showcaseEnabled ? 'default' : 'outline'}
+                            size="sm"
+                            onClick={toggleShowcase}
+                            disabled={showcaseLoading}
+                        >
+                            {showcaseLoading ? (
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : showcaseEnabled ? (
+                                'Disable'
+                            ) : (
+                                'Enable'
+                            )}
+                        </Button>
+                    </div>
+
+                    {showcaseEnabled && showcaseUsername && (
+                        <div className="flex items-center gap-2 p-2 rounded-lg bg-secondary/50">
+                            <code className="flex-1 text-xs truncate">
+                                {window.location.origin}/{showcaseUsername}
+                            </code>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 px-2"
+                                onClick={copyShowcaseUrl}
+                            >
+                                {copied ? (
+                                    <Check className="h-3 w-3 text-emerald-500" />
+                                ) : (
+                                    <Copy className="h-3 w-3" />
+                                )}
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 px-2"
+                                asChild
+                            >
+                                <a
+                                    href={`/${showcaseUsername}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <ExternalLink className="h-3 w-3" />
+                                </a>
+                            </Button>
+                        </div>
+                    )}
+                </div>
 
                 {/* Logout */}
                 <div className="pt-3 border-t">

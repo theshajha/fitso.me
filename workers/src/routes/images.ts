@@ -26,10 +26,10 @@ const ALLOWED_CONTENT_TYPES = [
 ];
 
 /**
- * Build user-scoped image key: {userId}/images/{hash}
+ * Build user-scoped image key: {username}/images/{hash}
  */
-function buildImageKey(userId: string, hash: string): string {
-  return `${userId}/images/${hash}`;
+function buildImageKey(username: string, hash: string): string {
+  return `${username}/images/${hash}`;
 }
 
 /**
@@ -61,7 +61,7 @@ imagesRouter.post('/presign-upload', async (c) => {
     }
 
     // Image key is user-scoped for isolation
-    const imageKey = buildImageKey(session.userId, hash);
+    const imageKey = buildImageKey(session.username, hash);
 
     // Check if image already exists for this user (per-user deduplication)
     const existing = await c.env.R2_BUCKET.head(imageKey);
@@ -121,7 +121,7 @@ imagesRouter.put('/upload/:hash', async (c) => {
     }
 
     // User-scoped image key
-    const imageKey = buildImageKey(session.userId, hash);
+    const imageKey = buildImageKey(session.username, hash);
 
     // Check if already exists for this user
     const existing = await c.env.R2_BUCKET.head(imageKey);
@@ -139,7 +139,7 @@ imagesRouter.put('/upload/:hash', async (c) => {
       contentType,
       size: body.byteLength,
       uploadedAt: new Date().toISOString(),
-      uploadedBy: session.userId,
+      uploadedBy: session.username,
     };
 
     await c.env.R2_BUCKET.put(imageKey, body, {
@@ -174,7 +174,7 @@ imagesRouter.get('/check/:hash', async (c) => {
     }
 
     // Check in user's image folder
-    const imageKey = buildImageKey(session.userId, hash);
+    const imageKey = buildImageKey(session.username, hash);
     const existing = await c.env.R2_BUCKET.head(imageKey);
 
     return c.json({ exists: !!existing });
@@ -203,14 +203,14 @@ imagesRouter.get('/:path{.+}', async (c) => {
 
     if (path.includes('/images/')) {
       // Full path provided - verify it belongs to this user
-      if (!path.startsWith(`${session.userId}/`)) {
+      if (!path.startsWith(`${session.username}/`)) {
         return c.json({ error: 'Access denied' }, 403);
       }
       imageKey = path;
     } else {
       // Just hash provided - build user-scoped key
       const hash = path.replace('images/', '');
-      imageKey = buildImageKey(session.userId, hash);
+      imageKey = buildImageKey(session.username, hash);
     }
 
     const object = await c.env.R2_BUCKET.get(imageKey);
@@ -251,7 +251,7 @@ imagesRouter.delete('/:hash', async (c) => {
     }
 
     // User-scoped image key - users can only delete their own images
-    const imageKey = buildImageKey(session.userId, hash);
+    const imageKey = buildImageKey(session.username, hash);
 
     // Check if image exists
     const object = await c.env.R2_BUCKET.head(imageKey);
