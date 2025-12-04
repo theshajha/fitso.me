@@ -3,14 +3,13 @@
  * Provides UI for cloud sync configuration and status
  */
 
-import { useState } from 'react';
-import { useSync } from '@/hooks/useSync';
-import { requeueAllForSync } from '@/db';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
+import { requeueAllForSync } from '@/db';
+import { useSync } from '@/hooks/useSync';
 import {
     AlertTriangle,
     Check,
@@ -26,6 +25,7 @@ import {
     WifiOff,
     Wrench,
 } from 'lucide-react';
+import { useState } from 'react';
 
 export function SyncSettings() {
     const [state, actions] = useSync();
@@ -58,13 +58,13 @@ export function SyncSettings() {
         setEmailError(null);
 
         const result = await actions.sendMagicLink(email.trim());
-        
+
         if (result.success) {
             setEmailSent(true);
         } else {
             setEmailError(result.message);
         }
-        
+
         setIsLoading(false);
     };
 
@@ -129,8 +129,8 @@ export function SyncSettings() {
                                     </p>
                                 </div>
                             </div>
-                            <Button 
-                                variant="outline" 
+                            <Button
+                                variant="outline"
                                 onClick={() => { setEmailSent(false); setEmail(''); }}
                                 className="w-full"
                             >
@@ -195,7 +195,7 @@ export function SyncSettings() {
     }
 
     // Authenticated - show sync status and controls
-    const imageSyncPercent = state.imageStats 
+    const imageSyncPercent = state.imageStats
         ? Math.round((state.imageStats.synced / Math.max(state.imageStats.total, 1)) * 100)
         : 0;
 
@@ -260,7 +260,7 @@ export function SyncSettings() {
                         <div className="flex items-center justify-between text-sm">
                             <span className="text-muted-foreground">Last synced</span>
                             <span className="font-medium">
-                                {state.lastSyncAt 
+                                {state.lastSyncAt
                                     ? new Date(state.lastSyncAt).toLocaleString()
                                     : 'Never'
                                 }
@@ -304,9 +304,9 @@ export function SyncSettings() {
                         )}
 
                         {/* Sync Now Button */}
-                        <Button 
-                            variant="outline" 
-                            className="w-full" 
+                        <Button
+                            variant="outline"
+                            className="w-full"
                             onClick={handleSyncNow}
                             disabled={state.isSyncing || isRepairing}
                         >
@@ -314,23 +314,24 @@ export function SyncSettings() {
                             Sync Now
                         </Button>
 
-                        {/* Repair Button - shows when sync seems stuck */}
-                        {state.pendingChanges > 0 && !state.isSyncing && (
-                            <Button 
-                                variant="ghost" 
-                                size="sm"
-                                className="w-full text-muted-foreground hover:text-foreground"
-                                onClick={handleRepairSync}
-                                disabled={isRepairing}
-                            >
-                                {isRepairing ? (
-                                    <Loader2 className="h-3 w-3 mr-2 animate-spin" />
-                                ) : (
-                                    <Wrench className="h-3 w-3 mr-2" />
-                                )}
-                                {isRepairing ? 'Repairing...' : 'Repair Sync'}
-                            </Button>
-                        )}
+                        {/* Full Re-sync Button - always visible for troubleshooting */}
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="w-full text-muted-foreground hover:text-foreground"
+                            onClick={handleRepairSync}
+                            disabled={isRepairing || state.isSyncing}
+                        >
+                            {isRepairing ? (
+                                <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                            ) : (
+                                <Wrench className="h-3 w-3 mr-2" />
+                            )}
+                            {isRepairing ? 'Re-syncing everything...' : 'Full Re-sync'}
+                        </Button>
+                        <p className="text-[10px] text-center text-muted-foreground">
+                            Use Full Re-sync if data or images aren't syncing properly
+                        </p>
                     </div>
                 )}
 
@@ -347,8 +348,8 @@ export function SyncSettings() {
 
                 {/* Logout */}
                 <div className="pt-3 border-t">
-                    <Button 
-                        variant="ghost" 
+                    <Button
+                        variant="ghost"
                         className="w-full text-muted-foreground hover:text-foreground"
                         onClick={handleLogout}
                         disabled={isLoading || state.isSyncing}

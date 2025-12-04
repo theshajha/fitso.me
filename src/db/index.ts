@@ -664,6 +664,7 @@ export async function clearPendingChanges(): Promise<void> {
 }
 
 // Re-queue all data for sync (strips imageData from items)
+// Also resets image sync status so images get re-uploaded
 export async function requeueAllForSync(): Promise<number> {
     // Clear existing change log
     await db.changeLog.clear();
@@ -680,16 +681,27 @@ export async function requeueAllForSync(): Promise<number> {
     let count = 0;
     const now = new Date().toISOString();
 
+    // Reset image sync status for all items so they get re-uploaded
+    await db.items.bulkUpdate(
+        items.map(item => ({
+            key: item.id,
+            changes: {
+                imageSyncStatus: 'local' as ImageSyncStatus,
+                imageRef: undefined,  // Clear old ref so new path is used
+            }
+        }))
+    );
+
     // Queue items (without imageData)
     for (const item of items) {
-        const { imageData, ...itemWithoutImage } = item;
+        const { imageData, imageRef, ...itemWithoutImage } = item;
         await db.changeLog.add({
             id: `items-${item.id}-${Date.now()}-${count}`,
             table: 'items',
             recordId: item.id,
             operation: 'update',
             timestamp: now,
-            payload: JSON.stringify(itemWithoutImage),
+            payload: JSON.stringify({ ...itemWithoutImage, imageSyncStatus: 'local' }),
             synced: false,
         });
         count++;
