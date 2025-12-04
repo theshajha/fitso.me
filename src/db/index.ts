@@ -582,7 +582,7 @@ export async function cleanupSyncedChanges(): Promise<number> {
     const syncedChanges = await db.changeLog
         .filter(log => log.synced === true)
         .sortBy('timestamp');
-    
+
     if (syncedChanges.length <= 1000) return 0;
 
     const toDelete = syncedChanges.slice(0, syncedChanges.length - 1000);
@@ -593,16 +593,16 @@ export async function cleanupSyncedChanges(): Promise<number> {
 // Compute SHA-256 hash of image data
 export async function computeImageHash(base64Data: string): Promise<string> {
     // Remove data URL prefix if present
-    const cleanData = base64Data.includes(',') 
-        ? base64Data.split(',')[1] 
+    const cleanData = base64Data.includes(',')
+        ? base64Data.split(',')[1]
         : base64Data;
-    
+
     const binaryString = atob(cleanData);
     const bytes = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
         bytes[i] = binaryString.charCodeAt(i);
     }
-    
+
     const hashBuffer = await crypto.subtle.digest('SHA-256', bytes);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -633,8 +633,8 @@ export async function getDataForSync() {
 // Get items with pending image uploads
 export async function getItemsNeedingImageSync(): Promise<Item[]> {
     return await db.items
-        .filter(item => 
-            !!item.imageData && 
+        .filter(item =>
+            !!item.imageData &&
             (!item.imageSyncStatus || item.imageSyncStatus === 'local' || item.imageSyncStatus === 'error')
         )
         .toArray();
@@ -642,19 +642,119 @@ export async function getItemsNeedingImageSync(): Promise<Item[]> {
 
 // Update item's image sync status
 export async function updateImageSyncStatus(
-    itemId: string, 
-    status: ImageSyncStatus, 
+    itemId: string,
+    status: ImageSyncStatus,
     imageRef?: string,
     imageHash?: string
 ): Promise<void> {
-    const updates: Partial<Item> = { 
+    const updates: Partial<Item> = {
         imageSyncStatus: status,
         updatedAt: new Date().toISOString(),
     };
     if (imageRef) updates.imageRef = imageRef;
     if (imageHash) updates.imageHash = imageHash;
-    
+
     await db.items.update(itemId, updates);
+}
+
+// Clear pending changes only (without logging out)
+export async function clearPendingChanges(): Promise<void> {
+    await db.changeLog.clear();
+    await updateSyncMeta({ pendingChanges: 0, lastSyncVersion: 0 });
+}
+
+// Re-queue all data for sync (strips imageData from items)
+export async function requeueAllForSync(): Promise<number> {
+    // Clear existing change log
+    await db.changeLog.clear();
+
+    // Get all data
+    const [items, trips, tripItems, outfits, wishlist] = await Promise.all([
+        db.items.filter(i => !i._deleted).toArray(),
+        db.trips.filter(t => !t._deleted).toArray(),
+        db.tripItems.filter(ti => !ti._deleted).toArray(),
+        db.outfits.filter(o => !o._deleted).toArray(),
+        db.wishlist.filter(w => !w._deleted).toArray(),
+    ]);
+
+    let count = 0;
+    const now = new Date().toISOString();
+
+    // Queue items (without imageData)
+    for (const item of items) {
+        const { imageData, ...itemWithoutImage } = item;
+        await db.changeLog.add({
+            id: `items-${item.id}-${Date.now()}-${count}`,
+            table: 'items',
+            recordId: item.id,
+            operation: 'update',
+            timestamp: now,
+            payload: JSON.stringify(itemWithoutImage),
+            synced: false,
+        });
+        count++;
+    }
+
+    // Queue trips
+    for (const trip of trips) {
+        await db.changeLog.add({
+            id: `trips-${trip.id}-${Date.now()}-${count}`,
+            table: 'trips',
+            recordId: trip.id,
+            operation: 'update',
+            timestamp: now,
+            payload: JSON.stringify(trip),
+            synced: false,
+        });
+        count++;
+    }
+
+    // Queue tripItems
+    for (const tripItem of tripItems) {
+        await db.changeLog.add({
+            id: `tripItems-${tripItem.id}-${Date.now()}-${count}`,
+            table: 'tripItems',
+            recordId: tripItem.id,
+            operation: 'update',
+            timestamp: now,
+            payload: JSON.stringify(tripItem),
+            synced: false,
+        });
+        count++;
+    }
+
+    // Queue outfits
+    for (const outfit of outfits) {
+        await db.changeLog.add({
+            id: `outfits-${outfit.id}-${Date.now()}-${count}`,
+            table: 'outfits',
+            recordId: outfit.id,
+            operation: 'update',
+            timestamp: now,
+            payload: JSON.stringify(outfit),
+            synced: false,
+        });
+        count++;
+    }
+
+    // Queue wishlist
+    for (const wishlistItem of wishlist) {
+        await db.changeLog.add({
+            id: `wishlist-${wishlistItem.id}-${Date.now()}-${count}`,
+            table: 'wishlist',
+            recordId: wishlistItem.id,
+            operation: 'update',
+            timestamp: now,
+            payload: JSON.stringify(wishlistItem),
+            synced: false,
+        });
+        count++;
+    }
+
+    // Update pending count and reset sync version to force full sync
+    await updateSyncMeta({ pendingChanges: count, lastSyncVersion: 0 });
+
+    return count;
 }
 
 // Sign out - clear sync data but keep user data
@@ -672,7 +772,7 @@ export async function clearSyncData(): Promise<void> {
         lastError: undefined,
         lastErrorAt: undefined,
     });
-    
+
     // Reset image sync status on all items
     const items = await db.items.toArray();
     await db.items.bulkUpdate(

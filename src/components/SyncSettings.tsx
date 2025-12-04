@@ -5,6 +5,7 @@
 
 import { useState } from 'react';
 import { useSync } from '@/hooks/useSync';
+import { requeueAllForSync } from '@/db';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -23,6 +24,7 @@ import {
     Shield,
     Wifi,
     WifiOff,
+    Wrench,
 } from 'lucide-react';
 
 export function SyncSettings() {
@@ -31,6 +33,21 @@ export function SyncSettings() {
     const [emailSent, setEmailSent] = useState(false);
     const [emailError, setEmailError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isRepairing, setIsRepairing] = useState(false);
+
+    // Handle repair sync (re-queue all changes without imageData)
+    const handleRepairSync = async () => {
+        setIsRepairing(true);
+        try {
+            await requeueAllForSync();
+            await actions.refresh();
+            // Automatically sync after repair
+            await actions.syncNow();
+        } catch (error) {
+            console.error('Repair failed:', error);
+        }
+        setIsRepairing(false);
+    };
 
     // Handle magic link request
     const handleSendMagicLink = async (e: React.FormEvent) => {
@@ -291,11 +308,29 @@ export function SyncSettings() {
                             variant="outline" 
                             className="w-full" 
                             onClick={handleSyncNow}
-                            disabled={state.isSyncing}
+                            disabled={state.isSyncing || isRepairing}
                         >
                             <RefreshCw className={`h-4 w-4 mr-2 ${state.isSyncing ? 'animate-spin' : ''}`} />
                             Sync Now
                         </Button>
+
+                        {/* Repair Button - shows when sync seems stuck */}
+                        {state.pendingChanges > 0 && !state.isSyncing && (
+                            <Button 
+                                variant="ghost" 
+                                size="sm"
+                                className="w-full text-muted-foreground hover:text-foreground"
+                                onClick={handleRepairSync}
+                                disabled={isRepairing}
+                            >
+                                {isRepairing ? (
+                                    <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                                ) : (
+                                    <Wrench className="h-3 w-3 mr-2" />
+                                )}
+                                {isRepairing ? 'Repairing...' : 'Repair Sync'}
+                            </Button>
+                        )}
                     </div>
                 )}
 

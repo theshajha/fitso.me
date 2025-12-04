@@ -3,10 +3,18 @@
  * These changes are queued for sync to the cloud
  */
 
-import { db, logChange, type SyncTable } from '@/db';
+import { db, logChange, type Item, type SyncTable } from '@/db';
 
 let isInitialized = false;
 let isTracking = true; // Can be disabled during imports/syncs
+
+/**
+ * Strip imageData from item before logging (images synced separately)
+ */
+function stripImageData(obj: Item): Omit<Item, 'imageData'> {
+    const { imageData, ...rest } = obj;
+    return rest;
+}
 
 /**
  * Enable/disable change tracking
@@ -30,19 +38,20 @@ export function isTrackingEnabled(): boolean {
 export function initializeChangeTracking(): void {
     if (isInitialized) return;
 
-    // Items table hooks
+    // Items table hooks - strip imageData to keep payload small (images synced separately)
     db.items.hook('creating', function (primKey, obj) {
         if (!isTracking) return;
         // Use setTimeout to avoid blocking the transaction
         setTimeout(() => {
-            logChange('items', primKey as string, 'create', obj);
+            logChange('items', primKey as string, 'create', stripImageData(obj as Item));
         }, 0);
     });
 
     db.items.hook('updating', function (modifications, primKey, obj) {
         if (!isTracking) return;
         setTimeout(() => {
-            logChange('items', primKey as string, 'update', { ...obj, ...modifications });
+            const merged = { ...obj, ...modifications } as Item;
+            logChange('items', primKey as string, 'update', stripImageData(merged));
         }, 0);
     });
 
