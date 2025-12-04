@@ -574,10 +574,20 @@ export async function getUnsyncedChanges(): Promise<ChangeLog[]> {
 
 // Mark changes as synced
 export async function markChangesSynced(changeIds: string[]): Promise<void> {
-    if (changeIds.length === 0) return;
+    if (changeIds.length === 0) {
+        console.log('[DB] markChangesSynced: No changes to mark');
+        return;
+    }
+
+    console.log(`[DB] markChangesSynced: Marking ${changeIds.length} changes as synced`);
+    console.log('[DB] Change IDs to mark:', changeIds);
 
     const now = new Date().toISOString();
     let updatedCount = 0;
+
+    // Get the changes before marking them
+    const changesToMark = await db.changeLog.where('id').anyOf(changeIds).toArray();
+    console.log(`[DB] Found ${changesToMark.length} changes in DB to mark:`, changesToMark.map(c => ({ id: c.id, table: c.table, recordId: c.recordId, synced: c.synced })));
 
     // Use transaction with individual updates for reliability
     await db.transaction('rw', db.changeLog, async () => {
@@ -586,16 +596,21 @@ export async function markChangesSynced(changeIds: string[]): Promise<void> {
             if (result === 1) {
                 updatedCount++;
             } else {
-                console.warn(`[DB] Failed to update changeLog entry: ${id}`);
+                console.warn(`[DB] Failed to update changeLog entry: ${id} (result: ${result})`);
             }
         }
     });
 
     console.log(`[DB] Successfully updated ${updatedCount}/${changeIds.length} changeLog entries`);
 
+    // Verify the changes were marked
+    const verifyMarked = await db.changeLog.where('id').anyOf(changeIds).toArray();
+    console.log('[DB] After marking, synced status:', verifyMarked.map(c => ({ id: c.id, synced: c.synced })));
+
     // Update pending count
     const pendingCount = await getPendingChangesCount();
-    console.log(`[DB] Pending changes count: ${pendingCount}`);
+    const allUnsynced = await db.changeLog.filter(log => log.synced === false).toArray();
+    console.log(`[DB] Pending changes count: ${pendingCount}. Unsynced changes:`, allUnsynced.map(c => ({ id: c.id, table: c.table, recordId: c.recordId, timestamp: c.timestamp })));
     await updateSyncMeta({ pendingChanges: pendingCount });
 }
 

@@ -4,8 +4,9 @@
  */
 
 import { Hono } from 'hono';
-import type { Env, UserData } from '../types';
+import type { Env } from '../types';
 import { getUserByUsername } from '../utils/auth';
+import { loadFeaturedData } from '../utils/dataAccess';
 
 export const publicRouter = new Hono<{ Bindings: Env }>();
 
@@ -33,19 +34,8 @@ publicRouter.get('/showcase/:username', async (c) => {
       return c.json({ success: false, error: 'Showcase not enabled' }, 403);
     }
 
-    // Get user data from R2
-    const userDataKey = `${username}/data.json`;
-    const dataObject = await c.env.R2_BUCKET.get(userDataKey);
-
-    if (!dataObject) {
-      return c.json({ success: false, error: 'No data found' }, 404);
-    }
-
-    const userData = await dataObject.json<UserData>();
-
-    // Filter to only show featured items (not deleted and explicitly marked as featured)
-    const publicItems = userData.items.filter(item => !item._deleted && item.isFeatured === true);
-    const publicOutfits = userData.outfits.filter(outfit => !outfit._deleted && outfit.isFeatured === true);
+    // Load featured items and outfits using data access layer
+    const { items: publicItems, outfits: publicOutfits } = await loadFeaturedData(c.env.R2_BUCKET, username);
 
     return c.json({
       success: true,

@@ -7,14 +7,18 @@
 
 import { Hono } from 'hono';
 import type { Env, ImageMetadata, Session } from '../types';
+import {
+  checkRateLimit,
+  checkStorageQuota,
+  validateImage,
+  getRateLimitKey,
+  DEFAULT_QUOTAS,
+} from '../utils/quotas';
 
 export const imagesRouter = new Hono<{
   Bindings: Env;
   Variables: { session: Session }
 }>();
-
-// Maximum image size (10MB)
-const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
 
 // Allowed content types
 const ALLOWED_CONTENT_TYPES = [
@@ -56,8 +60,41 @@ imagesRouter.post('/presign-upload', async (c) => {
       return c.json({ success: false, error: 'Invalid content type' }, 400);
     }
 
-    if (!size || size > MAX_IMAGE_SIZE) {
-      return c.json({ success: false, error: 'Image too large (max 10MB)' }, 400);
+    // Check image upload rate limit
+    const rateLimitKey = getRateLimitKey('image-upload', session.username);
+    const rateCheck = await checkRateLimit(
+      c.env.AUTH_KV,
+      rateLimitKey,
+      DEFAULT_QUOTAS.imageUpload.requests,
+      DEFAULT_QUOTAS.imageUpload.windowSeconds
+    );
+
+    if (!rateCheck.allowed) {
+      return c.json(
+        {
+          success: false,
+          error: rateCheck.reason,
+          retryAfter: rateCheck.resetAt?.toISOString(),
+        },
+        429
+      );
+    }
+
+    // Validate image size
+    const imageValidation = validateImage(size);
+    if (!imageValidation.allowed) {
+      return c.json({ success: false, error: imageValidation.reason }, 400);
+    }
+
+    // Check storage quota
+    const storageCheck = await checkStorageQuota(
+      c.env.R2_BUCKET,
+      session.username,
+      size
+    );
+
+    if (!storageCheck.allowed) {
+      return c.json({ success: false, error: storageCheck.reason }, 429);
     }
 
     // Image key is user-scoped for isolation
@@ -110,7 +147,7 @@ imagesRouter.put('/upload/:hash', async (c) => {
 
     const body = await c.req.arrayBuffer();
 
-    if (body.byteLength > MAX_IMAGE_SIZE) {
+    if (body.byteLength > DEFAULT_QUOTAS.maxImageSizeBytes) {
       return c.json({ success: false, error: 'Image too large' }, 400);
     }
 

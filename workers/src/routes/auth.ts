@@ -6,7 +6,6 @@
 import { Hono } from 'hono';
 import type { Env } from '../types';
 import {
-  checkRateLimit,
   createSessionToken,
   generateToken,
   generateUserId,
@@ -18,6 +17,11 @@ import {
   verifyMagicLinkToken,
   verifySession,
 } from '../utils/auth';
+import {
+  checkRateLimit,
+  getRateLimitKey,
+  DEFAULT_QUOTAS,
+} from '../utils/quotas';
 
 export const authRouter = new Hono<{ Bindings: Env }>();
 
@@ -34,12 +38,20 @@ authRouter.post('/magic-link', async (c) => {
       return c.json({ success: false, error: 'Valid email required' }, 400);
     }
 
-    // Rate limit check
-    const rateLimit = await checkRateLimit(email, c.env);
-    if (!rateLimit.allowed) {
+    // Check magic link rate limit (3 requests per hour)
+    const rateLimitKey = getRateLimitKey('magic-link', email);
+    const rateCheck = await checkRateLimit(
+      c.env.AUTH_KV,
+      rateLimitKey,
+      DEFAULT_QUOTAS.magicLink.requests,
+      DEFAULT_QUOTAS.magicLink.windowSeconds
+    );
+
+    if (!rateCheck.allowed) {
       return c.json({
         success: false,
-        error: `Please wait ${rateLimit.retryAfter} seconds before requesting another link`
+        error: rateCheck.reason,
+        retryAfter: rateCheck.resetAt?.toISOString(),
       }, 429);
     }
 

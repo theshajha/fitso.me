@@ -16,15 +16,27 @@ import type {
   SyncTrip,
   SyncTripItem,
   SyncWishlistItem,
-  UserData,
 } from '../types';
+import {
+  loadMetadata,
+  saveMetadata,
+  loadTableData,
+  saveTableData,
+  type SyncableRecord,
+} from '../utils/dataAccess';
+import {
+  checkRateLimit,
+  checkDailyItemLimit,
+  checkTotalItemCount,
+  incrementDailyItemCount,
+  getRateLimitKey,
+  DEFAULT_QUOTAS,
+} from '../utils/quotas';
 
 export const syncRouter = new Hono<{
   Bindings: Env;
   Variables: { session: Session }
 }>();
-
-type SyncableRecord = SyncItem | SyncTrip | SyncTripItem | SyncOutfit | SyncWishlistItem;
 
 /**
  * GET /sync
@@ -34,6 +46,26 @@ syncRouter.get('/', async (c) => {
   try {
     const session = c.get('session');
     const sinceVersion = parseInt(c.req.query('since') || '0', 10);
+
+    // Check sync rate limit
+    const rateLimitKey = getRateLimitKey('sync', session.username);
+    const rateCheck = await checkRateLimit(
+      c.env.AUTH_KV,
+      rateLimitKey,
+      DEFAULT_QUOTAS.sync.requests,
+      DEFAULT_QUOTAS.sync.windowSeconds
+    );
+
+    if (!rateCheck.allowed) {
+      return c.json(
+        {
+          success: false,
+          error: rateCheck.reason,
+          retryAfter: rateCheck.resetAt?.toISOString(),
+        } as SyncPullResponse,
+        429
+      );
+    }
 
     // Load metadata
     const metadata = await loadMetadata(c.env.R2_BUCKET, session.username);
@@ -113,6 +145,39 @@ syncRouter.post('/', async (c) => {
       return c.json({ success: false, error: 'Invalid changes format' } as SyncPushResponse, 400);
     }
 
+    // Check sync rate limit
+    const rateLimitKey = getRateLimitKey('sync', session.username);
+    const rateCheck = await checkRateLimit(
+      c.env.AUTH_KV,
+      rateLimitKey,
+      DEFAULT_QUOTAS.sync.requests,
+      DEFAULT_QUOTAS.sync.windowSeconds
+    );
+
+    if (!rateCheck.allowed) {
+      return c.json(
+        {
+          success: false,
+          error: rateCheck.reason,
+          retryAfter: rateCheck.resetAt?.toISOString(),
+        } as SyncPushResponse,
+        429
+      );
+    }
+
+    // Count new item creations for daily limit check
+    const newItemCount = changes.filter(
+      c => c.table === 'items' && c.operation === 'create'
+    ).length;
+
+    if (newItemCount > 0) {
+      // Check daily item creation limit
+      const dailyCheck = await checkDailyItemLimit(c.env.AUTH_KV, session.username);
+      if (!dailyCheck.allowed) {
+        return c.json({ success: false, error: dailyCheck.reason } as SyncPushResponse, 429);
+      }
+    }
+
     // Load current metadata
     const metadata = await loadMetadata(c.env.R2_BUCKET, session.username);
 
@@ -131,6 +196,36 @@ syncRouter.post('/', async (c) => {
       const tableChanges = changesByTable.get(change.table) || [];
       tableChanges.push(change);
       changesByTable.set(change.table, tableChanges);
+    }
+
+    // Load all table data to check total counts
+    const [items, trips, outfits, wishlist] = await Promise.all([
+      loadTableData<SyncItem>(c.env.R2_BUCKET, session.username, 'items'),
+      loadTableData<SyncTrip>(c.env.R2_BUCKET, session.username, 'trips'),
+      loadTableData<SyncOutfit>(c.env.R2_BUCKET, session.username, 'outfits'),
+      loadTableData<SyncWishlistItem>(c.env.R2_BUCKET, session.username, 'wishlist'),
+    ]);
+
+    // Check total item counts (after applying changes would exceed limits)
+    const activeItems = items.filter(i => !i._deleted);
+    const activeTrips = trips.filter(t => !t._deleted);
+    const activeOutfits = outfits.filter(o => !o._deleted);
+    const activeWishlist = wishlist.filter(w => !w._deleted);
+
+    const newItemsToAdd = changes.filter(c => c.table === 'items' && c.operation === 'create').length;
+    const newTripsToAdd = changes.filter(c => c.table === 'trips' && c.operation === 'create').length;
+    const newOutfitsToAdd = changes.filter(c => c.table === 'outfits' && c.operation === 'create').length;
+    const newWishlistToAdd = changes.filter(c => c.table === 'wishlist' && c.operation === 'create').length;
+
+    const countCheck = checkTotalItemCount(
+      activeItems.length + newItemsToAdd,
+      activeTrips.length + newTripsToAdd,
+      activeOutfits.length + newOutfitsToAdd,
+      activeWishlist.length + newWishlistToAdd
+    );
+
+    if (!countCheck.allowed) {
+      return c.json({ success: false, error: countCheck.reason } as SyncPushResponse, 429);
     }
 
     // Process each table's changes
@@ -155,6 +250,11 @@ syncRouter.post('/', async (c) => {
     metadata.updatedAt = new Date().toISOString();
     await saveMetadata(c.env.R2_BUCKET, session.username, metadata, session);
 
+    // Increment daily item counter if new items were created
+    if (newItemCount > 0) {
+      await incrementDailyItemCount(c.env.AUTH_KV, session.username, newItemCount);
+    }
+
     const response: SyncPushResponse = {
       success: true,
       version: metadata.version,
@@ -167,75 +267,6 @@ syncRouter.post('/', async (c) => {
     return c.json({ success: false, error: 'Server error' } as SyncPushResponse, 500);
   }
 });
-
-/**
- * Load metadata from R2
- */
-async function loadMetadata(bucket: R2Bucket, username: string): Promise<{ version: number; updatedAt: string }> {
-  const metadataKey = `${username}/metadata.json`;
-  const metadataObject = await bucket.get(metadataKey);
-
-  if (!metadataObject) {
-    // Initialize with default metadata
-    return {
-      version: 0,
-      updatedAt: new Date().toISOString(),
-    };
-  }
-
-  return await metadataObject.json<{ version: number; updatedAt: string }>();
-}
-
-/**
- * Save metadata to R2
- */
-async function saveMetadata(
-  bucket: R2Bucket,
-  username: string,
-  metadata: { version: number; updatedAt: string },
-  session: Session
-): Promise<void> {
-  const metadataKey = `${username}/metadata.json`;
-  await bucket.put(metadataKey, JSON.stringify(metadata), {
-    customMetadata: {
-      userId: session.userId,
-      username: session.username,
-      version: String(metadata.version),
-      updatedAt: metadata.updatedAt,
-    },
-  });
-}
-
-/**
- * Load table data from R2
- */
-async function loadTableData<T extends SyncableRecord>(
-  bucket: R2Bucket,
-  username: string,
-  tableName: string
-): Promise<T[]> {
-  const tableKey = `${username}/${tableName}.json`;
-  const tableObject = await bucket.get(tableKey);
-
-  if (!tableObject) {
-    return [];
-  }
-
-  return await tableObject.json<T[]>();
-}
-
-/**
- * Save table data to R2
- */
-async function saveTableData<T extends SyncableRecord>(
-  bucket: R2Bucket,
-  username: string,
-  tableName: string,
-  data: T[]
-): Promise<void> {
-  const tableKey = `${username}/${tableName}.json`;
-  await bucket.put(tableKey, JSON.stringify(data));
-}
 
 /**
  * Apply a single change to an array using Last-Write-Wins
