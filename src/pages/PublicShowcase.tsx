@@ -91,10 +91,20 @@ export default function PublicShowcase() {
 
   // Build image URL
   const getImageUrl = (item: ShowcaseItem) => {
-    if (item.imageRef) {
-      return `${SYNC_API_URL}/public/showcase/${username}/image/${item.imageHash || item.imageRef.split('/').pop()}`;
+    // Extract hash from imageHash or imageRef
+    let hash: string | null = null;
+
+    if (item.imageHash) {
+      hash = item.imageHash;
+    } else if (item.imageRef) {
+      // imageRef format: "{username}/images/{hash}" or "images/{hash}"
+      const parts = item.imageRef.split('/');
+      hash = parts[parts.length - 1]; // Get last part (the hash)
     }
-    return null;
+
+    if (!hash) return null;
+
+    return `${SYNC_API_URL}/public/showcase/${username}/image/${hash}`;
   };
 
   if (loading) {
@@ -197,7 +207,7 @@ export default function PublicShowcase() {
         )}
 
         {/* Items Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
           {filteredItems?.map(item => (
             <Card 
               key={item.id} 

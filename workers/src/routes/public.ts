@@ -43,10 +43,9 @@ publicRouter.get('/showcase/:username', async (c) => {
 
     const userData = await dataObject.json<UserData>();
 
-    // Filter to only show featured/public items
-    // For now, show all non-deleted items
-    const publicItems = userData.items.filter(item => !item._deleted);
-    const publicOutfits = userData.outfits.filter(outfit => !outfit._deleted);
+    // Filter to only show featured items (not deleted and marked as featured)
+    const publicItems = userData.items.filter(item => !item._deleted && item.isFeatured);
+    const publicOutfits = userData.outfits.filter(outfit => !outfit._deleted && outfit.isFeatured);
 
     return c.json({
       success: true,

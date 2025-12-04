@@ -1,22 +1,19 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import { db, type Item } from '@/db'
+import { useShowcase } from '@/hooks/useShowcase'
+import { useSync } from '@/hooks/useSync'
 import { cn, formatSize } from '@/lib/utils'
 import {
+    AlertCircle,
     Briefcase,
     Check,
     Copy,
-    Download,
+    ExternalLink,
     Footprints,
     Laptop,
-    Link2,
     Package,
-    Share2,
     Shirt,
     Sparkles,
     Star,
@@ -40,305 +37,15 @@ const categoryColors: Record<string, string> = {
     footwear: 'from-red-500 to-rose-500',
 }
 
-// Generate a short hash from data
-function generateShortCode(data: object): string {
-    const json = JSON.stringify(data)
-    // Simple hash function
-    let hash = 0
-    for (let i = 0; i < json.length; i++) {
-        const char = json.charCodeAt(i)
-        hash = ((hash << 5) - hash) + char
-        hash = hash & hash // Convert to 32-bit integer
-    }
-    // Convert to base36 and take first 6 chars
-    const code = Math.abs(hash).toString(36).toUpperCase().padStart(6, '0').slice(0, 6)
-    return code
-}
-
-// Store share data in localStorage with short code
-const SHARE_STORAGE_KEY = 'fitsome-shared-showcases'
-
-function storeShareData(code: string, data: object): void {
-    try {
-        const stored = localStorage.getItem(SHARE_STORAGE_KEY)
-        const shares = stored ? JSON.parse(stored) : {}
-        shares[code] = {
-            data,
-            createdAt: new Date().toISOString(),
-        }
-        // Keep only last 50 shares
-        const keys = Object.keys(shares)
-        if (keys.length > 50) {
-            delete shares[keys[0]]
-        }
-        localStorage.setItem(SHARE_STORAGE_KEY, JSON.stringify(shares))
-    } catch (e) {
-        console.error('Failed to store share data:', e)
-    }
-}
-
-function getShareData(code: string): object | null {
-    try {
-        const stored = localStorage.getItem(SHARE_STORAGE_KEY)
-        if (stored) {
-            const shares = JSON.parse(stored)
-            return shares[code]?.data || null
-        }
-    } catch (e) {
-        console.error('Failed to get share data:', e)
-    }
-    return null
-}
-
-// Compact data encoding for URL (compressed but still works cross-device)
-function encodeCompact(data: object): string {
-    const json = JSON.stringify(data)
-    // Use a more compact encoding: first compress common patterns
-    const compressed = json
-        .replace(/"name":/g, '"n":')
-        .replace(/"category":/g, '"c":')
-        .replace(/"subcategory":/g, '"s":')
-        .replace(/"brand":/g, '"b":')
-        .replace(/"color":/g, '"o":')
-        .replace(/"title":/g, '"t":')
-        .replace(/"description":/g, '"d":')
-        .replace(/"items":/g, '"i":')
-
-    return btoa(encodeURIComponent(compressed))
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=/g, '')
-}
-
-function decodeCompact(encoded: string): object | null {
-    try {
-        // Restore base64 chars
-        let b64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
-        while (b64.length % 4) b64 += '='
-
-        const json = decodeURIComponent(atob(b64))
-            .replace(/"n":/g, '"name":')
-            .replace(/"c":/g, '"category":')
-            .replace(/"s":/g, '"subcategory":')
-            .replace(/"b":/g, '"brand":')
-            .replace(/"o":/g, '"color":')
-            .replace(/"t":/g, '"title":')
-            .replace(/"d":/g, '"description":')
-            .replace(/"i":/g, '"items":')
-
-        return JSON.parse(json)
-    } catch {
-        return null
-    }
-}
-
-// Generate standalone HTML page
-function generateShowcaseHTML(items: Item[], title: string, description: string): string {
-    const itemsHtml = items.map(item => {
-        const sizeDisplay = formatSize(item.size)
-        return `
-      <div class="item-card">
-        ${item.imageData
-                ? `<div class="item-image"><img src="${item.imageData}" alt="${item.name}" /></div>`
-                : `<div class="item-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-              </svg>
-            </div>`
-            }
-        <div class="item-content">
-          <h3 class="item-name">${item.name}</h3>
-          <p class="item-details">
-            ${item.subcategory || item.category}
-            ${item.brand ? ` • ${item.brand}` : ''}
-            ${item.color ? ` • ${item.color}` : ''}
-          </p>
-          ${sizeDisplay !== '—' ? `<span class="item-size">Size: ${sizeDisplay}</span>` : ''}
-        </div>
-      </div>
-    `
-    }).join('')
-
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title} - FITSO.ME Showcase</title>
-  <style>
-    :root {
-      --bg: #0a0a0a;
-      --card-bg: #171717;
-      --text: #fafafa;
-      --text-muted: #a1a1aa;
-      --accent: #f59e0b;
-      --border: #27272a;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 2rem;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-    }
-    
-    header h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--accent), #fb923c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.5rem;
-    }
-    
-    header p {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    
-    .item-card {
-      background: var(--card-bg);
-      border-radius: 1rem;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .item-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    }
-    
-    .item-image {
-      aspect-ratio: 1;
-      overflow: hidden;
-    }
-    
-    .item-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    
-    .item-placeholder {
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #27272a, #18181b);
-      color: var(--text-muted);
-    }
-    
-    .item-content {
-      padding: 1rem;
-    }
-    
-    .item-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-    
-    .item-details {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      margin-bottom: 0.5rem;
-    }
-    
-    .item-size {
-      display: inline-block;
-      background: var(--border);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.375rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 0.875rem;
-    }
-    
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-    
-    @media (max-width: 640px) {
-      body {
-        padding: 1rem;
-      }
-      header h1 {
-        font-size: 1.75rem;
-      }
-      .grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <h1>✨ ${title}</h1>
-      ${description ? `<p>${description}</p>` : ''}
-    </header>
-    
-    <div class="grid">
-      ${itemsHtml}
-    </div>
-    
-    <footer>
-      <p>Created with <a href="https://fitso.me">FITSO.ME</a> • ${new Date().toLocaleDateString()}</p>
-    </footer>
-  </div>
-</body>
-</html>`
-}
-
 export default function Showcase() {
     const [items, setItems] = useState<Item[]>([])
     const [featuredItems, setFeaturedItems] = useState<Item[]>([])
     const [loading, setLoading] = useState(true)
-    const [showExportDialog, setShowExportDialog] = useState(false)
-    const [showShareDialog, setShowShareDialog] = useState(false)
-    const [exportTitle, setExportTitle] = useState('My Wardrobe Showcase')
-    const [exportDescription, setExportDescription] = useState('')
-    const [shareUrl, setShareUrl] = useState('')
     const [copied, setCopied] = useState(false)
+
+    // Sync and showcase state
+    const [syncState] = useSync()
+    const showcase = useShowcase(syncState.isAuthenticated)
 
     useEffect(() => {
         loadItems()
@@ -357,119 +64,130 @@ export default function Showcase() {
         loadItems()
     }
 
-    const handleExportHTML = () => {
-        const html = generateShowcaseHTML(featuredItems, exportTitle, exportDescription)
-        const blob = new Blob([html], { type: 'text/html' })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `${exportTitle.toLowerCase().replace(/\s+/g, '-')}-showcase.html`
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
-        setShowExportDialog(false)
+    const handleCopyUrl = async () => {
+        const url = showcase.getPublicUrl()
+        if (url) {
+            await navigator.clipboard.writeText(url)
+            setCopied(true)
+            setTimeout(() => setCopied(false), 2000)
+        }
     }
 
-    const handleGenerateShareUrl = () => {
-        // Create shareable data (without images to keep URL short)
-        const shareData = {
-            title: exportTitle,
-            description: exportDescription,
-            items: featuredItems.map(item => ({
-                name: item.name,
-                category: item.category,
-                subcategory: item.subcategory,
-                brand: item.brand,
-                color: item.color,
-            }))
-        }
-
-        // Generate short code and store data
-        const code = generateShortCode(shareData)
-        storeShareData(code, shareData)
-
-        // Create compact encoded version for cross-device sharing
-        const encoded = encodeCompact(shareData)
-
-        // Use short code if URL would be too long
-        const fullUrl = `${window.location.origin}/showcase?s=${encoded}`
-        const shortUrl = `${window.location.origin}/showcase?c=${code}`
-
-        // If encoded URL is longer than 200 chars, use the code version
-        const url = fullUrl.length > 200 ? shortUrl : fullUrl
-        setShareUrl(url)
-        setShowShareDialog(true)
+    const handleEnableProfile = async () => {
+        await showcase.toggle()
     }
-
-    const copyToClipboard = async () => {
-        await navigator.clipboard.writeText(shareUrl)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 2000)
-    }
-
-    // Check for shared showcase in URL
-    useEffect(() => {
-        const params = new URLSearchParams(window.location.search)
-
-        // Check for compact encoded data
-        const compactParam = params.get('s')
-        if (compactParam) {
-            const data = decodeCompact(compactParam) as { title: string; description: string; items: Partial<Item>[] } | null
-            if (data) {
-                console.log('Shared showcase data (compact):', data)
-                setExportTitle(data.title || 'Shared Showcase')
-                setExportDescription(data.description || '')
-            }
-            return
-        }
-
-        // Check for short code
-        const codeParam = params.get('c')
-        if (codeParam) {
-            const data = getShareData(codeParam) as { title: string; description: string; items: Partial<Item>[] } | null
-            if (data) {
-                console.log('Shared showcase data (code):', data)
-                setExportTitle(data.title || 'Shared Showcase')
-                setExportDescription(data.description || '')
-            }
-        }
-    }, [])
 
     const nonFeaturedItems = items.filter(item => !item.isFeatured)
 
     return (
         <div className="p-4 md:p-8 space-y-4 md:space-y-8">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex flex-col gap-4">
                 <div>
                     <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2 md:gap-3">
                         <Sparkles className="h-6 w-6 md:h-8 md:w-8 text-amber-400" />
                         Showcase
                     </h1>
-                    <p className="text-muted-foreground text-sm md:text-base hidden sm:block">Feature your best items and share them</p>
+                    <p className="text-muted-foreground text-sm md:text-base">Feature your best items and share them publicly</p>
                 </div>
-                <div className="flex gap-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={handleGenerateShareUrl}
-                        disabled={featuredItems.length === 0}
-                        className="gap-2"
-                    >
-                        <Link2 className="h-4 w-4" />
-                        <span className="hidden sm:inline">Share</span>
-                    </Button>
-                    <Button
-                        size="sm"
-                        onClick={() => setShowExportDialog(true)}
-                        disabled={featuredItems.length === 0}
-                        className="gap-2"
-                    >
-                        <Download className="h-4 w-4" />
-                        <span className="hidden sm:inline">Export</span>
-                    </Button>
-                </div>
+
+                {/* Public Profile Card */}
+                <Card>
+                    <CardContent className="pt-6 space-y-4">
+                        <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                                <h3 className="font-semibold flex items-center gap-2 mb-1">
+                                    <ExternalLink className="h-4 w-4" />
+                                    Public Profile
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Share your featured items with the world
+                                </p>
+                            </div>
+                        </div>
+
+                        {!syncState.isAuthenticated ? (
+                            <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                                <p className="text-sm text-muted-foreground flex items-center gap-2">
+                                    <AlertCircle className="h-4 w-4 text-amber-500" />
+                                    Enable sync in Settings to share your public profile
+                                </p>
+                            </div>
+                        ) : showcase.enabled ? (
+                            <div className="space-y-3">
+                                <div className="flex items-center gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                    <Check className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                                    <span className="text-sm text-muted-foreground">Your public profile is live!</span>
+                                </div>
+
+                                {showcase.getPublicUrl() && (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-2">
+                                            <code className="flex-1 text-xs p-2 rounded bg-secondary truncate">
+                                                {showcase.getPublicUrl()}
+                                            </code>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={handleCopyUrl}
+                                            >
+                                                {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                                            </Button>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                asChild
+                                            >
+                                                <a href={showcase.getPublicUrl()!} target="_blank" rel="noopener noreferrer">
+                                                    <ExternalLink className="h-3 w-3" />
+                                                </a>
+                                            </Button>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground">
+                                            💡 Only items marked as Featured will be visible on your public profile
+                                        </p>
+                                    </div>
+                                )}
+
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={handleEnableProfile}
+                                    disabled={showcase.loading}
+                                >
+                                    Disable Public Profile
+                                </Button>
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                <p className="text-sm text-muted-foreground">
+                                    Enable your public profile to share your featured items with a unique URL.
+                                    Only items marked as Featured will be visible.
+                                </p>
+                                <Button
+                                    size="sm"
+                                    onClick={handleEnableProfile}
+                                    disabled={showcase.loading || featuredItems.length === 0}
+                                    className="gap-2"
+                                >
+                                    <ExternalLink className="h-4 w-4" />
+                                    Enable Public Profile
+                                </Button>
+                                {featuredItems.length === 0 && (
+                                    <p className="text-xs text-muted-foreground">
+                                        Add some featured items first before enabling your profile
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
+                        {showcase.error && (
+                            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                                <p className="text-sm text-red-500">{showcase.error}</p>
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
             </div>
 
             {/* Featured Items */}
@@ -493,7 +211,7 @@ export default function Showcase() {
                             <h3 className="text-lg font-semibold mb-2">No featured items yet</h3>
                             <p className="text-muted-foreground mb-4 max-w-md">
                                 Click the star icon on any item below to add it to your showcase.
-                                Featured items can be exported as a beautiful HTML page or shared via link.
+                                Featured items will appear on your public profile.
                             </p>
                         </CardContent>
                     </Card>
@@ -605,108 +323,6 @@ export default function Showcase() {
                     </div>
                 )}
             </div>
-
-            {/* Export HTML Dialog */}
-            <Dialog open={showExportDialog} onOpenChange={setShowExportDialog}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                            <Download className="h-5 w-5" />
-                            Export Showcase as HTML
-                        </DialogTitle>
-                        <DialogDescription>
-                            Create a beautiful standalone HTML page with your featured items.
-                            Share it anywhere or host it on any website.
-                        </DialogDescription>
-                    </DialogHeader>
-
-                    <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="title">Showcase Title</Label>
-                            <Input
-                                id="title"
-                                value={exportTitle}
-                                onChange={(e) => setExportTitle(e.target.value)}
-                                placeholder="My Wardrobe Showcase"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="description">Description (optional)</Label>
-                            <Textarea
-                                id="description"
-                                value={exportDescription}
-                                onChange={(e) => setExportDescription(e.target.value)}
-                                placeholder="A collection of my favorite wardrobe items..."
-                                rows={3}
-                            />
-                        </div>
-
-                        <div className="p-3 rounded-lg bg-secondary/50 text-sm">
-                            <p className="text-muted-foreground">
-                                <strong className="text-foreground">{featuredItems.length} items</strong> will be included.
-                                Images are embedded directly in the HTML file.
-                            </p>
-                        </div>
-                    </div>
-
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setShowExportDialog(false)}>
-                            Cancel
-                        </Button>
-                        <Button onClick={handleExportHTML} className="gap-2">
-                            <Download className="h-4 w-4" />
-                            Download HTML
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
-
-            {/* Share Link Dialog */}
-            <Dialog open={showShareDialog} onOpenChange={setShowShareDialog}>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                            <Share2 className="h-5 w-5" />
-                            Share Your Showcase
-                        </DialogTitle>
-                        <DialogDescription>
-                            Share this link with others to show off your featured items.
-                            Note: Images are not included in the link (only item details).
-                        </DialogDescription>
-                    </DialogHeader>
-
-                    <div className="space-y-4 py-4">
-                        <div className="flex gap-2">
-                            <Input
-                                value={shareUrl}
-                                readOnly
-                                className="font-mono text-xs"
-                            />
-                            <Button variant="outline" size="icon" onClick={copyToClipboard}>
-                                {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
-                            </Button>
-                        </div>
-
-                        <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-sm">
-                            <p className="text-amber-200">
-                                <strong>💡 Tip:</strong> For a richer showcase with images, use the "Export HTML" option instead.
-                                You can host the HTML file on GitHub Pages, Netlify, or any web server.
-                            </p>
-                        </div>
-                    </div>
-
-                    <DialogFooter>
-                        <Button variant="outline" onClick={() => setShowShareDialog(false)}>
-                            Close
-                        </Button>
-                        <Button onClick={copyToClipboard} className="gap-2">
-                            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-                            {copied ? 'Copied!' : 'Copy Link'}
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
         </div>
     )
 }
-
