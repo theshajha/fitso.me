@@ -477,13 +477,13 @@ export default function Landing() {
             <a href="mailto:shashank@fitso.me" className="hover:text-white/70 transition-colors">
               Contact
             </a>
-            <a 
-              href="https://twitter.com/theshajha" 
-              target="_blank" 
+            <a
+              href="https://theshajha.com"
+              target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white/70 transition-colors"
             >
-              Twitter
+              Built by Shashank
             </a>
           </div>
         </div>
