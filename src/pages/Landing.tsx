@@ -199,8 +199,8 @@ export default function Landing() {
 
             {/* Subheadline - The problem */}
             <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto leading-relaxed">
-              Stop forgetting what's in your closet. Catalog your wardrobe, plan outfits 
-              in seconds, and never pack for a trip wondering "did I forget something?"
+              Import your entire wardrobe from Myntra & Ajio in minutes, or add items manually.
+              Finally see everything you own, plan outfits effortlessly, and never forget what's packed away.
             </p>
 
             {/* CTA Buttons */}
@@ -280,6 +280,118 @@ export default function Landing() {
               alt="Fitso.me - Your wardrobe organized beautifully"
               className="w-full h-auto"
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Import Integrations Section */}
+      <section className="relative z-10 py-32 px-6 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
+        <div className="max-w-6xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 backdrop-blur-sm mb-6">
+              <Sparkles className="h-4 w-4 text-amber-400" />
+              <span className="text-sm text-amber-300 font-medium">New Feature</span>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-6">
+              Build your wardrobe in{' '}
+              <span className="bg-gradient-to-r from-amber-400 via-pink-400 to-violet-400 bg-clip-text text-transparent">
+                minutes, not hours
+              </span>
+            </h2>
+            <p className="text-lg text-white/50 max-w-2xl mx-auto">
+              Import dozens of items automatically from your order history.
+              One click and your wardrobe is ready to organize.
+            </p>
+          </div>
+
+          {/* Integration Cards */}
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+            {/* Myntra Card */}
+            <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-pink-500/10 via-pink-500/5 to-transparent border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300 overflow-hidden">
+              {/* Glow effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-pink-500/20 to-rose-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              <div className="relative">
+                {/* Myntra-ish branding */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="text-3xl font-black tracking-tight text-pink-300">
+                    MYNTRA
+                  </div>
+                  <CheckCircle className="h-6 w-6 text-emerald-400" />
+                </div>
+
+                <p className="text-white/70 mb-6 leading-relaxed">
+                  Automatically import your entire order history with images, brands, sizes, and prices.
+                </p>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2 text-white/50">
+                    <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                    <span>One-click bookmarklet</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/50">
+                    <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                    <span>Auto-categorization</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/50">
+                    <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
+                    <span>Duplicate detection</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Ajio Card */}
+            <div className="group relative p-8 rounded-3xl bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300 overflow-hidden">
+              {/* Glow effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              <div className="relative">
+                {/* Ajio-ish branding */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="text-3xl font-black tracking-tight text-amber-300">
+                    AJIO
+                  </div>
+                  <CheckCircle className="h-6 w-6 text-emerald-400" />
+                </div>
+
+                <p className="text-white/70 mb-6 leading-relaxed">
+                  Import all your Ajio purchases seamlessly. Product details extracted automatically.
+                </p>
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center gap-2 text-white/50">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span>Quick setup</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/50">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span>Smart size detection</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-white/50">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                    <span>Privacy-first proxy</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Coming Soon */}
+          <div className="text-center">
+            <p className="text-white/40 text-sm mb-4">More integrations coming soon</p>
+            <div className="flex items-center justify-center gap-6 opacity-30">
+              <div className="px-6 py-3 rounded-lg border border-white/10 text-sm font-medium text-white/60">
+                Amazon
+              </div>
+              <div className="px-6 py-3 rounded-lg border border-white/10 text-sm font-medium text-white/60">
+                Flipkart
+              </div>
+              <div className="px-6 py-3 rounded-lg border border-white/10 text-sm font-medium text-white/60">
+                Zara
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -401,9 +513,9 @@ export default function Landing() {
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mx-auto mb-6 text-2xl font-black text-white">
                 1
               </div>
-              <h3 className="text-xl font-bold mb-2">Snap a photo</h3>
+              <h3 className="text-xl font-bold mb-2">Import or add items</h3>
               <p className="text-white/50">
-                Take pictures of your clothes, shoes, accessories — anything you own.
+                Import from Myntra & Ajio in one click, or add items manually with photos.
               </p>
             </div>
 
@@ -413,7 +525,7 @@ export default function Landing() {
               </div>
               <h3 className="text-xl font-bold mb-2">Organize & tag</h3>
               <p className="text-white/50">
-                Add details like category, brand, size. Search and filter instantly.
+                Items are auto-categorized. Refine details like size, color, and location as needed.
               </p>
             </div>
 
@@ -446,7 +558,8 @@ export default function Landing() {
           </h2>
           
           <p className="text-lg text-white/50 mb-10 max-w-xl mx-auto">
-            Join thousands of people who finally know what they own — and actually wear it.
+            Import from Myntra & Ajio or add items manually.
+            Join people who finally know what they own — and actually wear it.
             Free to use. Syncs across all your devices.
           </p>
 
