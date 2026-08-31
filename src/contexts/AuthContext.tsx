@@ -4,6 +4,7 @@
  * Username is loaded lazily and doesn't block app access
  */
 
+import { identifyAuthedUser, trackLoginCompleted, trackSignupCompleted } from '@/lib/analytics';
 import * as auth from '@/lib/auth/supabase-auth';
 import { supabase } from '@/lib/supabase';
 import type { Session, User } from '@supabase/supabase-js';
@@ -26,6 +27,29 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Timeout for initial auth check (5 seconds)
 const AUTH_INIT_TIMEOUT = 5000;
+
+// A SIGNED_IN whose user was created this recently is the account's first
+// sign-in, i.e. the signup completing (magic-link users have no separate
+// "create account" step). Anything older is a returning login.
+const NEW_USER_WINDOW_MS = 10 * 60 * 1000;
+const SIGNUP_TRACKED_KEY = 'fitsome_signup_tracked';
+
+function trackSignInConversion(user: User) {
+  try {
+    identifyAuthedUser(user.id, user.email ?? undefined);
+    const createdAt = user.created_at ? new Date(user.created_at).getTime() : NaN;
+    const isNewUser = Number.isFinite(createdAt) && Date.now() - createdAt < NEW_USER_WINDOW_MS;
+    const tracked: string[] = JSON.parse(localStorage.getItem(SIGNUP_TRACKED_KEY) || '[]');
+    if (isNewUser && !tracked.includes(user.id)) {
+      trackSignupCompleted('magic_link');
+      localStorage.setItem(SIGNUP_TRACKED_KEY, JSON.stringify([...tracked, user.id]));
+    } else if (!isNewUser) {
+      trackLoginCompleted('magic_link');
+    }
+  } catch (error) {
+    console.error('[Auth] Conversion tracking failed:', error);
+  }
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -142,6 +166,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // For sign in or token refresh
       setSession(newSession);
       setUser(newSession.user);
+
+      // Conversion events only on an actual sign-in (not TOKEN_REFRESHED /
+      // INITIAL_SESSION, which also carry a session).
+      if (event === 'SIGNED_IN') {
+        trackSignInConversion(newSession.user);
+      }
 
       // Load profile in background
       loadProfile(newSession.user.id);

@@ -89,6 +89,27 @@ export function identifyUser(name: string) {
     trackEvent('user_signed_up', { name })
 }
 
+// Identify the PostHog person with the real Supabase user id (called on every
+// SIGNED_IN so device-anonymous pageviews merge into the account's person).
+export function identifyAuthedUser(userId: string, email?: string) {
+    if (!isAnalyticsEnabled()) return
+    posthog.identify(userId, email ? { email } : undefined)
+}
+
+// Conversion: account created (first magic-link sign-in). Fires once per user
+// per browser — the caller guards with the `fitsome_signup_tracked` key.
+export function trackSignupCompleted(method: 'magic_link' | 'password' = 'magic_link') {
+    trackEvent('signup_completed', { method })
+    updateUserProperties({
+        journey_stage: 'activated',
+        signed_up_at: new Date().toISOString(),
+    })
+}
+
+export function trackLoginCompleted(method: 'magic_link' | 'password' = 'magic_link') {
+    trackEvent('login_completed', { method })
+}
+
 // Update user journey stage and properties
 export function updateUserProperties(properties: Record<string, unknown>) {
     if (!isAnalyticsEnabled()) return
@@ -490,7 +511,7 @@ export function trackError(errorType: string, errorMessage: string, context?: st
 
 // Track complete funnels for PostHog
 export const FUNNELS = {
-    ONBOARDING: ['landing_page_viewed', 'get_started_clicked', 'onboarding_completed', 'first_item_added'],
+    ONBOARDING: ['landing_page_viewed', 'get_started_clicked', 'signup_completed', 'onboarding_completed', 'first_item_added'],
     DEMO_CONVERSION: ['landing_page_viewed', 'demo_mode_clicked', 'demo_entered', 'demo_exited', 'user_signed_up'],
     INVENTORY_GROWTH: ['first_item_added', 'inventory_milestone_reached'],
     OUTFIT_CREATION: ['item_added', 'outfit_created'],

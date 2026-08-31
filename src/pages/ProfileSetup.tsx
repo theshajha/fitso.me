@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
+import { trackOnboardingCompleted } from '@/lib/analytics';
 import { AlertCircle, Loader2, Package, Sparkles } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -77,6 +78,7 @@ export default function ProfileSetup() {
       }
 
       // Success! Go to dashboard
+      trackOnboardingCompleted(Boolean(displayName.trim()));
       navigate('/dashboard', { replace: true });
     } catch (err) {
       console.error('[ProfileSetup] Error:', err);
