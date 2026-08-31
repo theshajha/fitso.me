@@ -99,7 +99,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Initialize auth state - only checks for existing session
   useEffect(() => {
     let mounted = true;
-    let timeoutId: NodeJS.Timeout | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     const initAuth = async () => {
       console.log('[Auth] Initializing auth...');
