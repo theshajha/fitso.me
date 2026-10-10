@@ -49,7 +49,7 @@ function Logo({ size = 'sm' }: { size?: 'sm' | 'md' | 'lg' }) {
 export default function GuidePage() {
   const { slug } = useParams<{ slug: string }>();
   const guide = slug ? getGuideBySlug(slug) : null;
-  const relatedGuides = slug ? getRelatedGuides(slug) : [];
+  const relatedGuides = guide ? getRelatedGuides(guide) : [];
 
   // Process guide content with current year
   const processedGuide = useMemo(() => {
