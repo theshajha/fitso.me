@@ -1,0 +1,78 @@
+{
+  "slug": "colour-season",
+  "title": "Colour season finder: your palette from one selfie",
+  "description": "Free colour season finder for Indian skin. Upload one selfie in daylight and get your season, undertone and a palette to shop from.",
+  "headline": "Find your colour season from one selfie",
+  "sub": "One selfie in daylight. Your season, your palette. Free.",
+  "how_it_works": [
+    "Pick your door and answer five quick questions about your life, climate, occasions, budget and vibe.",
+    "Take one selfie near a window, or upload one. No filter, no heavy make-up.",
+    "Get your season, your undertone, three things that are working for you and a palette of colours to buy."
+  ],
+  "what_you_get": [
+    "Your colour season: spring, summer, autumn or winter, with a depth such as light, true, soft, bright or deep.",
+    "Your undertone: warm, cool or neutral, with a plain note on how confident the read is.",
+    "Three things that are working for you, each tied to something visible in your photo.",
+    "One thing to stop buying, phrased as an upgrade.",
+    "A palette of six to eight colours you can shop from today, plus a share card without your photo."
+  ],
+  "sample": {
+    "door": "men",
+    "season": "autumn",
+    "season_depth": "deep",
+    "undertone": "warm",
+    "archetype": "Easy Classic",
+    "working_for_you": [
+      "Your warm, golden-brown skin glows next to olive and rust.",
+      "Your dark hair and strong brows give you natural contrast, so deep colours look rich on you.",
+      "Your jawline holds a collared shirt well."
+    ],
+    "stop_buying": "Swap the stark white shirts for cream. Cream sits better against your warm skin.",
+    "palette": [
+      "#B8632F",
+      "#7A7A3A",
+      "#CFA03E",
+      "#8B5E3C",
+      "#4F6F52",
+      "#C97B63"
+    ],
+    "confidence": 0.86,
+    "retake_hint": null
+  },
+  "faq": [
+    {
+      "q": "How accurate is a selfie colour analysis?",
+      "a": "It is a strong guide, not a lab test. Light matters most, so the tool shows how confident it is and asks for a retake in daylight when the photo is not clear enough."
+    },
+    {
+      "q": "What happens to my photo?",
+      "a": "We read it once to find your colours and delete it. The result page and share card never show your face."
+    },
+    {
+      "q": "Does it work on dusky and wheatish skin?",
+      "a": "Yes. All four seasons exist on every Indian skin depth. The tool looks at your undertone and clarity, not just how light or deep you are."
+    },
+    {
+      "q": "Do I have to pay?",
+      "a": "No. The colour season, the palette and the share card are free. A longer Style Report is optional."
+    }
+  ],
+  "cta": {
+    "label": "Find my colour season",
+    "href": "/app/quick-win?door=men&from=colour-season"
+  },
+  "keywords": [
+    "colour season finder",
+    "colour analysis from selfie",
+    "which colour season am i",
+    "colour analysis india free"
+  ],
+  "intro": "Most people shop colour by guesswork. You pick what looks good on the hanger, and then it looks flat on you. A colour season fixes that. It tells you which colours work with your skin, your hair and your eyes, so every shirt, kurta or dupatta you buy has a better chance of working. This tool reads one selfie and gives you your season in under a minute. It is built for Indian skin, from fair to deep, and it does not assume that one skin tone is better than another.",
+  "tips": [
+    "Take the selfie near a window, facing the light, in the middle of the day.",
+    "Remove glasses and pull your hair back from your face.",
+    "Skip filters, beauty modes and heavy make-up.",
+    "Stand against a plain wall, not a coloured one."
+  ],
+  "honesty": "We say how confident we are. If your light was poor, the result asks you to retake in daylight instead of guessing. You will never see a score that compares you with other people."
+}

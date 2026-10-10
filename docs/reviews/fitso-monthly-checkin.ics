@@ -1,0 +1,23 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//fitso.me//monthly check-in//EN
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Asia/Dubai
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0400
+TZOFFSETTO:+0400
+TZNAME:GST
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:fitso-monthly-checkin-2026@fitso.me
+DTSTAMP:20261010T070000Z
+DTSTART;TZID=Asia/Dubai:20261031T100000
+DTEND;TZID=Asia/Dubai:20261031T120000
+RRULE:FREQ=MONTHLY;BYDAY=-1SA
+SUMMARY:fitso.me monthly check-in
+DESCRIPTION:Two hours on fitso.me: what worked\, what did not\, what to steer next month. Run the fitso-monthly-review skill first so the numbers are on the table. Plan: docs/plans/2026-10-10-fitso-pivot-plan.md
+END:VEVENT
+END:VCALENDAR

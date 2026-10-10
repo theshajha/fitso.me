@@ -1,0 +1,110 @@
+{
+  "spring": {
+    "key": "spring",
+    "name": "Spring",
+    "one_line": "Warm and clear. Your colours look fresh, sunny and a little bright.",
+    "undertone": "warm",
+    "depth_variants": ["light", "true", "bright"],
+    "palette": ["#FF7F50", "#F4452E", "#FF8C42", "#FFB347", "#FFD54A", "#A6D94A", "#4CBB5F", "#1FB5A6", "#2DB5D0", "#3F8FE0", "#FF9E9D", "#E8548C"],
+    "neutrals": ["#FFF3DC", "#D9BF93", "#A9794B", "#5C4631"],
+    "metal": "gold",
+    "wear_more": {
+      "men": ["Coral or tangerine polos and tees", "Warm camel chinos", "Fresh green overshirts", "Turquoise or aqua knits", "Cream and ivory instead of stark white"],
+      "women": ["Coral, peach and apricot kurtas and tops", "Turquoise and aqua dupattas", "Warm red lipstick and bindi tones", "Fresh green and golden yellow", "Cream and ivory instead of stark white"]
+    },
+    "wear_less": {
+      "men": ["Charcoal and black head to toe", "Dusty, greyed-out blues", "Stark optical white next to the face"],
+      "women": ["Dusty mauve and grey-lilac", "Heavy black near the face", "Icy pastels that look chalky on you"]
+    },
+    "indian_skin_notes": "Spring shows up where warmth and clarity meet. On fair skin it reads as peachy or golden with a light flush. On wheatish skin it often looks like golden warmth, and clear warm colours such as coral and turquoise make it glow. On dusky skin it shows as a golden or honey glow, and bright warm colours hold their own without washing you out. Spring is a warm season, but warm undertones appear on every skin depth. No season is better than another. Each one is a different set of colours that work harder on you.",
+    "celebrity_examples": {
+      "men": ["Varun Dhawan (often cited as a spring)", "Ranveer Singh (often cited as a bright spring)", "Zac Efron (often cited as a light spring)"],
+      "women": ["Alia Bhatt (often cited as a spring)", "Katrina Kaif (often cited as a light spring)", "Taylor Swift (often cited as a bright spring)"]
+    },
+    "signature_look": {
+      "men": "A coral or tangerine polo, camel chinos, tan loafers and a gold-toned watch. Easy, sunny and clear.",
+      "women": "A coral or turquoise kurta set with a golden-yellow dupatta, gold jewellery and warm tan sandals. Fresh and bright."
+    }
+  },
+  "summer": {
+    "key": "summer",
+    "name": "Summer",
+    "one_line": "Cool and soft. Your colours look calm, dusty and gently blended.",
+    "undertone": "cool",
+    "depth_variants": ["light", "true", "soft"],
+    "palette": ["#A7B8D6", "#6F8FAF", "#8E9AAF", "#B8A9C9", "#C8A2C8", "#9E7B9B", "#D8A7B1", "#E3B7C4", "#A3B8A5", "#6D9AA0", "#B5C7D3", "#C26B84"],
+    "neutrals": ["#F2F2F5", "#B8BCC6", "#7A8190", "#3F4A5E"],
+    "metal": "silver",
+    "wear_more": {
+      "men": ["Powder blue and slate shirts", "Soft navy instead of black", "Lavender and dusty rose knits", "Cool grey trousers", "Sage and eucalyptus green"],
+      "women": ["Dusty rose, lilac and mauve", "Powder blue and soft teal", "Cool pink lipstick", "Soft white instead of cream", "Silver and rose-gold jewellery"]
+    },
+    "wear_less": {
+      "men": ["Orange and rust shirts", "Mustard and golden yellow near the face", "Harsh black and white contrast"],
+      "women": ["Bright orange and tangerine", "Mustard and golden browns", "Very high contrast black and white"]
+    },
+    "indian_skin_notes": "Summer shows up as a cool, soft tone with a pink or rosy edge. On fair skin it often reads as pink-beige with soft contrast. On wheatish skin it can look like an olive or rosy-beige base, where muted cool colours feel calm and even. On dusky skin it shows as a cool, smoky depth, and soft blues, plums and dusty roses look rich instead of loud. Cool undertones exist on every depth of Indian skin. No season is better than another. Summer simply likes blended, quiet colour.",
+    "celebrity_examples": {
+      "men": ["Sidharth Malhotra (often cited as a summer)", "Shahid Kapoor (often cited as a light summer)", "Henry Cavill (often cited as a soft summer)"],
+      "women": ["Kareena Kapoor (often cited as a summer)", "Sonam Kapoor (often cited as a soft summer)", "Shraddha Kapoor (often cited as a light summer)"]
+    },
+    "signature_look": {
+      "men": "A powder blue shirt, grey trousers, white leather sneakers and a silver watch. Calm and clean.",
+      "women": "A dusty rose or lilac kurta with a soft grey-blue dupatta, silver jhumkas and muted nude sandals. Soft and composed."
+    }
+  },
+  "autumn": {
+    "key": "autumn",
+    "name": "Autumn",
+    "one_line": "Warm and muted. Your colours look earthy, rich and a little spiced.",
+    "undertone": "warm",
+    "depth_variants": ["soft", "true", "deep"],
+    "palette": ["#B8632F", "#C97B63", "#B5483A", "#CFA03E", "#E0B77A", "#D9A66B", "#8A9A5B", "#7A7A3A", "#4F6F52", "#4A7C74", "#A0522D", "#8B5E3C"],
+    "neutrals": ["#F3E7D0", "#C8A97E", "#7B5B3A", "#3B3226"],
+    "metal": "gold",
+    "wear_more": {
+      "men": ["Olive and moss overshirts", "Rust, brick and terracotta tees", "Camel and tobacco browns", "Mustard knits", "Cream instead of stark white"],
+      "women": ["Terracotta, rust and brick kurtas", "Olive, moss and forest green", "Mustard and marigold", "Warm brown and camel", "Antique gold jewellery"]
+    },
+    "wear_less": {
+      "men": ["Icy blues and cool pinks", "Pure black next to the face", "Neon and electric shades"],
+      "women": ["Cool, icy pastels", "Fuchsia and blue-based reds", "Stark black and white contrast"]
+    },
+    "indian_skin_notes": "Autumn shows up as warm, earthy depth. On fair skin it can read as golden, freckled or peachy with soft contrast. On wheatish skin it often looks like a warm bronze or golden base, where earthy colours like olive and rust feel natural. On dusky skin it shows as a rich golden-brown glow, and deep spice colours look at home. Warm undertones appear on every skin depth. No season is better than another. Autumn simply likes warmth that is not loud.",
+    "celebrity_examples": {
+      "men": ["Ranbir Kapoor (often cited as an autumn)", "Virat Kohli (often cited as a deep autumn)", "Dulquer Salmaan (often cited as a deep autumn)"],
+      "women": ["Deepika Padukone (often cited as a deep autumn)", "Kajol (often cited as a warm autumn)", "Sobhita Dhulipala (often cited as a deep autumn)"]
+    },
+    "signature_look": {
+      "men": "An olive overshirt over a cream tee, camel chinos, brown leather boots and a gold-toned watch. Warm and grounded.",
+      "women": "A terracotta or rust kurta set with an olive-and-mustard dupatta, antique gold jewellery and tan kolhapuris. Rich and warm."
+    }
+  },
+  "winter": {
+    "key": "winter",
+    "name": "Winter",
+    "one_line": "Cool and clear. Your colours look crisp, deep and high in contrast.",
+    "undertone": "cool",
+    "depth_variants": ["bright", "true", "deep"],
+    "palette": ["#1F3FE0", "#0F6CBD", "#C8102E", "#E6007E", "#FF3D8B", "#5E2CA5", "#009B77", "#0B5345", "#00A3A3", "#1B1F3B", "#E8F0FF", "#111111"],
+    "neutrals": ["#F7F9FC", "#9AA3B2", "#2B2F3A", "#0A0A14"],
+    "metal": "silver",
+    "wear_more": {
+      "men": ["Cobalt and royal blue", "True red and deep burgundy", "Crisp white shirts", "Black and charcoal tailoring", "Emerald and pine green"],
+      "women": ["Cobalt, fuchsia and true red", "Emerald and deep teal", "Crisp white", "Black with one bright colour", "Silver and white-gold jewellery"]
+    },
+    "wear_less": {
+      "men": ["Muddy browns and khaki", "Mustard and orange", "Faded, washed-out colours"],
+      "women": ["Dusty, earthy mustard and rust", "Beige and camel head to toe", "Soft, washed-out pastels"]
+    },
+    "indian_skin_notes": "Winter shows up as cool clarity and strong contrast. On fair skin it often reads as porcelain or rosy with dark hair and a clear edge. On wheatish skin it can look like a cool olive base, where sharp colours like cobalt and emerald look striking. On dusky skin it shows as a deep, cool richness, and bright jewel colours look luminous. Cool undertones exist on every depth of Indian skin. No season is better than another. Winter simply likes crisp colour and strong contrast.",
+    "celebrity_examples": {
+      "men": ["Shah Rukh Khan (often cited as a deep winter)", "Hrithik Roshan (often cited as a winter)", "Dev Patel (often cited as a bright winter)"],
+      "women": ["Aishwarya Rai Bachchan (often cited as a winter)", "Anushka Sharma (often cited as a winter)", "Zendaya (often cited as a deep winter)"]
+    },
+    "signature_look": {
+      "men": "A crisp white shirt, a charcoal or black blazer, a cobalt tie or knit and black leather shoes. Sharp and clear.",
+      "women": "A fuchsia or emerald kurta or saree with silver jewellery and a sharp black accent. Crisp and bold."
+    }
+  }
+}
