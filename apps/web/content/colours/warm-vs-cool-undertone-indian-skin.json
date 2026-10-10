@@ -1,0 +1,143 @@
+{
+  "slug": "warm-vs-cool-undertone-indian-skin",
+  "door": "both",
+  "pillar": "B",
+  "title": "Warm vs cool undertone on Indian skin: how to tell at home",
+  "description": "How to tell if your undertone is warm, cool or neutral on Indian skin, using three home tests and what each result means for your wardrobe.",
+  "updated": "2026-10-10",
+  "intro": "Skin tone is how light or deep you are. Undertone is the colour beneath it. Two people with the same wheatish or dusky skin can have different undertones, and that is why one looks great in rust and the other in cobalt. This guide shows you how to find yours in five minutes and what to do with the answer.",
+  "sections": [
+    {
+      "heading": "Find your undertone at home in five minutes",
+      "body": "Undertone is the quiet colour under your skin. It is not the same as how light or dark you are. On Indian skin, undertone is often hard to see by eye because depth hides it. That is why we use three tests, not one. Do the three tests below in daylight, near a window, with no filter and no coloured light. Then trust the answer that shows up twice.",
+      "tips": [
+        "Vein test. Look at the inside of your wrist. Mostly green veins point to a warm undertone. Mostly blue or purple veins point to a cool one. A mix of both usually means neutral. On deeper skin the veins are harder to see, so skip this test if you cannot tell and lean on the other two.",
+        "White versus cream test. Hold a plain white shirt under your chin, then a cream or ivory one. If cream makes your face look healthier and stark white looks harsh, you lean warm. If crisp white looks clean and cream looks a little yellow or flat, you lean cool. If both look fine, you are likely neutral.",
+        "Jewellery test. Try a gold chain and a silver chain against your neck. If gold makes your skin glow, you lean warm. If silver does the same, you lean cool. If both work, you are neutral, and you get to wear both."
+      ]
+    },
+    {
+      "heading": "What each result means",
+      "body": "Warm means a golden, peach or olive-golden base. Cool means a pink, rosy or blue-red base. Neutral means a balance of both, and you can wear colours from either side. Do not worry if you land in the middle. Neutral is common, and it gives you the most choice.",
+      "tips": [
+        "Warm: rust, olive, terracotta, mustard, camel, warm teal, cream. Gold looks best.",
+        "Cool: navy, cobalt, burgundy, emerald, raspberry, crisp white. Silver looks best.",
+        "Neutral: teal, wine, forest green, charcoal. Both gold and silver work."
+      ]
+    },
+    {
+      "heading": "Common mix-ups on Indian skin",
+      "body": "A few things confuse the result. Tan can make cool skin look golden in summer. Redness around the nose or cheeks can make warm skin look pink. Yellow bulbs add warmth and blue-white LEDs add coolness, so test near a window. If your results change by season, test on a cloudy day to keep it fair.",
+      "tips": [
+        "Test with no make-up, no foundation and no filter.",
+        "Use a plain white or cream cloth, not a patterned one.",
+        "Ask a friend to compare the two cloths. A second pair of eyes helps.",
+        "If two tests say warm and one says neutral, call it warm."
+      ]
+    },
+    {
+      "heading": "Three outfits that work across undertones",
+      "body": "If you are unsure, start with colours that work for warm, cool and neutral. Teal, wine and forest green are safe starting points on most Indian skin depths. Prices are rough rupee ranges.",
+      "looks": [
+        {
+          "name": "Teal and cream",
+          "pieces": [
+            "Teal shirt or kurta (Fabindia or Marks & Spencer)",
+            "Cream trousers (Uniqlo or Libas)",
+            "Brown sandals or loafers (Hidesign)"
+          ],
+          "budget_inr": "4,000 to 7,500",
+          "why": "Teal looks good on almost every undertone and every depth."
+        },
+        {
+          "name": "Wine and charcoal",
+          "pieces": [
+            "Wine top or polo (Zara or Allen Solly)",
+            "Charcoal trousers (Van Heusen or Marks & Spencer)",
+            "Black shoes"
+          ],
+          "budget_inr": "5,000 to 8,500",
+          "why": "Wine works on warm and cool skin when it has some depth."
+        },
+        {
+          "name": "Forest green and ivory",
+          "pieces": [
+            "Forest green overshirt or kurta (H&M or Biba)",
+            "Ivory tee or inner (Uniqlo)",
+            "Tan accessories"
+          ],
+          "budget_inr": "4,500 to 8,000",
+          "why": "Green sits between warm and cool, and ivory keeps your face clear."
+        }
+      ],
+      "tips": [
+        "Once you know your side, swap in the matching colours."
+      ]
+    }
+  ],
+  "palette_blocks": [
+    {
+      "label": "Wear more",
+      "hexes": [
+        "#1F6F78",
+        "#7B2D3B",
+        "#2E5E4E",
+        "#2F4FB5",
+        "#C26A4A",
+        "#F2E8D5"
+      ]
+    },
+    {
+      "label": "Wear less",
+      "hexes": [
+        "#D9D2C3",
+        "#C9CED6",
+        "#E8E0A0",
+        "#BDB7A6"
+      ]
+    },
+    {
+      "label": "Neutrals that work",
+      "hexes": [
+        "#1B2A41",
+        "#F4EFE6",
+        "#4A4A4A",
+        "#8B6B4A"
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Can dusky skin be cool-toned?",
+      "a": "Yes. Dusky skin spans warm and cool, and many people have a cool, plum-brown or blue-brown base."
+    },
+    {
+      "q": "Is wheatish skin warm?",
+      "a": "Not always. Wheatish skin covers warm, cool and neutral undertones. Run the three tests."
+    },
+    {
+      "q": "Do I need a professional analysis?",
+      "a": "It helps, but the three tests are a good start. Upload a selfie in daylight to see your colour season for free."
+    },
+    {
+      "q": "Does my undertone change with a tan?",
+      "a": "Your skin tone changes with sun, but your undertone stays the same. Test when your tan is lowest."
+    }
+  ],
+  "related": [
+    "colour-season-guide-india",
+    "best-colours-wheatish-skin-men",
+    "best-colours-dusky-skin-women"
+  ],
+  "cta": {
+    "headline": "One selfie in daylight. Your season, your palette. Free.",
+    "sub": "Skip the guessing. Upload one selfie and see which colours work for you, with a palette you can shop from today.",
+    "href": "/app/quick-win?door=women&from=colour-season"
+  },
+  "keywords": [
+    "warm vs cool undertone indian skin",
+    "how to find undertone",
+    "undertone test at home",
+    "warm or cool skin tone india"
+  ]
+}

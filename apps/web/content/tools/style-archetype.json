@@ -1,0 +1,70 @@
+{
+  "slug": "style-archetype",
+  "title": "Style archetype quiz: find your style in five questions",
+  "description": "A free style archetype quiz with no photo. Answer five questions and get a style name, three signature pieces and what to upgrade.",
+  "headline": "Find your style archetype in five questions",
+  "sub": "No photo needed. Five questions, one style name, three pieces to start with.",
+  "how_it_works": [
+    "Pick your door, men or women.",
+    "Answer five questions: where you wear your clothes, your climate, your occasions, your budget per item and your vibe.",
+    "Get your style archetype, three signature pieces and two upgrades."
+  ],
+  "what_you_get": [
+    "A style name such as Quiet Sharp or Soft Romantic, in two words you can remember.",
+    "A one-line description of what that style looks like in plain words.",
+    "Three signature pieces to build around.",
+    "Two upgrades, each phrased as a swap rather than a rule.",
+    "An option to add a selfie and get your colour season too."
+  ],
+  "sample": {
+    "door": "women",
+    "archetype": "Polished Ease",
+    "one_line": "Neat and comfortable together. You look finished and still relaxed.",
+    "signature_pieces": [
+      "A fluid shirt or kurta in a good fabric",
+      "Straight-leg tailored trousers or palazzos",
+      "Block-heel sandals or clean loafers"
+    ],
+    "avoid_list": [
+      "Swap stiff, clingy fabrics for fluid drape",
+      "Swap busy accessories for one good bag and one good pair of earrings"
+    ],
+    "famous_for": "You carry fluid structure well; clean lines and soft drape make you look pulled together."
+  },
+  "faq": [
+    {
+      "q": "Is a style archetype a label I am stuck with?",
+      "a": "No. It is a starting point. Most people sit between two styles. The name gives you a direction, and you can change it when your life changes."
+    },
+    {
+      "q": "Why does my answer about vibe matter most?",
+      "a": "Your vibe sets the style family. The other answers, like climate and budget, set which versions of it you can use."
+    },
+    {
+      "q": "Do I need to upload a photo?",
+      "a": "Not for this tool. If you want your colour season too, add one selfie in daylight."
+    },
+    {
+      "q": "Are all eight styles equally good?",
+      "a": "Yes. Each one is a different way to look well put together. None is better than another."
+    }
+  ],
+  "cta": {
+    "label": "Find my style",
+    "href": "/app/quick-win?door=men&from=style-archetype"
+  },
+  "keywords": [
+    "style archetype quiz",
+    "what is my style quiz",
+    "fashion personality quiz india",
+    "find my style men women"
+  ],
+  "intro": "You may already know what you like to wear. You may not have a name for it. A style archetype gives it a name, so you can shop with a clear idea instead of scrolling for hours. This quiz uses five questions and no photo. It is the fastest way to get a direction. There are eight styles for men and eight for women. None is better than another. Each is a different way to look well put together.",
+  "tips": [
+    "Answer for the life you have, not the one you wish you had.",
+    "If two answers fit, pick the one you use more days of the week.",
+    "Retake the quiz when your job or city changes.",
+    "Add a selfie after the quiz to get your colour season too."
+  ],
+  "honesty": "The quiz gives you a name and three pieces to start with. It never tells you what you cannot wear. Every upgrade is a swap, and every swap has a reason."
+}

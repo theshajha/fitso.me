@@ -1,0 +1,73 @@
+{
+  "slug": "does-this-suit-me",
+  "title": "Does this suit me? A free verdict on one item",
+  "description": "Upload a product screenshot and get an honest yes, yes-if or no based on your colour season and style. Free for your first check.",
+  "headline": "Does this suit me? Get an honest verdict",
+  "sub": "Find your colours first. Then check one item before you buy it.",
+  "how_it_works": [
+    "Do the quick win first. One selfie gives you your season, undertone and style.",
+    "Upload a screenshot of the item or paste its link.",
+    "Get a verdict: yes, yes-if or no, with the reasons and what to do next."
+  ],
+  "what_you_get": [
+    "A clear verdict: yes, yes-if (with the one change that makes it work) or no.",
+    "Two to four reasons, tied to your colours, your style and what you already own.",
+    "What the item is, its colour and a rough price.",
+    "A saved-money figure when the answer is no and you skip the purchase.",
+    "An honest answer. A no is worth more than a polite yes."
+  ],
+  "sample": {
+    "door": "men",
+    "verdict": "yes_if",
+    "reasons": [
+      "The olive green sits well with your warm undertone.",
+      "The straight cut works with your build.",
+      "You already own two similar overshirts, so this one would duplicate them."
+    ],
+    "condition": "Yes if you swap it for the rust version. It fills a gap in your wardrobe and adds a colour you do not own yet.",
+    "item": {
+      "name": "Olive cotton overshirt",
+      "brand": "Zara",
+      "category": "overshirt",
+      "colour": "olive",
+      "price_guess_inr": 3490
+    },
+    "saved_amount_inr": null
+  },
+  "faq": [
+    {
+      "q": "Why do I need to do the quick win first?",
+      "a": "The verdict needs your colours and your style. Without them, the answer is a guess. With them, it is specific to you."
+    },
+    {
+      "q": "Will it only say yes?",
+      "a": "No. It says no when an item clashes with your palette, duplicates something you own or goes against your stop-buying note."
+    },
+    {
+      "q": "What kind of item can I check?",
+      "a": "Clothes, shoes and accessories from any Indian or global brand. A clear screenshot works best."
+    },
+    {
+      "q": "How many checks are free?",
+      "a": "Your first check is free with your quick win. More checks come with a paid plan."
+    }
+  ],
+  "cta": {
+    "label": "Start with my colours",
+    "href": "/app/quick-win?door=men&from=does-this-suit-me"
+  },
+  "keywords": [
+    "does this suit me",
+    "will this colour suit me",
+    "should i buy this",
+    "outfit check before buying india"
+  ],
+  "intro": "You find a shirt online. It looks good on the model. You wonder if it will look good on you. Most shopping advice says yes to everything, which is why wardrobes fill up with things people rarely wear. This tool checks one item against your colour season, your style and what the item replaces. It tells you yes, yes-if or no, and it explains why. A no can save you a return and a few thousand rupees.",
+  "tips": [
+    "Use a clear screenshot with the colour visible, not a dark or filtered one.",
+    "Include the product name and price when you can.",
+    "Check items before you add them to your cart, not after.",
+    "Ask about one item at a time for the clearest answer."
+  ],
+  "honesty": "An honest no is more useful than a polite yes. The verdict says no when the item clashes with your palette, repeats something you already own or goes against your stop-buying note."
+}

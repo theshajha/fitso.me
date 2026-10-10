@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fitso pivot plan</title>
+<meta name="description" content="Six-month plan to turn fitso.me from a wardrobe inventory into an AI stylist that makes three decisions, with a path to $5,000 a month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --base:#FAFAFC; --surface:#FFFFFF; --ink:#15131A; --ink-2:#4A4756; --ink-3:#5E5A6B; --line:#DEDCE6; --line-2:#ECEAF2;
+  --accent:#D4166F; --accent-ink:#FFFFFF; --wash:#FBE4EF;
+  --s1:#D4166F; --s2:#2F55D4; --s3:#C2641A; --s4:#1F8A6B;
+  --spring:#FF7A45; --summer:#7FA8D9; --autumn:#B8632F; --winter:#2642E5;
+  --good:#15735A; --warn:#965007; --bad:#C62828;
+  --radius:10px; --maxw:1280px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --base:#121117; --surface:#1A1921; --ink:#F1EFF6; --ink-2:#C4C0D0; --ink-3:#A29EB0; --line:#2E2C38; --line-2:#242230;
+    --accent:#F0479A; --accent-ink:#1A0A12; --wash:#3A1427;
+    --s1:#F0479A; --s2:#6B8CF2; --s3:#E0863C; --s4:#3FB58E;
+    --good:#3FB58E; --warn:#E09A3C; --bad:#F06B6B;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --base:#121117; --surface:#1A1921; --ink:#F1EFF6; --ink-2:#C4C0D0; --ink-3:#A29EB0; --line:#2E2C38; --line-2:#242230;
+  --accent:#F0479A; --accent-ink:#1A0A12; --wash:#3A1427;
+  --s1:#F0479A; --s2:#6B8CF2; --s3:#E0863C; --s4:#3FB58E;
+  --good:#3FB58E; --warn:#E09A3C; --bad:#F06B6B;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--base);color:var(--ink);font-family:"Hanken Grotesk",system-ui,sans-serif;font-size:17px;line-height:1.55;font-feature-settings:"tnum" 1}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:"Syne",sans-serif;letter-spacing:-0.01em;line-height:1.08;margin:0}
+h1{font-weight:800;font-size:clamp(40px,6vw,76px)}
+h2{font-weight:800;font-size:clamp(26px,3vw,38px)}
+h3{font-weight:700;font-size:20px;margin-top:28px}
+p{margin:12px 0}
+a{color:var(--accent)}
+code,.mono{font-family:"Spline Sans Mono",ui-monospace,monospace;font-size:0.92em}
+.kicker{font-family:"Spline Sans Mono",monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+ul{padding-left:22px}li{margin:6px 0}
+strong{font-weight:700}
+
+/* masthead */
+.mast{position:relative;overflow:hidden;padding:56px 0 40px;border-bottom:1px solid var(--line)}
+.mast .wrap{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:end}
+.mast .meta{display:flex;flex-wrap:wrap;gap:18px 28px;margin:18px 0 0;font-family:"Spline Sans Mono",monospace;font-size:13px;color:var(--ink-2)}
+.mast .meta b{display:block;color:var(--ink-3);font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.fan{position:relative;height:300px}
+.fan .chip{position:absolute;left:50%;bottom:0;width:92px;height:250px;border-radius:14px 14px 8px 8px;transform-origin:50% 100%;box-shadow:0 10px 30px rgba(20,16,30,.18);border:3px solid var(--surface);display:flex;align-items:flex-end;padding:10px;font-family:"Spline Sans Mono",monospace;font-size:11px;color:#fff;letter-spacing:.08em;text-transform:uppercase;animation:fanin .9s cubic-bezier(.2,.8,.2,1) both}
+.fan .c1{background:var(--spring);transform:translateX(-50%) rotate(-42deg)}
+.fan .c2{background:var(--summer);transform:translateX(-50%) rotate(-24deg);animation-delay:.08s}
+.fan .c3{background:var(--autumn);transform:translateX(-50%) rotate(-6deg);animation-delay:.16s}
+.fan .c4{background:var(--winter);transform:translateX(-50%) rotate(12deg);animation-delay:.24s}
+.fan .c5{background:var(--accent);transform:translateX(-50%) rotate(30deg);animation-delay:.32s}
+@keyframes fanin{from{transform:translateX(-50%) rotate(0deg);opacity:0}}
+@media (prefers-reduced-motion: reduce){.fan .chip{animation:none}}
+
+/* verdict */
+.verdict{margin:36px 0 0;padding:28px 28px 24px;background:var(--surface);border:1px solid var(--line);border-left:8px solid var(--accent);border-radius:var(--radius)}
+.verdict .stamp{display:inline-block;font-family:"Syne",sans-serif;font-weight:800;font-size:13px;letter-spacing:.16em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:6px 12px;border-radius:6px;transform:rotate(-2deg)}
+.verdict p{font-size:19px}
+.verdict p.lead{font-size:22px;font-weight:600;line-height:1.35}
+
+/* sections */
+section.sec{padding:44px 0 8px;border-top:1px solid var(--line-2)}
+.sec-h{display:grid;grid-template-columns:72px 1fr;gap:20px;align-items:center;margin-bottom:18px}
+.tab{height:54px;border-radius:8px 8px 4px 4px;display:flex;align-items:center;justify-content:center;font-family:"Spline Sans Mono",monospace;font-weight:600;color:#fff;font-size:22px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.14)}
+.t1{background:var(--s1)}.t2{background:var(--s2)}.t3{background:var(--s3)}.t4{background:var(--s4)}
+.t5{background:var(--spring)}.t6{background:var(--winter)}
+.sec .deck{color:var(--ink-2);font-size:18px;margin-top:-6px}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
+th{font-family:"Spline Sans Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500;background:var(--base)}
+tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-family:"Spline Sans Mono",monospace;font-size:14px}
+tbody tr.hi td{background:var(--wash);font-weight:600}
+
+/* chips & callouts */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:14px}
+.chip i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.yes{color:var(--good);font-weight:700}.no{color:var(--bad);font-weight:700}.yesif{color:var(--warn);font-weight:700}
+.rule{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:14px;margin:18px 0}
+.rule div{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.rule div b{display:block;font-family:"Syne",sans-serif;font-size:15px;margin-bottom:6px}
+.decision{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start;padding:18px 0;border-bottom:1px dashed var(--line)}
+.decision:last-child{border-bottom:0}
+.decision .n{font-family:"Syne",sans-serif;font-weight:800;font-size:28px;color:var(--accent)}
+.decision .n small{display:block;font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.12em;color:var(--ink-3);font-weight:500}
+.ask{background:var(--wash);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;margin:20px 0}
+.ask ol{margin:8px 0 0;padding-left:22px}
+.ask li{margin:10px 0}
+
+/* figures */
+figure{margin:22px 0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 18px 12px;overflow-x:auto}
+figure svg{display:block;max-width:100%;height:auto}
+figcaption{font-size:14px;color:var(--ink-2);margin-top:10px}
+figcaption b{font-family:"Spline Sans Mono",monospace;font-weight:600;color:var(--ink);letter-spacing:.06em}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-2);margin:4px 0 8px}
+.legend i{width:14px;height:8px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:middle}
+svg text{font-family:"Hanken Grotesk",sans-serif;fill:var(--ink-2);font-size:12px}
+svg text.v{font-family:"Spline Sans Mono",monospace;fill:var(--ink);font-size:12px;font-weight:600}
+svg text.lane{font-family:"Syne",sans-serif;fill:var(--ink);font-weight:700;font-size:13px}
+svg .grid{stroke:var(--line-2);stroke-width:1}
+svg .axis{stroke:var(--line);stroke-width:1}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--base);font-family:"Spline Sans Mono",monospace;font-size:12px;padding:6px 9px;border-radius:6px;opacity:0;transform:translate(-50%,-130%);transition:opacity .12s;z-index:9;white-space:nowrap}
+.hit{cursor:crosshair}
+.hit:hover{filter:brightness(1.12)}
+
+/* roadmap month cards */
+.months{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:16px;margin-top:18px}
+.mo{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;border-top:6px solid var(--s2)}
+.mo:nth-child(2){border-top-color:var(--s1)}.mo:nth-child(3){border-top-color:var(--s3)}.mo:nth-child(4){border-top-color:var(--s4)}.mo:nth-child(5){border-top-color:var(--summer)}.mo:nth-child(6){border-top-color:var(--winter)}
+.mo h3{margin:0 0 4px;font-size:19px}
+.mo .when{font-family:"Spline Sans Mono",monospace;font-size:12px;color:var(--ink-3);margin-bottom:10px}
+.mo h4{margin:14px 0 4px;font-family:"Spline Sans Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.mo ul{margin:0;padding-left:18px;font-size:15px}
+.mo .gate{margin-top:14px;padding:10px 12px;background:var(--wash);border-radius:8px;font-size:14px}
+.mo .gate b{font-family:"Syne",sans-serif;color:var(--accent)}
+
+footer{padding:40px 0 60px;color:var(--ink-3);font-size:13px;border-top:1px solid var(--line);margin-top:40px}
+
+@media (max-width:900px){
+  .mast .wrap{grid-template-columns:1fr}
+  .fan{height:200px}.fan .chip{width:70px;height:170px}
+  .sec-h{grid-template-columns:52px 1fr}.tab{height:44px;font-size:16px}
+  .decision{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff;color:#000;font-size:12pt}
+  .mast{padding:20px 0}.fan{display:none}.mast .wrap{grid-template-columns:1fr}
+  .tbl,figure,.mo,.rule div,.verdict{break-inside:avoid;border-color:#bbb}
+  section.sec{break-before:auto}
+  .tip{display:none}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <div>
+      <div class="kicker">fitso.me · pivot plan · six months</div>
+      <h1>From closet inventory to the honest stylist</h1>
+      <div class="meta">
+        <div><b>Date</b>2026-10-10</div>
+        <div><b>Horizon</b>to 2027-04-14</div>
+        <div><b>Owner</b>Shashank, solo</div>
+        <div><b>Fixed budget</b>near zero</div>
+        <div><b>Goal</b>USD 5,000 / month</div>
+      </div>
+    </div>
+    <div class="fan" aria-hidden="true">
+      <div class="chip c1">spring</div>
+      <div class="chip c2">summer</div>
+      <div class="chip c3">autumn</div>
+      <div class="chip c4">winter</div>
+      <div class="chip c5">you</div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="verdict">
+    <span class="stamp">Verdict</span>
+    <p class="lead">Pivot fitso.me into an AI stylist that makes three decisions for a person: what is working for them, what their wardrobe should be, and whether to buy a specific item. Sell a free quick win, a one-time Style Report, and an annual Pro plan. Grow only through content and shared result cards.</p>
+    <p>The real goal is USD 5,000 a month by December 2027, from this product or a family of products that grow out of it. This six-month plan is phase one: get as close as the funnel allows, steer every month, and learn which pillar compounds. The base case lands near 5,000 only if traffic ramps as modelled. The low case is about 1,900. Both are progress, and both are reviewed at the monthly check-in in section 13.</p>
+    <p>USD 5,000 a month needs about 125 paying buyers a month at a blended USD 35, plus about USD 700 in affiliate commissions. At the modelled funnel that needs about 15,000 visitors a month. The site has 51 today. <strong>Traffic is the binding constraint, not the product.</strong> Roughly 60 percent of the six-month effort goes to the content engine, 40 percent to the product.</p>
+    <p>Pricing is built to win the impulse: a real founding price, a real personal timer, a credit you earn by sharing, and nothing fake. Section 4.1 has the mechanism and section 14 the game theory behind it. Decisions that need your call are in section 12.</p>
+  </div>
+
+  <!-- 1 -->
+  <section class="sec" id="start">
+    <div class="sec-h"><div class="tab t2">1</div><h2>Where we start</h2></div>
+    <p class="deck">A paused product with a working import pipeline, 21 guides nobody can find, and no AI.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Fact</th><th>Value</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr><td>Visitors, last 30 days</td><td>51</td><td>PostHog web overview, 2026-10-10</td></tr>
+        <tr><td>Sessions, last 30 days</td><td>63, bounce 70 percent</td><td>PostHog</td></tr>
+        <tr><td>Guides written</td><td>21: 8 festival, 6 travel, 2 occasion, 2 lifestyle, 2 celebration, 1 seasonal</td><td><code>src/lib/guides/</code></td></tr>
+        <tr class="hi"><td>Guides indexable</td><td>effectively none. Client-rendered SPA, every guide URL serves the homepage head, no sitemap, no robots file</td><td><code>vercel.json</code>, <code>public/_redirects</code>, <code>index.html</code></td></tr>
+        <tr><td>AI in product</td><td>none. The "AI categorization" is regex</td><td><code>src/lib/importers/categoryDetection.ts</code></td></tr>
+        <tr><td>Order import</td><td>Myntra and Ajio bookmarklets that scrape the DOM. High fragility</td><td><code>src/lib/importers/scrapers/</code></td></tr>
+        <tr><td>Stack</td><td>React 19 + Vite SPA, Supabase auth and Postgres, Dexie local store, Cloudflare Worker + R2 for images, PostHog</td><td>repo</td></tr>
+        <tr><td>Known security gap</td><td>browser queries the database directly</td><td>agents stack notes</td></tr>
+        <tr><td>Last commit</td><td>2026-08-31, project marked paused</td><td>git</td></tr>
+      </tbody>
+    </table></div>
+    <div class="rule">
+      <div><b>Carries over</b>Supabase auth and data, the image worker, the item schema, the analytics wiring, the 21 guides as seed content, packing and wishlist as low-priority Pro extras, and a domain with six months of age.</div>
+      <div><b>Does not carry over</b>The manual-inventory framing, the landing page promise, and the SPA as the home of content pages.</div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="sec" id="market">
+    <div class="sec-h"><div class="tab t3">2</div><h2>What the market says</h2></div>
+    <p class="deck">Verified by a three-reviewer research pass unless marked. Nobody verified competes on honesty plus a buy verdict against a target wardrobe.</p>
+    <ul>
+      <li><strong>Whering</strong> is the best-funded direct competitor: about USD 7M seed led by eBay Ventures and Google AI Futures Fund, nearly USD 14M total, about 10M users, mostly Gen Z. Its AI features (virtual try-on, a styling chatbot) are announced, not shipped.</li>
+      <li><strong>Alta</strong> raised USD 11M seed in June 2025 (Menlo Ventures) for an AI stylist and personal shopper. Free today, paid tiers undisclosed. Unverified beyond the funding.</li>
+      <li><strong>Style DNA</strong> is the closest working product: selfie colour analysis, body-type guidance, a photo check of store items. Subscription only, with "poor value for money" and "unauthorized charges" among its top review complaints. Unverified, from app-store aggregators.</li>
+      <li><strong>Colour analysis apps</strong> (My Best Colors, Drape, Colorayz, Dressika) mostly sell a one-time unlock. A few push weekly subscriptions. Unverified.</li>
+      <li><strong>Myntra</strong> expected 200M annual active users by end of 2025, hit an 80M monthly peak in the festive season, and reports Gen Z as half its active base.</li>
+      <li><strong>India online fashion</strong> is forecast to add about USD 56B at 21 percent a year from 2025 to 2030 (Technavio).</li>
+      <li><strong>Conversion benchmark:</strong> hard-paywall mobile apps convert about 12 percent of installs to paid by day 35 against about 2 percent for open freemium (RevenueCat 2025 guest commentary, low confidence, mobile not web). Lesson: keep the free tier narrow and put the paywall right after the first visible result.</li>
+      <li><strong>Payments:</strong> Dodo Payments is a merchant of record with India domestic cards and UPI at about 4 percent plus a fixed fee, plus 1.5 percent international and 0.5 percent on subscriptions. Paddle and Lemon Squeezy list 5 percent plus 50 cents, with Paddle's Indian onboarding reported as selective. Razorpay is 2 percent domestic but is not a merchant of record. Vendor pages only.</li>
+      <li><strong>Affiliate:</strong> Myntra pays about 5 to 8 percent through networks and 8 to 12 percent through its creator program. Amazon India fashion pays about 5 to 9 percent. Affiliate blogs only.</li>
+      <li><strong>Search demand</strong> for colour analysis, capsule wardrobes, and occasion outfits could not be quantified. The qualitative signal is strong: colour analysis is a sustained TikTok and Pinterest trend, and every 2026 menswear source frames the year as "fewer, better pieces".</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section class="sec" id="product">
+    <div class="sec-h"><div class="tab t1">3</div><h2>The product: three decisions</h2></div>
+    <div class="decision">
+      <div class="n">01<small>what is working for me</small></div>
+      <div><strong>Style profile from photos.</strong> Colour season, face and feature read, body proportion, style archetype. Output leads with "three things working for you", then the rules that follow. This is the proof moment and the share hook.</div>
+    </div>
+    <div class="decision">
+      <div class="n">02<small>what should my wardrobe be</small></div>
+      <div><strong>Target wardrobe plan.</strong> The user declares the wardrobe they want: life, climate, work, occasions, budget, vibe. The model builds a core wardrobe template, compares it to what they own, and produces a gap list and a phase-out list. This is what turns decision 03 into a real decision instead of "it suits you".</div>
+    </div>
+    <div class="decision">
+      <div class="n">03<small>should I buy this</small></div>
+      <div><strong>Verdict on an item.</strong> Screenshot or link in. Out: <span class="yes">yes</span>, <span class="no">no</span>, or <span class="yesif">yes-if</span>, with reasons tied to the profile and the target. Every yes adds the item to the wardrobe. Every no is a saved purchase shown on the dashboard. This is the daily habit and the affiliate channel.</div>
+    </div>
+
+    <h3>Honest flattery, as a product rule</h3>
+    <div class="rule">
+      <div><b>1. Positives first</b>The first screen of any result is "what is working for you", with at least three observations the model can point to in the photo.</div>
+      <div><b>2. Gaps are upgrades</b>"A spread collar will do more for your jawline", never "avoid narrow collars".</div>
+      <div><b>3. No fake comparisons</b>No "better than 80 percent of people". A percentile is a comparison the model cannot make and reads as a trick the second time.</div>
+      <div><b>4. Confidence shown</b>A low-confidence colour read says "retake in daylight for a sharper call" instead of guessing.</div>
+      <div><b>5. The voice</b>A friend who dresses well and likes you. Not a fashion editor.</div>
+    </div>
+
+    <h3>Two front doors, one engine</h3>
+    <p>Nothing on the women's side should read as the men's product with the pronouns changed.</p>
+    <div class="tbl"><table>
+      <thead><tr><th></th><th>Men</th><th>Women</th></tr></thead>
+      <tbody>
+        <tr><td>What they are buying</td><td>a uniform that works, fewer decisions</td><td>a range that handles occasions, more options</td></tr>
+        <tr><td>Unit of thought</td><td>the item</td><td>the outfit</td></tr>
+        <tr><td>Profile emphasis</td><td>fit, proportion, colour palette, grooming cues</td><td>colour season, body shape, silhouette, occasion range</td></tr>
+        <tr><td>Target wardrobe</td><td>20 to 35 piece capsule, two or three looks</td><td>40 to 60 pieces across occasion families, outfit formulas</td></tr>
+        <tr><td>Verdict logic</td><td>duplicates, fit, palette, replaces a tired item</td><td>pairs with what she owns, occasion coverage, silhouette</td></tr>
+        <tr><td>Content topics</td><td>capsule, office, wedding guest, Goa, interview, "stop buying navy"</td><td>wedding season, festive, office, body shape, colour palette, "what to wear with X"</td></tr>
+        <tr><td>Tone</td><td>direct, low word count</td><td>warm, visual, more options shown</td></tr>
+        <tr><td>Share card</td><td>"your three strengths"</td><td>"your season and palette"</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Separate:</strong> intake questions, archetype library, core wardrobe templates, content calendars, landing pages, result card designs, copy. <strong>Shared:</strong> vision model, item schema, verdict engine, import, billing, analytics.</p>
+
+    <h3>The wardrobe fills itself</h3>
+    <p>Manual entry killed the first version. Three automatic inputs replace it.</p>
+    <div class="chips">
+      <span class="chip"><i style="background:var(--s1)"></i>verdict yeses become items</span>
+      <span class="chip"><i style="background:var(--s2)"></i>Myntra and Ajio import, behind a health check, with a screenshot fallback</span>
+      <span class="chip"><i style="background:var(--s3)"></i>"photo of your rail": five photos, the vision model itemises</span>
+    </div>
+
+    <h3>Capture quality and privacy</h3>
+    <p>Colour season reads are only as good as the lighting. The intake guides the user: daylight, no filter, neutral background, hair back, one close face shot, one full-length shot. The model returns a confidence score. Below the threshold the result says so and asks for a retake. Honest beats wrong.</p>
+    <p>Original photos are deleted after the profile is generated. Only the derived profile and a user-approved thumbnail are kept. This is both the right thing and a selling line.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="sec" id="tiers">
+    <div class="sec-h"><div class="tab t4">4</div><h2>Tiers and pricing</h2></div>
+    <p class="deck">A free tier that proves it works on this person and stops there. An impulse buy. An expensive tier for people for whom this matters.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Tier</th><th>Price</th><th>What you get</th><th>Why it exists</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Free quick win</strong></td><td class="num">0</td><td>One selfie plus five answers. Colour season, style archetype, your three strengths, one "stop buying this", a shareable result card, one free verdict. Email required to see the result.</td><td>proof on your own face, list building, the share hook</td></tr>
+        <tr><td><strong>Style Report</strong><br><span class="kicker">one-time</span></td><td class="num">INR 1,499<br>USD 24</td><td>Full profile from five to eight photos (face, full length, closet rail), target wardrobe intake, core wardrobe template for your life, gap list and phase-out list, ten verdicts, PDF.</td><td>the impulse buy. Less than one wrong shirt.</td></tr>
+        <tr class="hi"><td><strong>Pro</strong><br><span class="kicker">annual</span></td><td class="num">INR 4,999<br>USD 79</td><td>Everything in the Report plus unlimited verdicts under fair use, wardrobe auto-fill, a live shopping list for your gaps with links, trip packing from your real wardrobe, "what do I wear to X" answered for you, a re-profile each season.</td><td>the expensive tier. For people who shop often and want the decision made every time.</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li>A Report buyer who upgrades to Pro within 30 days has the Report price credited.</li>
+      <li>INR for India, USD for the Gulf and global. The USD price sits above the FX conversion because the Gulf buyer's reference price is a Namshi order, not a Myntra order.</li>
+      <li>Price test in month five: Report at INR 999 against 1,499, Pro at 3,999 against 4,999. The base case uses the higher prices as list prices. What people actually pay in the first months is set by the urgency mechanism below.</li>
+    </ul>
+
+    <h3>4.1 Honest urgency: how the price wins the impulse</h3>
+    <p>A visitor who sees USD 24 and no reason to decide today will decide tomorrow, and tomorrow never comes. Three mechanisms give a real reason to decide now. Each is true, each is enforced, and none runs on the landing page for a stranger who has done nothing yet.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Mechanism</th><th>What the user sees</th><th>What makes it true</th><th>What it is for</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Founding price</strong></td><td>"Founding price: Report INR 499 / USD 10, Pro INR 1,999 / USD 39, until fitso has earned its first USD 1,000. USD 612 of 1,000 so far."</td><td>The counter is live from the payments webhook. At 1,000 the founding price ends and never returns. Founding Pro members keep their price on every renewal.</td><td>scarcity that is public and verifiable. The counter is common knowledge, so it creates a rush without a fake "3 left".</td></tr>
+        <tr><td><strong>Finish-today price</strong></td><td>On the free result page: "Your Report price for the next 24 hours: INR 999 / USD 15. After that, INR 1,499 / USD 24." with a visible countdown.</td><td>Server-side, one per account, starts when the free result is shown, never resets. A user who returns on day three sees the list price and "your finish-today price ended on &lt;date&gt;".</td><td>urgency that rewards effort already spent. The user uploaded a photo and saw something true. The discount is for finishing, not for being rushed.</td></tr>
+        <tr><td><strong>Share credit</strong></td><td>"Post your card, get INR 500 / USD 8 off Pro for 7 days."</td><td>Issued when the card is opened by someone else at least once.</td><td>a price the user earns by doing the thing that grows the product. Referral as discount.</td></tr>
+      </tbody>
+    </table></div>
+    <p>During the founding period the finish-today price is the founding price, so there is one number on the screen, not two.</p>
+    <div class="rule">
+      <div><b>1. Timers never reset</b>Never extend, never reappear. Expired means expired. The expiry line on return is what makes the next timer believable.</div>
+      <div><b>2. Real numbers</b>The counter and the list price are real. The list price is what people pay after founding, and the base case is built on it.</div>
+      <div><b>3. Nothing for strangers</b>No countdown for anonymous visitors. Urgency starts after the user does something.</div>
+      <div><b>4. No fake caps</b>No "only N left" unless N is a real cap. Founding is capped by revenue, not a made-up seat count.</div>
+      <div><b>5. Refund brake</b>Refunds over 3 percent of sales in a month pause every urgency mechanism until the cause is found. The monthly review checks this.</div>
+    </div>
+    <p><strong>Effect on the model:</strong> months one and two run at about USD 15 blended revenue per buyer instead of 34, and the first USD 1,000 should land in month two or early three. Conversion is expected to run higher under founding pricing, so the monthly buyer targets stand and the revenue targets for months one and two are soft. From month three the list price and the finish-today price carry the model.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="sec" id="money">
+    <div class="sec-h"><div class="tab t6">5</div><h2>Path to USD 5,000 a month</h2></div>
+
+    <h3>Unit economics</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Item</th><th class="num">Value</th><th>Basis</th></tr></thead>
+      <tbody>
+        <tr><td>Blended Report price</td><td class="num">USD 20</td><td>60 percent India at USD 18 equivalent, 40 percent Gulf and global at USD 24</td></tr>
+        <tr><td>Blended Pro price</td><td class="num">USD 68</td><td>60 percent India at USD 60 equivalent, 40 percent at USD 79</td></tr>
+        <tr><td>Buyer mix</td><td class="num">70 / 30</td><td>Report / Pro. Impulse tier dominates early</td></tr>
+        <tr class="hi"><td>Revenue per buyer</td><td class="num">USD 34.4</td><td>0.7 x 20 + 0.3 x 68</td></tr>
+        <tr><td>Payment fees</td><td class="num">5.5 percent</td><td>Dodo, INR and USD blended</td></tr>
+        <tr><td>Model cost, Report</td><td class="num">USD 0.10 to 0.30</td><td>Opus 5.5 at USD 4 in / 20 out per million tokens, about eight images at roughly 1,500 tokens each plus 4,000 output tokens</td></tr>
+        <tr><td>Model cost, verdict</td><td class="num">USD 0.01 to 0.03</td><td>Sonnet 5.5 at USD 2 in / 10 out, one image plus cached profile</td></tr>
+        <tr><td>Model cost, quick win</td><td class="num">about USD 0.02</td><td>Sonnet 5.5, one image</td></tr>
+        <tr><td>Affiliate per verdict yes</td><td class="num">about USD 1.40</td><td>INR 2,000 average item at 6 percent</td></tr>
+      </tbody>
+    </table></div>
+
+    <figure>
+      <div class="kicker">Fig. 1 · from 100 visitors to buyers</div>
+      <svg viewBox="0 0 1200 250" role="img" aria-label="Funnel: of 100 visitors, 15 start the quick win, 10 finish it, 0.8 buy">
+        <g id="f1"></g>
+      </svg>
+      <figcaption><b>FIG. 1</b> Of 100 visitors, 15 start the quick win, 10 finish it, and 0.8 buy. Model cost per buyer is under a dollar, so the visitor is the only expensive input. 125 buyers a month need about 15,000 visitors.</figcaption>
+    </figure>
+
+    <h3>Funnel assumptions</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Step</th><th class="num">Rate</th><th>Basis</th></tr></thead>
+      <tbody>
+        <tr><td>Visitor starts the quick win</td><td class="num">15 percent</td><td>quiz-style landing pages with a visible result card</td></tr>
+        <tr><td>Starter finishes</td><td class="num">65 percent</td><td>one selfie, five answers, under two minutes</td></tr>
+        <tr><td>Finisher buys within 14 days</td><td class="num">8 percent</td><td>between the 2 percent open-freemium and 12 percent hard-paywall benchmarks. The free result is real but partial</td></tr>
+        <tr class="hi"><td>Visitor to buyer</td><td class="num">0.8 percent</td><td>product of the above</td></tr>
+        <tr><td>Report buyer upgrades to Pro within 90 days</td><td class="num">10 percent</td><td>assumption</td></tr>
+        <tr><td>Pro user verdict yeses a month</td><td class="num">6</td><td>assumption</td></tr>
+        <tr><td>Verdict yes converted via affiliate link</td><td class="num">40 percent</td><td>assumption</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Monthly targets</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Month</th><th>Period</th><th class="num">Visitors</th><th class="num">Quick wins done</th><th class="num">New buyers</th><th class="num">Subscription</th><th class="num">Affiliate</th><th class="num">Total</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>2026-10-15 to 2026-11-14</td><td class="num">1,000</td><td class="num">100</td><td class="num">5</td><td class="num">120</td><td class="num">0</td><td class="num">120</td></tr>
+        <tr><td>2</td><td>to 2026-12-14</td><td class="num">3,000</td><td class="num">300</td><td class="num">20</td><td class="num">600</td><td class="num">30</td><td class="num">630</td></tr>
+        <tr><td>3</td><td>to 2027-01-14</td><td class="num">6,000</td><td class="num">600</td><td class="num">45</td><td class="num">1,450</td><td class="num">100</td><td class="num">1,550</td></tr>
+        <tr><td>4</td><td>to 2027-02-14</td><td class="num">9,000</td><td class="num">900</td><td class="num">75</td><td class="num">2,500</td><td class="num">250</td><td class="num">2,750</td></tr>
+        <tr><td>5</td><td>to 2027-03-14</td><td class="num">12,000</td><td class="num">1,200</td><td class="num">100</td><td class="num">3,500</td><td class="num">450</td><td class="num">3,950</td></tr>
+        <tr class="hi"><td>6</td><td>to 2027-04-14</td><td class="num">15,000</td><td class="num">1,500</td><td class="num">125</td><td class="num">4,300</td><td class="num">700</td><td class="num">5,000</td></tr>
+      </tbody>
+    </table></div>
+    <p>Subscription revenue includes Report-to-Pro upgrades from earlier cohorts. Affiliate assumes the Pro base compounds. All money in USD.</p>
+
+    <figure>
+      <div class="kicker">Fig. 2 · visitors and revenue, months 1 to 6</div>
+      <div class="legend"><span><i style="background:var(--s2)"></i>visitors a month</span><span><i style="background:var(--s1)"></i>revenue, USD a month</span></div>
+      <svg viewBox="0 0 1200 300" role="img" aria-label="Two small bar charts: visitors ramp from 1,000 to 15,000; revenue ramps from 120 to 5,000 dollars">
+        <g id="f2"></g>
+      </svg>
+      <figcaption><b>FIG. 2</b> The two ramps have the same shape because conversion is held flat at 0.8 percent. The plan bets on traffic, and the gates in section 9 check it each month.</figcaption>
+    </figure>
+
+    <h3>Scenarios at month six</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Scenario</th><th class="num">Visitors</th><th class="num">Visitor to buyer</th><th class="num">Buyers</th><th class="num">Revenue per buyer</th><th class="num">Affiliate</th><th class="num">Month 6 total</th></tr></thead>
+      <tbody>
+        <tr><td>Low</td><td class="num">8,000</td><td class="num">0.6 percent</td><td class="num">48</td><td class="num">34</td><td class="num">250</td><td class="num">1,900</td></tr>
+        <tr class="hi"><td>Base</td><td class="num">15,000</td><td class="num">0.8 percent</td><td class="num">120</td><td class="num">34</td><td class="num">700</td><td class="num">4,800</td></tr>
+        <tr><td>High</td><td class="num">25,000</td><td class="num">1.0 percent</td><td class="num">250</td><td class="num">38</td><td class="num">1,400</td><td class="num">10,900</td></tr>
+      </tbody>
+    </table></div>
+    <p>The low case still clears cost by ten times. What moves base to high is one content pillar outperforming, not a product feature.</p>
+
+    <h3>Where month-six visitors come from</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Source</th><th class="num">Share</th><th class="num">Visitors</th><th>How</th></tr></thead>
+      <tbody>
+        <tr><td>Occasion pages (search)</td><td class="num">40 percent</td><td class="num">6,000</td><td>programmatic "what to wear to X" pages, India and Gulf first</td></tr>
+        <tr><td>Colour and feature pages (search)</td><td class="num">20 percent</td><td class="num">3,000</td><td>"best colours for wheatish skin", season pages, "does X suit Y"</td></tr>
+        <tr><td>Social (Reels, TikTok, Pinterest)</td><td class="num">25 percent</td><td class="num">3,750</td><td>result-card posts, "AI read my face kindly" format, pins of palettes and capsules</td></tr>
+        <tr><td>Shared result cards</td><td class="num">10 percent</td><td class="num">1,500</td><td>every free result is a card built to be posted. The card links back</td></tr>
+        <tr><td>Reddit and communities</td><td class="num">5 percent</td><td class="num">750</td><td>r/IndianFashionAddicts, r/malefashionadvice, r/femalefashionadvice, Dubai expat groups</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="sec" id="content">
+    <div class="sec-h"><div class="tab t5">6</div><h2>The content engine</h2></div>
+    <p class="deck"><strong>The one rule.</strong> Every piece of content is a question the product answers better than the page does. The page gives the generic answer in full. The call to action gives the personal one.</p>
+    <p>"Here are three Diwali looks for men. Want to know which one you can already wear from your closet, and what one item would upgrade it?" Content that does not map to a decision does not get made. No fashion news, no trend reports, no celebrity coverage.</p>
+
+    <h3>Four pillars, each tied to a decision</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Pillar</th><th>Maps to</th><th>Page type</th><th>Scale by</th><th>Example titles</th><th>CTA</th></tr></thead>
+      <tbody>
+        <tr><td><strong>A. What to wear to X</strong></td><td>02, 03</td><td>occasion page: three looks per budget band, local brands, INR or AED prices, climate note</td><td>occasion x gender x region x budget</td><td>"Sangeet outfits for men, Bangalore, under 5,000" · "Dubai brunch outfits for women" · "Interview outfit India men" · "Goa trip packing women"</td><td>see which of these you can already wear</td></tr>
+        <tr><td><strong>B. Colour and features</strong></td><td>01</td><td>colour page: palette shown, what to buy, what to stop buying, celebrity examples with the same season</td><td>skin tone x season x gender; feature x garment</td><td>"Best colours for wheatish skin men" · "Deep autumn palette for Indian women" · "Which collar suits a round face"</td><td>find your season from one selfie</td></tr>
+        <tr><td><strong>C. Should you buy X</strong></td><td>03</td><td>item or brand verdict page: who it works for, who it does not, what it replaces, what to pair it with</td><td>brand x item x season</td><td>"Is the Rare Rabbit oversized shirt worth it" · "Zara vs H&amp;M chinos in India" · "Best white sneakers under 4,000"</td><td>check this against your profile</td></tr>
+        <tr><td><strong>D. Core wardrobe templates</strong></td><td>02</td><td>capsule page: the full list, the looks it makes, the budget, the shopping order</td><td>life situation x gender x climate</td><td>"20-piece capsule for a Bangalore techie" · "Dubai office wardrobe for women" · "Monsoon capsule men"</td><td>build yours from what you own</td></tr>
+      </tbody>
+    </table></div>
+    <p>The existing 21 guides are seeds for Pillars A and D. They move to the new content site, rewritten in the new voice, and split by gender where the current page serves both.</p>
+
+    <h3>Free tools as content</h3>
+    <p>Each free tool has its own page targeting its own keyword. Each one is the quick win in a different costume.</p>
+    <div class="chips">
+      <span class="chip"><i style="background:var(--s1)"></i>colour season from a selfie</span>
+      <span class="chip"><i style="background:var(--s2)"></i>style archetype quiz, five questions, no photo</span>
+      <span class="chip"><i style="background:var(--s3)"></i>"does this suit me" single verdict</span>
+      <span class="chip"><i style="background:var(--s4)"></i>wardrobe gap calculator</span>
+    </div>
+
+    <h3>Social formats</h3>
+    <div class="rule">
+      <div><b>Result card posts</b>The free result is a vertical card with the person's season, archetype, and three strengths. It is the share unit. Every card carries the URL.</div>
+      <div><b>"AI read my face, kindly"</b>Short video: selfie in, three true compliments out, one upgrade. The honesty is the hook. The flattery is the share.</div>
+      <div><b>Pinterest</b>Palettes, capsules, and occasion boards. Pinterest behaves like search and women's fashion is its largest category. Every Pillar B and D page gets pinned.</div>
+      <div><b>Reddit</b>Honest, non-promotional answers in style threads with the tool mentioned when it is the real answer. One account, long memory, no spam.</div>
+    </div>
+
+    <h3>Production and quality</h3>
+    <ul>
+      <li><strong>AI drafts, you edit.</strong> A pillar template plus structured inputs (occasion, gender, region, budget, climate, local brands with prices) drafts a page. You review in batches.</li>
+      <li><strong>Capacity:</strong> 10 pages a production day, two production days a week, about 80 pages a month.</li>
+      <li><strong>Uniqueness guard:</strong> every page carries data no other page has (local brands, local prices, climate, a verdict table). This keeps programmatic pages out of Google's scaled-content penalty. Thin variants are not published.</li>
+      <li><strong>Month five</strong> adds aggregate verdict data to pages: "of users with a warm autumn profile, 7 in 10 got a yes on this item". No competitor has that data.</li>
+      <li><strong>Cadence:</strong> 2 production days a week on pages, 3 short videos a week, 20 pins a week, 3 Reddit replies a week.</li>
+    </ul>
+
+    <div class="tbl"><table>
+      <thead><tr><th>Month</th><th class="num">Pages live</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td class="num">50</td><td>21 migrated and split by gender, Pillar B colour pages, the four tool pages</td></tr>
+        <tr><td>2</td><td class="num">150</td><td>wedding season push: sangeet, mehendi, reception, cocktail, both genders, four cities</td></tr>
+        <tr><td>3</td><td class="num">300</td><td>Pillar C verdicts on the top 50 Myntra and Namshi items</td></tr>
+        <tr><td>4</td><td class="num">450</td><td>Gulf pages, Ramadan and Eid run-up</td></tr>
+        <tr><td>5</td><td class="num">600</td><td>verdict-data enrichment on the top 100 pages</td></tr>
+        <tr><td>6</td><td class="num">750</td><td>prune the bottom 20 percent, double the top 10 percent</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Calendar alignment</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Window</th><th>What is happening</th><th>Content push</th></tr></thead>
+      <tbody>
+        <tr><td>Oct to Nov 2026</td><td>Diwali, start of wedding season</td><td>Diwali pages exist. Wedding guest pages for men and women by city</td></tr>
+        <tr><td>Nov 2026 to Feb 2027</td><td>Indian wedding season peak, Dubai winter social season</td><td>sangeet, reception, cocktail, Dubai brunch and Friday looks</td></tr>
+        <tr><td>Dec 2026</td><td>New Year, Christmas, Goa</td><td>party and travel pages, Goa packing split by gender</td></tr>
+        <tr><td>Jan to Feb 2027</td><td>Pongal, Republic Day, office resolutions, "new year new wardrobe"</td><td>capsule pages, office pages, phase-out content</td></tr>
+        <tr><td>Feb to Mar 2027</td><td>Ramadan run-up, Holi, spring</td><td>Eid and Ramadan pages for the Gulf, Holi pages</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="sec" id="buy">
+    <div class="sec-h"><div class="tab t2">7</div><h2>Buy, not build</h2></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Need</th><th>Choice</th><th class="num">Cost a month</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Vision and reasoning</td><td>Claude through an AI gateway. Opus 5.5 for the full Report, Sonnet 5.5 for the quick win and verdicts, Haiku 5.5 for itemising rail photos</td><td class="num">USD 30 to 80</td><td>strongest vision for face and fabric reads. The gateway lets you swap models without code changes</td></tr>
+        <tr><td>Payments and tax</td><td>Dodo Payments as merchant of record for INR with UPI and for USD</td><td class="num">5.5 percent</td><td>one integration, Indian and Gulf tax handled, UPI for India. Revisit Razorpay direct at 2 percent for INR once volume justifies two integrations</td></tr>
+        <tr class="hi"><td>Content site</td><td>Astro static site on Cloudflare Pages, programmatic routes from a content database</td><td class="num">USD 0</td><td>the SPA cannot do SEO. Astro pre-renders every page, builds from data, ships almost no JavaScript</td></tr>
+        <tr><td>App</td><td>keep React, Supabase auth and Postgres, Cloudflare Worker and R2</td><td class="num">USD 0 to 25</td><td>already built. Move all database access behind the Worker to close the direct-query gap</td></tr>
+        <tr><td>Product link to item</td><td>screenshot first, link second. A screenshot works for every store and for Instagram. Links use a scraping API as a convenience layer</td><td class="num">USD 0 to 50</td><td>the Myntra and Ajio scrapers prove that DOM-coupled imports break silently</td></tr>
+        <tr><td>Background removal</td><td>an API such as remove.bg, or the open rembg model on the Worker</td><td class="num">USD 0 to 20</td><td>item cards need clean cutouts</td></tr>
+        <tr><td>Email</td><td>Resend</td><td class="num">USD 0 to 20</td><td>result delivery, nudges, seasonal re-profile reminders</td></tr>
+        <tr><td>Analytics</td><td>PostHog, already wired</td><td class="num">USD 0</td><td>funnel, feature flags for price tests, session replay on the intake</td></tr>
+        <tr><td>Images for content</td><td>the model generates palettes and capsule flat-lays as SVG. Product images come from affiliate feeds</td><td class="num">USD 0</td><td>no stock photo spend</td></tr>
+      </tbody>
+    </table></div>
+    <p>Monthly cost at month six: about USD 150 to 250 plus payment fees. Gross margin above 90 percent.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="sec" id="brand">
+    <div class="sec-h"><div class="tab t1">8</div><h2>Brand principles</h2></div>
+    <p class="deck">Design direction, typefaces, and the full visual system are a separate pass in month one, built in pen.dev. This plan sets the principles only.</p>
+    <div class="rule">
+      <div><b>Lively, loud, colourful</b>Colour is literally the product. The seasonal palettes are the brand's palette. A result card should be recognisable from across a room and look nothing like a wardrobe-management tool.</div>
+      <div><b>The result card is the logo</b>Most people will meet the brand as a screenshot in someone's story. Design the card before the landing page.</div>
+      <div><b>Flattery with receipts</b>Every compliment points at something in the photo. The voice is a friend who dresses well and is glad to see you.</div>
+      <div><b>Two doors, one house</b>The men's and women's doors share a wordmark and a colour system but have their own layouts, photography style, and copy.</div>
+    </div>
+    <p>The name stays fitso. Tagline candidate: <strong>"Know what's working for you."</strong></p>
+  </section>
+
+  <!-- 9 -->
+  <section class="sec" id="roadmap">
+    <div class="sec-h"><div class="tab t3">9</div><h2>Roadmap</h2></div>
+    <figure>
+      <div class="kicker">Fig. 3 · four lanes, six months, one gate a month</div>
+      <svg viewBox="0 0 1200 330" role="img" aria-label="Roadmap: product, content, growth and money lanes across six months with a gate each month">
+        <g id="f3"></g>
+      </svg>
+      <figcaption><b>FIG. 3</b> The content site ships in month one, before the paid product, because content takes longest to compound. Month six has no feature work.</figcaption>
+    </figure>
+
+    <div class="months">
+      <div class="mo">
+        <h3>Month 1 · the quick win and the content site</h3>
+        <div class="when">2026-10-15 to 2026-11-14</div>
+        <h4>Product</h4>
+        <ul><li>Week one: today's app moves to <code>closet.fitso.me</code> unchanged, with a banner. The root is free for the new product.</li><li>Brand pass in pen.dev: wordmark, colour system, the result card for each door, the landing pages for each door.</li><li>Free quick win live for both doors: one selfie, five answers, result card, one free verdict, email capture.</li><li>Checkout for the Style Report wired through Dodo. The Report ships in month two; early buyers are told the date.</li><li>Funnel events in PostHog: landed, started, photo uploaded, result shown, card shared, checkout started, paid.</li><li>Photo deletion after processing, with the policy on the page.</li></ul>
+        <h4>Content</h4>
+        <ul><li>Astro content site live at the same domain, with sitemap and robots.</li><li>21 guides migrated, rewritten, split by gender. Pillar B colour pages. Four tool pages. 50 pages live.</li></ul>
+        <h4>Growth</h4>
+        <ul><li>Launch to your network, Reddit style threads, Dubai and Bangalore groups.</li><li>First 20 result cards posted from friends' free results, with permission.</li></ul>
+        <div class="gate"><b>Gate:</b> 100 completed quick wins and 10 shared cards. If the share rate is under 5 percent, redesign the card before anything else.</div>
+      </div>
+      <div class="mo">
+        <h3>Month 2 · the Style Report</h3>
+        <div class="when">to 2026-12-14</div>
+        <h4>Product</h4>
+        <ul><li>Full Report for both doors: five to eight photos, target wardrobe intake, core template, gap list, phase-out list, ten verdicts, PDF.</li><li>Verdict from a screenshot.</li><li>Confidence scores and retake prompts on the colour read.</li></ul>
+        <h4>Content</h4>
+        <ul><li>Wedding season push: 100 new pages across sangeet, mehendi, reception, cocktail, by gender and city.</li><li>Three short videos a week start. Pinterest live, 20 pins a week.</li></ul>
+        <h4>Growth</h4>
+        <ul><li>Testimonials from the first 20 buyers, with their cards.</li></ul>
+        <div class="gate"><b>Gate:</b> 20 paid Reports and a finisher-to-buyer rate above 5 percent. Below that, fix the paywall screen before adding Pro.</div>
+      </div>
+      <div class="mo">
+        <h3>Month 3 · Pro and the self-filling wardrobe</h3>
+        <div class="when">to 2027-01-14</div>
+        <h4>Product</h4>
+        <ul><li>Pro: unlimited verdicts, wardrobe auto-fill from rail photos and verdict yeses, Myntra and Ajio import behind a health check, live shopping list for gaps with affiliate links.</li><li>Report to Pro upgrade with credit.</li></ul>
+        <h4>Content</h4>
+        <ul><li>Pillar C verdict pages on the top 50 items from Myntra and Namshi. 300 pages live.</li></ul>
+        <h4>Growth</h4>
+        <ul><li>Affiliate accounts live: Myntra via a network, Amazon India, Namshi or Ounass.</li><li>Referral: a shared card gives the friend one extra free verdict.</li></ul>
+        <div class="gate"><b>Gate:</b> 10 Pro buyers and the first affiliate commission.</div>
+      </div>
+      <div class="mo">
+        <h3>Month 4 · the Gulf door and occasions for you</h3>
+        <div class="when">to 2027-02-14</div>
+        <h4>Product</h4>
+        <ul><li>"What do I wear to X" answered from the user's own wardrobe, for Pro.</li><li>Trip packing from the real wardrobe.</li><li>Seasonal re-profile flow.</li></ul>
+        <h4>Content</h4>
+        <ul><li>Gulf pages: Dubai, Abu Dhabi, Riyadh office and social, Ramadan and Eid run-up. 450 pages live.</li></ul>
+        <h4>Growth</h4>
+        <ul><li>Dubai expat communities, Gulf Reddit, Gulf creators for the women's door.</li></ul>
+        <div class="gate"><b>Gate:</b> USD 2,500 in the month and 40 percent of revenue from outside India.</div>
+      </div>
+      <div class="mo">
+        <h3>Month 5 · data and price</h3>
+        <div class="when">to 2027-03-14</div>
+        <h4>Product</h4>
+        <ul><li>Aggregate verdict data on content pages.</li><li>Price test via PostHog flags: Report 999 against 1,499, Pro 3,999 against 4,999.</li><li>Seasonal re-profile emails to the first cohort.</li></ul>
+        <h4>Content</h4>
+        <ul><li>600 pages live. Enrich the top 100 pages with verdict data.</li></ul>
+        <div class="gate"><b>Gate:</b> a winning price and a visitor-to-buyer rate at or above 0.8 percent.</div>
+      </div>
+      <div class="mo">
+        <h3>Month 6 · double down</h3>
+        <div class="when">to 2027-04-14</div>
+        <h4>Product</h4>
+        <ul><li>Only conversion and retention work. No new features.</li></ul>
+        <h4>Content</h4>
+        <ul><li>Prune the bottom 20 percent of pages. Double output on the best pillar. 750 pages live.</li></ul>
+        <div class="gate"><b>Gate:</b> USD 5,000 in the month.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="sec" id="metrics">
+    <div class="sec-h"><div class="tab t4">10</div><h2>Metrics</h2></div>
+    <p class="deck">Tracked weekly in PostHog. The plan lives or dies on the first three.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Metric</th><th class="num">Month 6 target</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr class="hi"><td>Visitors a month</td><td class="num">15,000</td><td>the binding constraint</td></tr>
+        <tr class="hi"><td>Visitor to quick-win finish</td><td class="num">10 percent</td><td>the content-to-product handoff</td></tr>
+        <tr class="hi"><td>Finisher to buyer, 14 days</td><td class="num">8 percent</td><td>the paywall and the value of the free result</td></tr>
+        <tr><td>Share rate of free results</td><td class="num">10 percent</td><td>the organic loop</td></tr>
+        <tr><td>Report to Pro upgrade, 90 days</td><td class="num">10 percent</td><td>whether Pro is worth it</td></tr>
+        <tr><td>Pro verdicts per user a month</td><td class="num">6 or more</td><td>the habit</td></tr>
+        <tr><td>Affiliate click-through on yes</td><td class="num">40 percent</td><td>the shopping list works</td></tr>
+        <tr><td>Colour read confidence above threshold</td><td class="num">80 percent</td><td>capture guidance works</td></tr>
+        <tr><td>Pages in the Google index</td><td class="num">90 percent of published</td><td>the content site works</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="sec" id="risks">
+    <div class="sec-h"><div class="tab t6">11</div><h2>Risks</h2></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Risk</th><th>Likelihood</th><th>Effect</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Traffic ramps slower than modelled</td><td class="no">high</td><td>the whole target slips</td><td>80 pages a month and three social formats, not one channel. Month gates force a channel change early. The low case still clears cost</td></tr>
+        <tr><td>Google treats programmatic pages as scaled-content abuse</td><td class="yesif">medium</td><td>index loss</td><td>every page carries unique local data and a verdict table. Thin variants are never published. Month-six prune</td></tr>
+        <tr><td>Colour and face reads are wrong in bad light</td><td class="no">high</td><td>trust loss on the proof moment</td><td>guided capture, confidence score, retake prompt. "What is working" is robust even when the season call is uncertain</td></tr>
+        <tr><td>Face photos feel invasive</td><td class="yesif">medium</td><td>drop-off at upload</td><td>delete originals after processing and say so on the upload screen. The no-photo archetype quiz is the fallback quick win</td></tr>
+        <tr><td>Price sensitivity in India</td><td class="yesif">medium</td><td>lower Report conversion</td><td>999 price test in month five, UPI at checkout, INR pricing not converted USD</td></tr>
+        <tr><td>Myntra and Ajio scrapers break</td><td class="no">certain</td><td>import stops silently</td><td>screenshot-first and rail photos make import a convenience, not a dependency. A health check surfaces breakage</td></tr>
+        <tr><td>Whering or Alta ship the same AI features</td><td class="yesif">medium</td><td>harder differentiation</td><td>lead with honesty and the buy verdict against a target, which neither has announced. Move fast on India and the Gulf where neither is present</td></tr>
+        <tr><td>Instagram or TikTok reach drops</td><td class="yesif">medium</td><td>social share falls</td><td>Pinterest and search carry 60 percent of the modelled traffic</td></tr>
+        <tr><td>Solo founder bandwidth</td><td class="no">high</td><td>everything slows</td><td>two production days a week are protected. AI drafts all content. No feature work in month six</td></tr>
+        <tr><td>Payment onboarding delays</td><td class="yes">low</td><td>revenue delayed</td><td>start Dodo onboarding in week one. Razorpay as the India fallback</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="sec" id="decisions">
+    <div class="sec-h"><div class="tab t1">12</div><h2>Decisions needed from you</h2></div>
+    <div class="ask">
+      <ol>
+        <li><strong>List prices.</strong> Report at INR 1,499 / USD 24 and Pro at INR 4,999 / USD 79, with founding prices at INR 499 / USD 10 and INR 1,999 / USD 39 until the first USD 1,000. Yes, or different numbers.</li>
+        <li><strong>Content site on Astro</strong> next to the React app, pre-rendered, at the same domain. This is the one structural change. Yes, or keep everything in one app and accept the SEO cost.</li>
+        <li><strong>Dodo Payments as merchant of record</strong> for both INR and USD from day one, with Razorpay as a later INR optimisation. Yes, or Razorpay first.</li>
+        <li><strong>The old app moves to <code>closet.fitso.me</code>, frozen</strong> (section 15.1), and the hygiene deletions in section 15.2 go ahead. Both touch tracked files and DNS, so they wait for a yes. If you prefer another subdomain name, say which.</li>
+      </ol>
+    </div>
+    <p><strong>Assumed and not asked:</strong> screenshot-first for verdicts, photo deletion after processing, no human stylist anywhere, annual not lifetime for Pro, the name fitso stays, the check-in is the last Saturday of the month from 10:00 to 12:00 Dubai time.</p>
+  </section>
+
+  <!-- 13 -->
+  <section class="sec" id="steering">
+    <div class="sec-h"><div class="tab t2">13</div><h2>Steering: the monthly check-in</h2></div>
+    <p class="deck">The six-month plan is a first guess. The real plan is the one rewritten every month from numbers, in service of USD 5,000 a month by December 2027.</p>
+    <div class="rule">
+      <div><b>When</b>The last Saturday of every month, 10:00 to 12:00 Dubai time. On the calendar from 2026-10-31. Never a Sunday.</div>
+      <div><b>Before</b>The <code>karma/skills/fitso-monthly-review</code> skill runs and writes <code>docs/reviews/YYYY-MM.md</code>: scorecard of plan versus actual, the month's gate as pass or fail, what worked with numbers, what did not with a suspected cause, a pricing and honesty check, three bets for next month.</div>
+      <div><b>The two hours</b>20 minutes on the scorecard, 30 on what worked, 30 on what did not, 30 on choosing the three bets, 10 on updating the plan and the project roster.</div>
+      <div><b>Rules</b>A claim without a number is "unproven", not "worked". Targets change only after two months more than 40 percent off plan. At least one bet is on traffic until visitors pass 15,000. If the product alone cannot reach the 2027 goal, the review proposes one adjacent product that reuses the engine, and does not build it.</div>
+    </div>
+  </section>
+
+  <!-- 14 -->
+  <section class="sec" id="game">
+    <div class="sec-h"><div class="tab t5">14</div><h2>Game theory and gamification</h2></div>
+    <p class="deck">A repeated game between fitso and the user, and a one-shot game with every stranger from search. The job is to make honesty the winning strategy and progress visible.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Mechanism</th><th>The problem it solves</th><th>How it shows up</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Costly "no"</strong></td><td>A stylist who always says yes is cheap talk. The user cannot tell praise from sales.</td><td>The verdict engine returns "no" or "yes-if" at least a third of the time across all users. The dashboard shows the user their own no's and the rupees saved. The no's are the proof that the yes's mean something. The monthly review flags a yes rate above 75 percent.</td></tr>
+        <tr><td><strong>Incentive compatibility with affiliate</strong></td><td>A shopping assistant that earns on purchases is suspected of pushing them.</td><td>The verdict is computed and shown before any link lookup. Links appear only on a yes, and the page says so. The rule is written on the pricing page.</td></tr>
+        <tr><td><strong>Commitment device</strong></td><td>People buy on impulse what they would not buy on reflection.</td><td>The declared target wardrobe is the user's own rule. Every verdict is judged against it. The no-buy streak counts days since the last purchase made without a verdict. The user binds their future self, and fitso enforces.</td></tr>
+        <tr><td><strong>Costly signalling</strong></td><td>Social proof that is cheap to fake is ignored.</td><td>A shared card reveals a model's read of your own face and style. That is a real disclosure, so it is credible. Because the card leads with strengths, sharing is cheap for the user and the signal is strong.</td></tr>
+        <tr><td><strong>Reciprocity</strong></td><td>Referral programs feel like spam.</td><td>A shared card gives the friend one free verdict and the sharer Pro credit. Both sides gain, nobody is asked to recruit.</td></tr>
+        <tr><td><strong>Common knowledge</strong></td><td>Private deadlines do not move people.</td><td>The founding counter is public. Everyone sees the same number and knows everyone sees it. That is what produces a rush.</td></tr>
+        <tr><td><strong>Price discrimination by decision time</strong></td><td>One price loses either the impulse buyer or the deliberator.</td><td>The finish-today price captures the impulse buyer. The list price captures the deliberator who returns. Nobody is lied to about which one they are.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Gamification, personal progress only</h3>
+    <p>The product never ranks people against each other on looks, body, or face. Every game element is the user against their own target.</p>
+    <div class="rule">
+      <div><b>Wardrobe score, 0 to 100</b>Coverage of the target wardrobe by what the user owns. The big number on the dashboard. Moves with every yes, import, and phase-out.</div>
+      <div><b>Gap list as a quest board</b>Each gap is a card: what it is, why it matters for the target, "find it", "I own this".</div>
+      <div><b>Saved purchases</b>A running rupee total of every no the user took. Loss aversion made visible, in the user's favour.</div>
+      <div><b>No-buy streak</b>Days since the last purchase made without a verdict. Breaking it is not shamed. It resets.</div>
+      <div><b>Season pass</b>Each seasonal re-profile unlocks a new palette card. Four a year, collectible, shareable.</div>
+      <div><b>Badges tied to decisions</b>"Profile complete", "Closed the gap", "Phase-out done", "Ten honest no's". Nothing for logging in.</div>
+      <div><b>Verdict feedback loop</b>"I bought it" or "I returned it" earns a free verdict and feeds the accuracy data that content pages publish.</div>
+      <div><b>Not allowed</b>Public leaderboards, face or body scores, streak shaming, fake scarcity, notifications designed to make the user feel behind.</div>
+    </div>
+  </section>
+
+  <!-- 15 -->
+  <section class="sec" id="repo">
+    <div class="sec-h"><div class="tab t4">15</div><h2>Repo: freeze the old app, build the new one beside it</h2></div>
+    <p class="deck">From an audit on 2026-10-10. The React app is about 19,400 lines, the worker about 1,500. Roughly half the app is inventory-specific. None of it needs to die.</p>
+
+    <h3>15.1 The inventory app moves to closet.fitso.me</h3>
+    <p>The existing app moves to <code>closet.fitso.me</code> as it is, and the root domain becomes the new product. Every existing user keeps their login and data, and the new product reads the same Supabase tables for the wardrobe.</p>
+    <div class="rule">
+      <div><b>Frozen</b>No new features, no redesign. Security fixes and the database-access gap only.</div>
+      <div><b>One banner</b>"fitso has a new home at fitso.me. Your closet stays here." Same account signs into both.</div>
+      <div><b>Guides move out</b>To the content site, with redirects from the old guide URLs.</div>
+      <div><b>One worker</b>Auth, sync, and image routes serve both apps unchanged.</div>
+    </div>
+    <p>Why <code>closet</code> over <code>manage</code>: shorter, says what it is, and the new product calls the user's wardrobe their closet, so the subdomain reads as a feature of the same brand rather than a leftover.</p>
+
+    <h3>15.2 Hygiene, with your go-ahead</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Item</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><code>workers/.wrangler/state/</code> (5 tracked files: R2 blobs, SQLite)</td><td>local dev state in git, may contain user data. Add to <code>.gitignore</code>.</td></tr>
+        <tr><td><code>workers/fix-server-data.js</code> and <code>.mjs</code></td><td>one-off repair scripts with a hard-coded username.</td></tr>
+        <tr><td><code>workers/theshajha/metadata.json</code></td><td>a zero-byte stray.</td></tr>
+        <tr><td><code>src/lib/guides.ts</code></td><td>79-line re-export wrapper that shadows <code>src/lib/guides/index.ts</code>. Keep the directory, drop the wrapper.</td></tr>
+        <tr><td><code>workers/worker-configuration.d.ts</code> from git</td><td>404 KB generated file. Generate on <code>types</code>, ignore in git.</td></tr>
+        <tr><td><code>package-lock.json</code> is both tracked and ignored</td><td>pick one. Track it.</td></tr>
+        <tr><td>README product sections, <code>package.json</code> description and keywords</td><td>describe the old product. Rewrite for the two apps.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>15.3 Reused in the new app</h3>
+    <p>Supabase auth and the auth worker routes, the item schema and <code>useItems</code>, <code>ImageUpload</code> and the image routes, the import wizard and both scrapers behind a health check, <code>AnalyticsProvider</code> and the event names, the Radix primitives, the guide data as content seed, Privacy and Settings. Imported or copied into the new app, not moved out of the frozen one.</p>
+
+    <h3>15.4 New structure</h3>
+    <div class="tbl"><pre class="mono" style="margin:0;padding:16px 18px;font-size:13px;line-height:1.5;width:max-content;min-width:100%">fitso.me/
+  apps/
+    closet/            the existing React app, frozen, deployed to closet.fitso.me (today's src/ and public/)
+    web/               the new React app at fitso.me/app/*: landing (two doors), quick win, report, verdicts, wardrobe, billing
+      src/features/
+        profile/       intake, capture guidance, result card, report
+        target/        target wardrobe intake, template, gap list, phase-out
+        verdict/       screenshot or link in, verdict out, history, saved purchases
+        wardrobe/      items (shared schema), auto-fill from rail photos, import
+        billing/       Dodo checkout, founding counter, finish-today timer, credits
+    site/              Astro content site at fitso.me: pillars A to D, tool pages, sitemap, robots
+      content/         occasions, colours, items, capsules as data files
+  workers/             Hono API serving both apps; existing routes plus:
+    src/routes/ai.ts       profile, verdict, itemise (vision calls through the gateway)
+    src/routes/billing.ts  Dodo webhooks, founding counter, timers
+  packages/core/       shared TypeScript types: profile, target, item, verdict
+  docs/plans/          this plan
+  docs/reviews/        monthly reviews written by the review skill</pre></div>
+    <p>Routing: <code>closet.fitso.me</code> serves the frozen app. <code>fitso.me</code> serves the Astro site at <code>/</code>, <code>/men</code>, <code>/women</code>, <code>/guides/*</code>, <code>/tools/*</code>, and the new app at <code>/app/*</code>. Moving today's <code>src/</code> into <code>apps/closet/</code> is a rename, not a rewrite, and happens in week one so the root is free for the new product.</p>
+  </section>
+
+</main>
+
+<footer><div class="wrap">fitso.me pivot plan · 2026-10-10 · facts live in <code>docs/plans/2026-10-10-fitso-pivot-plan.md</code>. Numbers marked "assumption" or "unverified" are inputs to test, not findings.</div></footer>
+<div class="tip" id="tip"></div>
+
+<script>
+(function(){
+  const css = getComputedStyle(document.documentElement);
+  const c = n => css.getPropertyValue(n).trim();
+  const tip = document.getElementById('tip');
+  function hover(el, text){
+    el.classList.add('hit');
+    el.addEventListener('mousemove', e => { tip.textContent = text; tip.style.left = e.clientX+'px'; tip.style.top = e.clientY+'px'; tip.style.opacity = 1; });
+    el.addEventListener('mouseleave', () => tip.style.opacity = 0);
+  }
+  const NS='http://www.w3.org/2000/svg';
+  const el=(t,a)=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);return n;};
+  const txt=(x,y,s,cls,anchor)=>{const t=el('text',{x,y,'text-anchor':anchor||'start'});if(cls)t.setAttribute('class',cls);t.textContent=s;return t;};
+
+  // Fig 1: funnel as horizontal bars, single series
+  (function(){
+    const g=document.getElementById('f1');
+    const rows=[['Visitors',100,'100'],['Start the quick win',15,'15'],['Finish it',10,'10'],['Buy within 14 days',0.8,'0.8']];
+    const x0=220, w=900, h=36, gap=18;
+    rows.forEach((r,i)=>{
+      const y=20+i*(h+gap);
+      g.appendChild(txt(x0-14,y+h/2+4,r[0],'', 'end'));
+      const bw=Math.max(w*r[1]/100, 6);
+      const rect=el('rect',{x:x0,y,width:bw,height:h,rx:4,fill:c('--s1'),opacity:i===0?0.35:1});
+      g.appendChild(rect);
+      g.appendChild(txt(x0+bw+10,y+h/2+4,r[2]+' of 100','v'));
+      hover(rect, r[0]+': '+r[2]+' per 100 visitors');
+    });
+    g.appendChild(el('line',{x1:x0,y1:10,x2:x0,y2:230,class:'axis'}));
+  })();
+
+  // Fig 2: two small multiples, same x
+  (function(){
+    const g=document.getElementById('f2');
+    const months=['M1','M2','M3','M4','M5','M6'];
+    const vis=[1000,3000,6000,9000,12000,15000];
+    const rev=[120,630,1550,2750,3950,5000];
+    function panel(x0,title,data,max,col,fmt){
+      const w=540,h=200,top=50,bw=56,step=w/6;
+      g.appendChild(txt(x0,22,title,'lane'));
+      [0,0.5,1].forEach(f=>{const y=top+h-h*f;g.appendChild(el('line',{x1:x0,y1:y,x2:x0+w,y2:y,class:'grid'}));g.appendChild(txt(x0-6,y+4,fmt(max*f),'', 'end'));});
+      data.forEach((v,i)=>{
+        const bh=h*v/max, x=x0+i*step+(step-bw)/2, y=top+h-bh;
+        const r=el('rect',{x,y,width:bw,height:bh,rx:4,fill:col});
+        g.appendChild(r);
+        hover(r, months[i]+': '+fmt(v));
+        g.appendChild(txt(x+bw/2,top+h+18,months[i],'', 'middle'));
+        if(i===5||i===0) g.appendChild(txt(x+bw/2,y-6,fmt(v),'v','middle'));
+      });
+      g.appendChild(el('line',{x1:x0,y1:top+h,x2:x0+w,y2:top+h,class:'axis'}));
+    }
+    panel(70,'Visitors a month',vis,15000,c('--s2'),v=>v>=1000?(v/1000)+'k':v);
+    panel(660,'Revenue, USD a month',rev,5000,c('--s1'),v=>'$'+Math.round(v).toLocaleString());
+  })();
+
+  // Fig 3: roadmap lanes
+  (function(){
+    const g=document.getElementById('f3');
+    const lanes=[
+      ['Product',[[0,1,'brand, quick win, checkout'],[1,2,'Style Report'],[2,3,'Pro + auto-fill'],[3,4,'Gulf door, occasions'],[4,5,'data + price test'],[5,6,'conversion only']]],
+      ['Content',[[0,1,'Astro site, 50 pages'],[1,2,'wedding push, 150'],[2,3,'verdict pages, 300'],[3,4,'Gulf pages, 450'],[4,5,'enrich, 600'],[5,6,'prune, 750']]],
+      ['Growth',[[0,1,'network + Reddit'],[1,2,'video + Pinterest'],[2,3,'affiliate + referral'],[3,4,'Gulf communities'],[4,6,'double the best pillar']]],
+      ['Money',[[0,1,'$120'],[1,2,'$630'],[2,3,'$1.5k'],[3,4,'$2.8k'],[4,5,'$4.0k'],[5,6,'$5.0k']]]
+    ];
+    const cols=[c('--s2'),c('--s3'),c('--s4'),c('--s1')];
+    const x0=140,w=1020,step=w/6,top=40,lh=56;
+    const labels=['Oct–Nov','Nov–Dec','Dec–Jan','Jan–Feb','Feb–Mar','Mar–Apr'];
+    labels.forEach((l,i)=>{g.appendChild(txt(x0+i*step+step/2,22,'Month '+(i+1)+' · '+l,'', 'middle'));g.appendChild(el('line',{x1:x0+i*step,y1:30,x2:x0+i*step,y2:top+lanes.length*lh,class:'grid'}));});
+    lanes.forEach((ln,li)=>{
+      const y=top+li*lh;
+      g.appendChild(txt(x0-16,y+lh/2+5,ln[0],'lane','end'));
+      ln[1].forEach(b=>{
+        const x=x0+b[0]*step+3, bw=(b[1]-b[0])*step-6;
+        const r=el('rect',{x,y:y+10,width:bw,height:lh-20,rx:6,fill:cols[li],opacity:0.9});
+        g.appendChild(r);
+        const t=txt(x+10,y+lh/2+4,b[2]);t.setAttribute('fill','#fff');t.style.fill='#fff';t.setAttribute('font-weight','600');g.appendChild(t);
+        hover(r, ln[0]+' · '+b[2]);
+      });
+    });
+    // gates
+    const gates=['100 quick wins, 10 shares','20 Reports, 5%+','10 Pro, 1st affiliate','$2.5k, 40% non-India','price won, 0.8%','$5,000'];
+    const gy=top+lanes.length*lh+22;
+    gates.forEach((gt,i)=>{
+      const x=x0+(i+1)*step;
+      const d=el('path',{d:`M${x} ${gy-9} l9 9 l-9 9 l-9 -9 z`,fill:c('--accent')});
+      g.appendChild(d);hover(d,'Gate '+(i+1)+': '+gt);
+      g.appendChild(txt(x,gy+26,'gate '+(i+1),'', 'middle'));
+    });
+    g.appendChild(txt(x0-16,gy+5,'Gates','lane','end'));
+  })();
+})();
+</script>
+</body>
+</html>

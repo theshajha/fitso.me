@@ -1,0 +1,276 @@
+{
+  "slug": "wardrobe-gap",
+  "title": "Wardrobe gap checklist: what are you missing?",
+  "description": "A free checklist of the 20 core wardrobe pieces for men and 30 for women. Tick what you own and see what to add first.",
+  "headline": "See what your wardrobe is missing",
+  "sub": "Tick what you own. The unticked items are your shopping list, in order.",
+  "how_it_works": [
+    "Pick your door, men or women, and open the checklist.",
+    "Tick the pieces you already own and wear. Be honest, and tick only what you wear.",
+    "Read your gaps by category and buy the first one from the top of the list."
+  ],
+  "what_you_get": [
+    "A core checklist: 20 pieces for men, 30 for women, grouped by category.",
+    "A clear view of the gaps, as upgrades to add and not as faults.",
+    "A suggested order: shoes and basics first, then layers, then statement pieces.",
+    "A link to your colour season, so every gap you fill is in colours that suit you."
+  ],
+  "sample": {
+    "door": "women",
+    "owned": 21,
+    "gaps": [
+      "Wide-leg trousers or palazzos",
+      "Block heels",
+      "Statement earrings",
+      "Cardigan or hoodie",
+      "Small evening bag",
+      "Belt",
+      "Shorts",
+      "Skirt",
+      "Dupattas in two colours"
+    ],
+    "note": "You own a strong base of tops and ethnic wear. Adding wide-leg trousers and block heels would give you at least four new outfits from what you already have."
+  },
+  "checklist": {
+    "men": [
+      {
+        "category": "Tops",
+        "item": "White shirt, crisp"
+      },
+      {
+        "category": "Tops",
+        "item": "Light blue or grey shirt"
+      },
+      {
+        "category": "Tops",
+        "item": "Plain tees in two neutral colours"
+      },
+      {
+        "category": "Tops",
+        "item": "Polo shirt"
+      },
+      {
+        "category": "Tops",
+        "item": "Knit or sweater"
+      },
+      {
+        "category": "Layers",
+        "item": "Overshirt or light jacket"
+      },
+      {
+        "category": "Layers",
+        "item": "Blazer, unstructured"
+      },
+      {
+        "category": "Layers",
+        "item": "Hoodie or sweatshirt"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Dark jeans"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Chinos in a neutral colour"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Tailored trousers"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Shorts"
+      },
+      {
+        "category": "Shoes",
+        "item": "White leather sneakers"
+      },
+      {
+        "category": "Shoes",
+        "item": "Brown or black leather shoes"
+      },
+      {
+        "category": "Shoes",
+        "item": "Sandals or slides"
+      },
+      {
+        "category": "Ethnic",
+        "item": "Cotton or linen kurta"
+      },
+      {
+        "category": "Ethnic",
+        "item": "Festive kurta or sherwani piece"
+      },
+      {
+        "category": "Accessories",
+        "item": "Belt that matches your shoes"
+      },
+      {
+        "category": "Accessories",
+        "item": "Watch"
+      },
+      {
+        "category": "Accessories",
+        "item": "Sunglasses"
+      }
+    ],
+    "women": [
+      {
+        "category": "Tops",
+        "item": "White shirt, crisp"
+      },
+      {
+        "category": "Tops",
+        "item": "Plain tees in two neutral colours"
+      },
+      {
+        "category": "Tops",
+        "item": "Fitted top or blouse"
+      },
+      {
+        "category": "Tops",
+        "item": "Knit or sweater"
+      },
+      {
+        "category": "Tops",
+        "item": "Printed or textured top"
+      },
+      {
+        "category": "Layers",
+        "item": "Blazer"
+      },
+      {
+        "category": "Layers",
+        "item": "Light jacket or shrug"
+      },
+      {
+        "category": "Layers",
+        "item": "Cardigan or hoodie"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Dark jeans"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Tailored trousers"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Wide-leg trousers or palazzos"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Skirt"
+      },
+      {
+        "category": "Bottoms",
+        "item": "Shorts"
+      },
+      {
+        "category": "Dresses",
+        "item": "Everyday dress"
+      },
+      {
+        "category": "Dresses",
+        "item": "Dress for dinner or dates"
+      },
+      {
+        "category": "Ethnic",
+        "item": "Everyday cotton kurta set"
+      },
+      {
+        "category": "Ethnic",
+        "item": "Festive kurta or anarkali"
+      },
+      {
+        "category": "Ethnic",
+        "item": "Saree you can wear more than once"
+      },
+      {
+        "category": "Ethnic",
+        "item": "Dupattas in two colours"
+      },
+      {
+        "category": "Ethnic",
+        "item": "Lehenga or heavy festive set"
+      },
+      {
+        "category": "Shoes",
+        "item": "White sneakers"
+      },
+      {
+        "category": "Shoes",
+        "item": "Flat sandals"
+      },
+      {
+        "category": "Shoes",
+        "item": "Block heels"
+      },
+      {
+        "category": "Shoes",
+        "item": "Ethnic footwear, such as kolhapuris or mojaris"
+      },
+      {
+        "category": "Bags",
+        "item": "Everyday tote or work bag"
+      },
+      {
+        "category": "Bags",
+        "item": "Small evening bag"
+      },
+      {
+        "category": "Accessories",
+        "item": "Everyday earrings"
+      },
+      {
+        "category": "Accessories",
+        "item": "Statement earrings"
+      },
+      {
+        "category": "Accessories",
+        "item": "Watch"
+      },
+      {
+        "category": "Accessories",
+        "item": "Belt"
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Why is the checklist 20 pieces for men and 30 for women?",
+      "a": "Women often need more ethnic and occasion pieces and more bag and footwear variety. The lists are a starting point, not a target."
+    },
+    {
+      "q": "Should I own everything on the list?",
+      "a": "No. Tick what fits your life. If you never wear shorts, skip them and move on."
+    },
+    {
+      "q": "What do I buy first?",
+      "a": "Start with the gap that unlocks the most outfits. That is usually shoes, a layer or one bottom you can wear with most of your tops."
+    },
+    {
+      "q": "Does this use AI?",
+      "a": "Not yet. This is a simple checklist. Your colour season tells you which colours to buy for each gap."
+    }
+  ],
+  "cta": {
+    "label": "Find my colours before I shop",
+    "href": "/app/quick-win?door=women&from=wardrobe-gap"
+  },
+  "keywords": [
+    "wardrobe checklist",
+    "capsule wardrobe checklist india",
+    "wardrobe essentials men",
+    "wardrobe essentials women"
+  ],
+  "intro": "Most wardrobes do not have too few clothes. They have the wrong mix. Five black tees, no good trousers and no shoes that go with anything. This checklist lists the core pieces for each door, grouped by category. Tick what you own and wear. What is left unticked is your shopping list, so you buy the piece that unlocks the most outfits and skip the one that duplicates what you have.",
+  "tips": [
+    "Tick only what you wear at least once a month.",
+    "Count a piece only if it fits you now.",
+    "Fill the gap with the biggest outfit gain first, usually shoes or a bottom.",
+    "Choose colours from your season so the new piece works with the old ones."
+  ],
+  "honesty": "This checklist is a starting point for a core wardrobe, not a standard to meet. If a category does not fit your life, skip it. There is no score and no comparison with other people."
+}

@@ -1,0 +1,163 @@
+{
+  "slug": "colour-season-guide-india",
+  "door": "both",
+  "pillar": "B",
+  "title": "Colour season guide for India: spring, summer, autumn and winter",
+  "description": "A plain guide to the four colour seasons for Indian skin, with palettes, brand examples and how to find yours from one selfie.",
+  "updated": "2026-10-10",
+  "intro": "A colour season is a short way to say which colours work for you. There are four: spring, summer, autumn and winter. Each one is a mix of undertone (warm or cool) and clarity (clear or muted). Every season exists on Indian skin, and no season is better than another. This guide explains all four and how to find yours.",
+  "sections": [
+    {
+      "heading": "The four seasons in one view",
+      "body": "Think of two questions. Is your undertone warm or cool? Do you look best in clear, bright colour or soft, blended colour? The answers give you your season. Use the list below as a map.",
+      "tips": [
+        "Spring: warm and clear. Coral, turquoise, golden yellow, fresh green. Gold jewellery.",
+        "Summer: cool and soft. Dusty rose, powder blue, lilac, sage. Silver jewellery.",
+        "Autumn: warm and muted. Rust, olive, mustard, terracotta. Gold jewellery.",
+        "Winter: cool and clear. Cobalt, true red, emerald, fuchsia. Silver jewellery."
+      ]
+    },
+    {
+      "heading": "Find your undertone at home in five minutes",
+      "body": "Undertone is the quiet colour under your skin. It is not the same as how light or dark you are. Start with undertone, because it splits the four seasons into two halves: warm (spring and autumn) and cool (summer and winter). Do the three tests below in daylight, near a window, with no filter and no coloured light. Then trust the answer that shows up twice.",
+      "tips": [
+        "Vein test. Look at the inside of your wrist. Mostly green veins point to a warm undertone. Mostly blue or purple veins point to a cool one. A mix of both usually means neutral. On deeper skin the veins are harder to see, so skip this test if you cannot tell and lean on the other two.",
+        "White versus cream test. Hold a plain white shirt under your chin, then a cream or ivory one. If cream makes your face look healthier and stark white looks harsh, you lean warm. If crisp white looks clean and cream looks a little yellow or flat, you lean cool. If both look fine, you are likely neutral.",
+        "Jewellery test. Try a gold chain and a silver chain against your neck. If gold makes your skin glow, you lean warm. If silver does the same, you lean cool. If both work, you are neutral, and you get to wear both."
+      ]
+    },
+    {
+      "heading": "How seasons show up on Indian skin",
+      "body": "Each season shows up on fair, wheatish and dusky skin in a different way. Spring looks golden and fresh. Summer looks soft and rosy. Autumn looks rich and earthy. Winter looks crisp and high in contrast. Most people sit between two seasons, which is why a good analysis gives you a main season and a depth, such as light, true, soft, bright or deep.",
+      "tips": [
+        "Warm seasons (spring, autumn): gold, olive-gold and earthy depth often shows.",
+        "Cool seasons (summer, winter): rosy, blue-brown or silver-grey depth often shows.",
+        "Clear (spring, winter): you look best in colours with strong saturation.",
+        "Muted (summer, autumn): you look best in softly blended colours."
+      ]
+    },
+    {
+      "heading": "One outfit per season",
+      "body": "Here are four outfits, one per season, with brands you can buy in India. Prices are rough rupee ranges.",
+      "looks": [
+        {
+          "name": "Spring: coral and camel",
+          "pieces": [
+            "Coral polo or kurta (Uniqlo or Biba)",
+            "Camel chinos or palazzo (H&M or W)",
+            "Tan sandals (Hidesign)"
+          ],
+          "budget_inr": "3,500 to 6,500",
+          "why": "Warm, clear colour that looks fresh and sunny."
+        },
+        {
+          "name": "Summer: powder blue and grey",
+          "pieces": [
+            "Powder blue shirt or kurta (Marks & Spencer or Fabindia)",
+            "Grey trousers (Van Heusen or AND)",
+            "White sneakers (Puma)"
+          ],
+          "budget_inr": "4,500 to 7,500",
+          "why": "Cool, soft colour that looks calm."
+        },
+        {
+          "name": "Autumn: olive and rust",
+          "pieces": [
+            "Olive overshirt or dupatta (Zara or Fabindia)",
+            "Rust tee or kurta (The Souled Store or Biba)",
+            "Brown shoes or sandals (Woodland or Hidesign)"
+          ],
+          "budget_inr": "4,500 to 8,000",
+          "why": "Warm, muted colour that looks rich."
+        },
+        {
+          "name": "Winter: cobalt and black",
+          "pieces": [
+            "Cobalt shirt or kurta (Peter England or Global Desi)",
+            "Black trousers (Marks & Spencer or Zara)",
+            "Black shoes (Clarks)"
+          ],
+          "budget_inr": "5,500 to 9,500",
+          "why": "Cool, clear colour that looks sharp."
+        }
+      ],
+      "tips": [
+        "Buy one piece in your season first, then build from there."
+      ]
+    },
+    {
+      "heading": "Why a selfie beats a drape at home",
+      "body": "A professional draping session holds fabric under your chin and checks how your face responds. A good selfie analysis uses the same idea: it looks at your skin, eyes and hair in daylight and compares them to the four palettes. The result also shows how confident it is. If your photo had poor light, a good tool says \"retake in daylight\" instead of guessing.",
+      "tips": [
+        "Take the selfie near a window, facing the light.",
+        "No filter, no heavy make-up, no coloured background.",
+        "Hair back from the face, and no tinted glasses."
+      ]
+    }
+  ],
+  "palette_blocks": [
+    {
+      "label": "Wear more",
+      "hexes": [
+        "#FF7F50",
+        "#6F8FAF",
+        "#B8632F",
+        "#1F3FE0",
+        "#4CBB5F",
+        "#D8A7B1"
+      ]
+    },
+    {
+      "label": "Wear less",
+      "hexes": [
+        "#BDB7A6",
+        "#D9D2C3",
+        "#C9CED6",
+        "#E8E0A0"
+      ]
+    },
+    {
+      "label": "Neutrals that work",
+      "hexes": [
+        "#FFF3DC",
+        "#B8BCC6",
+        "#7B5B3A",
+        "#2B2F3A"
+      ]
+    }
+  ],
+  "faq": [
+    {
+      "q": "Which season is the most common in India?",
+      "a": "There is no reliable count. All four seasons exist across Indian skin tones, so test instead of assuming."
+    },
+    {
+      "q": "Can I be two seasons?",
+      "a": "Many people sit between two. A good result names a main season and a depth, such as soft or deep, and some colours overlap."
+    },
+    {
+      "q": "Does my season change with age?",
+      "a": "Hair and skin change over time, so recheck every few years. Your undertone usually stays stable."
+    },
+    {
+      "q": "Is the free selfie analysis private?",
+      "a": "Yes. Your photo is read once and deleted, and the result page does not show it."
+    }
+  ],
+  "related": [
+    "warm-vs-cool-undertone-indian-skin",
+    "best-colours-wheatish-skin-men",
+    "best-colours-fair-skin-women"
+  ],
+  "cta": {
+    "headline": "One selfie in daylight. Your season, your palette. Free.",
+    "sub": "Skip the guessing. Upload one selfie and see which colours work for you, with a palette you can shop from today.",
+    "href": "/app/quick-win?door=women&from=colour-season"
+  },
+  "keywords": [
+    "colour season guide india",
+    "spring summer autumn winter colour analysis",
+    "which colour season am i",
+    "colour analysis india"
+  ]
+}
