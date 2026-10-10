@@ -32,8 +32,8 @@ export default async function Page({ params }: { params: Promise<{ token: string
           </p>
           <h1 style={{ marginTop: 12 }}>Get yours</h1>
           <p>The free verdict belongs to the person who made this result. Make your own, then check what you plan to buy.</p>
-          <Button door={qw.door} size="lg" href={`/app/quick-win?door=${qw.door}`}>
-            Get yours
+          <Button door={qw.door} size="lg" href={`/start?door=${qw.door}`}>
+            Generate my personal style
           </Button>
         </Container>
       </div>

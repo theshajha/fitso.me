@@ -1,64 +1,62 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/brand/Container";
-import { DoorCard } from "@/components/brand/DoorCard";
-import { DoorFounding } from "@/components/brand/DoorFounding";
-import { DrapeFan } from "@/components/brand/DrapeFan";
-import { Honesty } from "@/components/brand/Honesty";
-import { HowItWorks } from "@/components/brand/HowItWorks";
-import { SampleCard } from "@/components/brand/SampleCard";
-import { SAMPLE_CARDS } from "@/components/brand/SampleCard.data";
+import { HeroPeople, HeroResultCard } from "@/components/brand/HeroPeople";
+import { ClosingCta } from "@/components/brand/ClosingCta";
+import { Faq } from "@/components/brand/Faq";
+import { Pricing } from "@/components/brand/Pricing";
+import { SwatchRibbon } from "@/components/brand/SwatchRibbon";
+import { SampleRead } from "@/components/brand/SampleRead";
 import { Section } from "@/components/brand/Section";
+import { QuickWinFlow } from "@/features/profile/QuickWinFlow";
 
 export const metadata: Metadata = {
-  title: { absolute: "fitso: know what's working for you" },
+  title: { absolute: "fitso: your personal style, from one photo" },
   description:
-    "One selfie. Five questions. Your colour season, your three strengths, and an honest answer before you buy anything. Photos deleted after the result.",
+    "Upload one full-length photo. In about a minute, see your colours, what already works on you, and the one thing to change. Free.",
   alternates: { canonical: "/" },
 };
 
 export default function Home() {
   return (
     <>
-      <section className="pt-10 md:pt-16">
-        <Container className="grid items-center gap-10 md:grid-cols-[1.5fr_1fr]">
-          <div className="flex flex-col gap-6">
-            <h1 style={{ margin: 0, fontSize: "clamp(2.5rem, 7.4vw, 6rem)", letterSpacing: "-0.045em" }}>
-              Know what&apos;s working for you.
+      {/* The product is the first screen: headline, uploader, and what a result looks like. */}
+      <section className="pt-8 pb-14 md:pt-14 md:pb-20">
+        <Container className="grid items-stretch gap-12 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-14">
+          <div className="flex min-w-0 flex-col justify-center gap-5 md:gap-6">
+            <h1 style={{ margin: 0, fontSize: "clamp(2.5rem, 4.9vw, 4.375rem)" }}>
+              Your personal style, from <span style={{ color: "var(--magenta)", whiteSpace: "nowrap" }}>one photo.</span>
             </h1>
-            <p style={{ margin: 0, fontSize: "1.25rem", fontWeight: 500 }}>
-              One selfie. Five questions. Your season, your three strengths, and an honest answer before you buy
-              anything.
+            <p style={{ margin: 0, fontSize: "clamp(1.0625rem, 1.5vw, 1.25rem)", lineHeight: 1.5 }}>
+              Upload a full-length photo. In about a minute, see your colours, what already works on you, and the one thing to change.
             </p>
+            <div id="start" className="mt-2" style={{ scrollMarginTop: 24 }}>
+              <QuickWinFlow embedded initialDoor={null} from="home" />
+            </div>
+            <div className="mt-4 md:hidden">
+              <HeroResultCard />
+            </div>
           </div>
-          <div className="flex justify-center md:justify-end">
-            <div className="md:origin-right md:scale-125 md:pr-4"><DrapeFan size={200} /></div>
+          <div className="hidden md:block">
+            <HeroPeople />
           </div>
         </Container>
       </section>
 
-      <Section id="doors" className="!pt-10 md:!pt-14">
-        <h2 className="sr-only">Choose women or men</h2>
-        <div className="grid gap-10 md:grid-cols-2 md:gap-8">
-          <DoorCard door="men" />
-          <DoorCard door="women" />
-        </div>
+      <SwatchRibbon />
+
+      <Section>
+        <SampleRead />
       </Section>
 
-      <HowItWorks />
-      <Honesty />
-      <DoorFounding />
-
-      <Section className="pt-0">
-        <h2 style={{ margin: 0 }}>This is what you get</h2>
-        <p style={{ margin: "12px 0 0", fontSize: "1.1875rem", color: "var(--ink-2)" }}>
-          Three sample cards. Every line on a real card points at something in your photo.
-        </p>
-        <div className="mt-10 grid gap-10 md:grid-cols-3 md:gap-6">
-          {SAMPLE_CARDS.map((c) => (
-            <SampleCard key={c.id} card={c} />
-          ))}
-        </div>
+      <Section id="pricing" className="scroll-mt-4">
+        <Pricing />
       </Section>
+
+      <Section>
+        <Faq />
+      </Section>
+
+      <ClosingCta />
     </>
   );
 }

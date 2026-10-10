@@ -14,7 +14,6 @@ type OrderView = {
   quick_win_id: string | null;
 };
 
-const TIER_LABEL: Record<string, string> = { founding: "Founding price", finish_today: "Finish-today price", list: "List price" };
 const UUID = /^[0-9a-f-]{36}$/i;
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ order?: string }> }) {
@@ -40,23 +39,27 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ o
           <div className="table-scroll">
             <table style={{ borderCollapse: "collapse" }}>
               <tbody>
-                <tr><th scope="row" style={{ textAlign: "left", paddingRight: 24 }}>Product</th><td>{order.product === "report" ? "Style Report" : "Pro, annual"}</td></tr>
+                <tr><th scope="row" style={{ textAlign: "left", paddingRight: 24 }}>Product</th><td>{order.product === "report" ? "Style Report" : "Style Report"}</td></tr>
                 <tr><th scope="row" style={{ textAlign: "left", paddingRight: 24 }}>Amount</th><td>{formatMoney(order.amount_minor, order.currency)}</td></tr>
-                <tr><th scope="row" style={{ textAlign: "left", paddingRight: 24 }}>Price</th><td>{TIER_LABEL[order.price_tier] ?? order.price_tier}</td></tr>
               </tbody>
             </table>
           </div>
           <p>
             {order.product === "report"
-              ? "Your Style Report ships by 14 December 2026. We'll email you the moment it's ready."
-              : "Pro opens in January 2027. Your founding price is locked."}
+              ? "Your Style Report is unlocked."
+              
+              : "Thank you for your order."}
           </p>
         </>
       ) : (
         <p>We could not find that order. If you paid, your confirmation email is on its way.</p>
       )}
       <p>
-        {token ? <Button href={`/r/${token}`}>Back to your result</Button> : <Button href="/" variant="secondary">Back to fitso.me</Button>}
+        {token ? (
+          <Button href={order?.product === "report" ? `/r/${token}#report` : `/r/${token}`}>
+            {order?.product === "report" ? "Open my report" : "Back to your result"}
+          </Button>
+        ) : <Button href="/" variant="secondary">Back to fitso.me</Button>}
       </p>
     </Section>
   );

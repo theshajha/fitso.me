@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { QuickWinProfile, Verdict } from "@fitso/core";
-import { itemVerdict, quickWinProfile } from "./ai";
+import { PhotoGate, QuickWinProfile, ReadReport, Verdict } from "@fitso/core";
+import { itemVerdict } from "./ai";
+import { gatePhoto, runRead } from "@/features/read/pipeline";
 import { newShareToken } from "./ids";
 import { signOwner, verifyOwner } from "./owner-cookie";
 import { getDb, resetFakeDb } from "./supabase";
@@ -9,11 +10,15 @@ const answers = { life: "office", climate: "hot and humid", occasions: ["travel"
 
 describe("stub AI", () => {
   it("returns schema-valid, deterministic fixtures", async () => {
-    const input = { door: "women" as const, answers, imageBytes: new Uint8Array(10), mimeType: "image/jpeg", archetypes: ["A", "B", "C"] };
-    const a = await quickWinProfile(input);
-    expect(QuickWinProfile.safeParse(a).success).toBe(true);
-    expect(await quickWinProfile(input)).toEqual(a);
-    const v = await itemVerdict({ profile: a, answers, link: "https://example.com/x" });
+    const image = { bytes: new Uint8Array(10), mimeType: "image/jpeg" as const };
+    const gate = await gatePhoto(image);
+    expect(PhotoGate.safeParse(gate).success).toBe(true);
+    const input = { door: "women" as const, answers, images: [image], archetypes: ["A", "B", "C"] };
+    const a = await runRead(input);
+    expect(QuickWinProfile.safeParse(a.profile).success).toBe(true);
+    expect(ReadReport.safeParse(a.report).success).toBe(true);
+    expect((await runRead(input)).profile).toEqual(a.profile);
+    const v = await itemVerdict({ profile: a.profile, answers, link: "https://example.com/x" });
     expect(Verdict.safeParse(v).success).toBe(true);
   });
 });

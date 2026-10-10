@@ -3,79 +3,70 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { Door } from "@fitso/core";
+import Image from "next/image";
 import { Button } from "@/components/brand/Button";
 import { Container } from "@/components/brand/Container";
-import { DrapeFan } from "@/components/brand/DrapeFan";
 import { track } from "@/lib/posthog";
-import { identifyByEmail } from "@/lib/posthog";
-import { doorTheme } from "@/lib/tokens";
-import { prepareImage, type ImageSource, type PreparedImage } from "./image-client";
-import {
-  BUDGET,
-  CLIMATE,
-  LIFE,
-  MAX_SELFIE_BYTES,
-  OCCASIONS,
-  QUESTION_COPY,
-  VIBE,
-  headlineFor,
-  type Option,
-} from "./questions";
-import { emailSchema } from "./schema";
+import { Processing, type ReadEvent } from "./Processing";
+import { cropFace, prepareImage, type FaceBox, type ImageSource } from "./image-client";
+import { MAX_SELFIE_BYTES } from "./questions";
 
-type Step = "door" | "life" | "climate" | "occasions" | "budget_per_item" | "vibe" | "selfie" | "email";
-
-type Answers = {
-  life?: string;
-  climate?: string;
-  occasions: string[];
-  budget_per_item?: string;
-  vibe?: string;
+type Check = {
+  usable: boolean;
+  ask: string | null;
+  issues: string[];
+  door: Door | null;
+  full_length: boolean;
+  face_box: FaceBox | null;
+  heritage: { guess: string; confidence: number };
 };
 
-const THINKING_LINES = [
-  "Reading your undertone",
-  "Checking what the light is doing",
-  "Finding your three strengths",
-  "Matching you to an archetype",
-  "Picking colours that suit you",
-];
+type Photo = {
+  id: number;
+  blob: Blob;
+  /** The original file or frame, kept so a face close-up can be cut at full resolution. */
+  source: ImageSource;
+  /** Face close-up cut from the original when the face is small in the frame. Sent as an extra photo. */
+  faceBlob?: Blob;
+  previewUrl: string;
+  status: "checking" | "ok" | "bad" | "error";
+  check?: Check;
+  message?: string;
+};
 
 const MAX_RAW_BYTES = 20 * 1024 * 1024;
+/** Photos the person adds. The app may add up to two face close-ups on top. */
+const MAX_PHOTOS = 4;
+const PHOTO_ERRORS = ["file_too_big", "bad_image_type", "missing_image", "no_face"];
 
-const GUIDANCE = [
-  "Daylight, facing a window",
-  "No filter",
-  "Plain background",
-  "Hair back from your face",
-  "Face centred in the frame",
-];
+const GUIDANCE = ["Head to toe", "Daylight, facing a window", "No filter"];
 
-export function QuickWinFlow({ initialDoor, from }: { initialDoor: Door | null; from: string | null }) {
+export function QuickWinFlow({
+  initialDoor,
+  from,
+  embedded = false,
+}: {
+  initialDoor: Door | null;
+  from: string | null;
+  embedded?: boolean;
+}) {
   const router = useRouter();
-  const [door, setDoor] = useState<Door | null>(initialDoor);
-  const steps: Step[] = [
-    ...(initialDoor ? [] : (["door"] as Step[])),
-    "life",
-    "climate",
-    "occasions",
-    "budget_per_item",
-    "vibe",
-    "selfie",
-    "email",
-  ];
-  const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState<Answers>({ occasions: [] });
-  const [selfie, setSelfie] = useState<PreparedImage | null>(null);
-  const [selfieError, setSelfieError] = useState<string | null>(null);
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [chosenDoor, setChosenDoor] = useState<Door | null>(null);
+  const [photos, setPhotos] = useState<Photo[]>([]);
+  const [photoError, setPhotoError] = useState<string | null>(null);
+  const [phase, setPhase] = useState<"photos" | "processing">("photos");
+  const [events, setEvents] = useState<ReadEvent[]>([]);
+  const [readError, setReadError] = useState<string | null>(null);
+  const nextId = useRef(1);
+  const urlsRef = useRef<string[]>([]);
 
-  const step = steps[Math.min(index, steps.length - 1)];
-  const progress = ((index + 1) / steps.length) * 100;
+  const usable = photos.filter((p) => p.status === "ok" && p.check);
+  const checking = photos.some((p) => p.status === "checking");
+  const detectedDoor = usable.map((p) => p.check?.door).find((d): d is Door => !!d) ?? null;
+  const door: Door | null = chosenDoor ?? initialDoor ?? detectedDoor;
   const accentDoor = door ?? undefined;
+  // Ask only when at least one photo is usable and none of them told us the door.
+  const needDoor = usable.length > 0 && !door;
 
   useEffect(() => {
     track("quick_win_started", { door: initialDoor, from });
@@ -83,527 +74,425 @@ export function QuickWinFlow({ initialDoor, from }: { initialDoor: Door | null; 
   }, [initialDoor, from]);
 
   useEffect(() => {
-    track("quick_win_step", { step });
-  }, [step]);
-
-  const next = () => setIndex((i) => Math.min(i + 1, steps.length - 1));
-  const back = () => {
-    setSubmitError(null);
-    setIndex((i) => Math.max(i - 1, 0));
-  };
-  const goTo = (s: Step) => setIndex(Math.max(0, steps.indexOf(s)));
+    const urls = urlsRef;
+    return () => urls.current.forEach((u) => URL.revokeObjectURL(u));
+  }, []);
 
   function chooseDoor(d: Door) {
-    setDoor(d);
+    setChosenDoor(d);
     track("door_selected", { door: d, preselected: false });
-    next();
   }
 
-  function pick(key: "life" | "climate" | "budget_per_item" | "vibe", value: string) {
-    setAnswers((a) => ({ ...a, [key]: value }));
-    setTimeout(next, 140);
-  }
-
-  function toggleOccasion(value: string) {
-    setAnswers((a) => ({
-      ...a,
-      occasions: a.occasions.includes(value) ? a.occasions.filter((v) => v !== value) : [...a.occasions, value],
-    }));
-  }
-
-  const onSelfie = useCallback(async (source: ImageSource, via: "camera" | "upload") => {
-    setSelfieError(null);
-    try {
-      if (source instanceof File && source.size > MAX_RAW_BYTES) {
-        setSelfieError("That file is over 20 MB. Pick a smaller photo or take a new one.");
-        return;
-      }
-      const prepared = await prepareImage(source);
-      if (prepared.blob.size > MAX_SELFIE_BYTES) {
-        setSelfieError("That photo is still over 6 MB after shrinking. Try a different one.");
-        return;
-      }
-      if (prepared.tooDark) {
-        URL.revokeObjectURL(prepared.previewUrl);
-        setSelfieError("That photo is too dark. Face a window or step into daylight and try again.");
-        return;
-      }
-      setSelfie((old) => {
-        if (old) URL.revokeObjectURL(old.previewUrl);
-        return prepared;
-      });
-      track("selfie_captured", { source: via });
-    } catch {
-      setSelfieError("We could not open that image. Try a JPEG or PNG photo.");
-    }
+  const patchPhoto = useCallback((id: number, patch: Partial<Photo>) => {
+    setPhotos((ps) => ps.map((p) => (p.id === id ? { ...p, ...patch } : p)));
   }, []);
+
+  const checkPhoto = useCallback(
+    async (id: number, blob: Blob, source?: ImageSource) => {
+      patchPhoto(id, { status: "checking", message: undefined });
+      try {
+        const fd = new FormData();
+        fd.set("selfie", blob, "photo.jpg");
+        const res = await fetch("/api/photo-check", { method: "POST", body: fd });
+        const json = (await res.json().catch(() => ({}))) as Partial<Check> & { error?: string; message?: string };
+        if (!res.ok || json.error) {
+          patchPhoto(id, { status: "error", message: json.message ?? "We could not check that photo. Try again." });
+          return;
+        }
+        const check = json as Check;
+        patchPhoto(id, { status: check.usable ? "ok" : "bad", check });
+        // Self-correct a small face: cut a close-up from the original and send both.
+        if (check.usable && check.face_box && source) {
+          try {
+            const faceBlob = await cropFace(source, check.face_box);
+            if (faceBlob) patchPhoto(id, { faceBlob });
+          } catch {
+            /* the full photo still goes through */
+          }
+        }
+      } catch {
+        patchPhoto(id, { status: "error", message: "We lost the connection. Try again." });
+      }
+    },
+    [patchPhoto],
+  );
+
+  const onPhoto = useCallback(
+    async (source: ImageSource, via: "camera" | "upload") => {
+      setPhotoError(null);
+      try {
+        if (source instanceof File && source.size > MAX_RAW_BYTES) {
+          setPhotoError("That file is over 20 MB. Choose a smaller photo or take a new one.");
+          return;
+        }
+        const prepared = await prepareImage(source);
+        if (prepared.blob.size > MAX_SELFIE_BYTES) {
+          URL.revokeObjectURL(prepared.previewUrl);
+          setPhotoError("That photo is too large, even after shrinking. Try a different one.");
+          return;
+        }
+        if (prepared.tooDark) {
+          URL.revokeObjectURL(prepared.previewUrl);
+          setPhotoError("That photo is too dark. Stand facing a window and take it again.");
+          return;
+        }
+        const id = nextId.current++;
+        urlsRef.current.push(prepared.previewUrl);
+        // A video frame is gone once the camera stops; keep the prepared blob as its source instead.
+        const keep: ImageSource = source instanceof HTMLVideoElement ? prepared.blob : source;
+        setPhotos((ps) => [...ps, { id, blob: prepared.blob, source: keep, previewUrl: prepared.previewUrl, status: "checking" }]);
+        track("selfie_captured", { source: via });
+        void checkPhoto(id, prepared.blob, keep);
+      } catch {
+        setPhotoError("We could not open that file. Use a JPEG or PNG photo.");
+      }
+    },
+    [checkPhoto],
+  );
+
+  const removePhoto = (id: number) => {
+    setPhotos((ps) => ps.filter((p) => p.id !== id));
+    setPhotoError(null);
+  };
+  function backToPhotos(message: string | null) {
+    setPhase("photos");
+    setEvents([]);
+    setReadError(null);
+    setPhotoError(message);
+  }
+
+  const openResult = useCallback((token: string) => router.push(`/r/${token}`), [router]);
 
   async function submit() {
-    setEmailError(null);
-    setSubmitError(null);
-    const parsedEmail = emailSchema.safeParse(email);
-    if (!parsedEmail.success) {
-      setEmailError("That email does not look right. Check it and try again.");
-      return;
-    }
-    if (!door || !selfie || !answers.life || !answers.climate || !answers.budget_per_item || !answers.vibe) {
-      setSubmitError("Something is missing. Go back and finish every step.");
-      return;
-    }
-    setSubmitting(true);
-    track("quick_win_submitted", { door });
+    if (!door || usable.length === 0 || checking) return;
+    setEvents([]);
+    setReadError(null);
+    setPhase("processing");
+    track("quick_win_submitted", { door, photos: usable.length });
     const fd = new FormData();
     fd.set("door", door);
-    fd.set("answers", JSON.stringify(answers));
-    fd.set("email", parsedEmail.data);
-    fd.set("selfie", selfie.blob, "selfie.jpg");
+    fd.set("answers", "{}");
+    // Full photos first, then face close-ups (at most two), within the server's limit of six.
+    const blobs = [...usable.map((p) => p.blob), ...usable.flatMap((p) => (p.faceBlob ? [p.faceBlob] : [])).slice(0, 2)].slice(0, 6);
+    blobs.forEach((b, i) => fd.append("photos", b, `photo-${i + 1}.jpg`));
+
+    let finished = false;
     try {
       const res = await fetch("/api/quick-win", { method: "POST", body: fd });
-      const json = (await res.json().catch(() => ({}))) as { token?: string; error?: string; message?: string };
-      if (res.ok && json.token) {
-        void identifyByEmail(parsedEmail.data);
-        router.push(`/r/${json.token}`);
-        return; // keep the waiting screen up during navigation
+      if (!res.ok || !res.body) {
+        const json = (await res.json().catch(() => ({}))) as { error?: string; message?: string };
+        const message = json.message ?? "Something went wrong. Try again.";
+        if (PHOTO_ERRORS.includes(json.error ?? "")) backToPhotos(message);
+        else setReadError(message);
+        return;
       }
-      setSubmitting(false);
-      const message = json.message ?? "Something went wrong. Try again.";
-      if (json.error === "invalid_email") {
-        setEmailError(message);
-      } else if (["file_too_big", "bad_image_type", "missing_image", "no_face"].includes(json.error ?? "")) {
-        setSelfie(null);
-        setSelfieError(message);
-        goTo("selfie");
-      } else {
-        setSubmitError(message);
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = "";
+      const handle = (line: string) => {
+        if (!line.trim()) return;
+        let ev: ReadEvent;
+        try {
+          ev = JSON.parse(line) as ReadEvent;
+        } catch {
+          return;
+        }
+        if (ev.type === "stage") {
+          if (ev.status === "done") track("read_stage", { stage: ev.stage });
+          setEvents((es) => [...es, ev]);
+        } else if (ev.type === "done") {
+          finished = true;
+          setEvents((es) => [...es, ev]);
+        } else if (ev.type === "error") {
+          finished = true;
+          if (PHOTO_ERRORS.includes(ev.code ?? "")) backToPhotos(ev.message);
+          else setReadError(ev.message || "Something went wrong. Try again.");
+        }
+      };
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split("\n");
+        buf = lines.pop() ?? "";
+        lines.forEach(handle);
       }
+      buf += decoder.decode();
+      handle(buf);
+      if (!finished) setReadError("We lost the connection before your result was ready. Try again.");
     } catch {
-      setSubmitting(false);
-      setSubmitError("We lost the connection. Check your signal and try again.");
+      if (!finished) setReadError("We lost the connection. Check your signal and try again.");
     }
   }
 
-  if (submitting) return <Waiting door={accentDoor} />;
+  if (phase === "processing") {
+    return (
+      <Processing
+        door={accentDoor}
+        photoUrls={usable.map((p) => p.previewUrl)}
+        events={events}
+        error={readError}
+        onRetry={() => backToPhotos(null)}
+        onOpen={openResult}
+        embedded={embedded}
+      />
+    );
+  }
 
-  const headline = headlineFor(from);
+  const step = (
+    <PhotoStep
+      photos={photos}
+      error={photoError}
+      needDoor={needDoor}
+      chosenDoor={chosenDoor}
+      checking={checking}
+      canSubmit={usable.length > 0 && !checking && !!door}
+      onChooseDoor={chooseDoor}
+      onImage={onPhoto}
+      onRemove={removePhoto}
+      onRecheck={(p) => void checkPhoto(p.id, p.blob, p.source)}
+      onSubmit={() => void submit()}
+    />
+  );
+
+  if (embedded) return step;
 
   return (
-    <div data-door={door ?? undefined}>
-      <div style={{ height: 4, background: "var(--line)" }} aria-hidden="true">
-        <div style={{ width: `${progress}%`, height: "100%", background: "var(--accent)", transition: "width 240ms ease" }} />
-      </div>
-      <Container className="section">
-        <p className="label" style={{ margin: 0, color: "var(--ink-2)" }}>
-          Step {index + 1} of {steps.length}
-        </p>
-        {index === 0 && (
-          <h1 style={{ marginTop: 12, fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>{headline}</h1>
-        )}
-
-        <div style={{ marginTop: 24 }}>
-          {step === "door" && <DoorStep onChoose={chooseDoor} />}
-          {step === "life" && (
-            <Question title={QUESTION_COPY.life} options={LIFE} value={answers.life} onPick={(v) => pick("life", v)} />
-          )}
-          {step === "climate" && (
-            <Question title={QUESTION_COPY.climate} options={CLIMATE} value={answers.climate} onPick={(v) => pick("climate", v)} />
-          )}
-          {step === "occasions" && (
-            <div>
-              <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>{QUESTION_COPY.occasions}</h2>
-              <OptionGrid>
-                {OCCASIONS.map((o) => (
-                  <OptionButton
-                    key={o.value}
-                    option={o}
-                    selected={answers.occasions.includes(o.value)}
-                    onClick={() => toggleOccasion(o.value)}
-                    multi
-                  />
-                ))}
-              </OptionGrid>
-              <div style={{ marginTop: 24 }}>
-                <Button door={accentDoor} disabled={answers.occasions.length === 0} onClick={next}>
-                  Continue
-                </Button>
-              </div>
-            </div>
-          )}
-          {step === "budget_per_item" && (
-            <Question
-              title={QUESTION_COPY.budget_per_item}
-              options={BUDGET}
-              value={answers.budget_per_item}
-              onPick={(v) => pick("budget_per_item", v)}
-            />
-          )}
-          {step === "vibe" && (
-            <Question
-              title={QUESTION_COPY.vibe}
-              options={VIBE[door ?? "women"]}
-              value={answers.vibe}
-              onPick={(v) => pick("vibe", v)}
-            />
-          )}
-          {step === "selfie" && (
-            <SelfieStep
-              door={accentDoor}
-              selfie={selfie}
-              error={selfieError}
-              onImage={onSelfie}
-              onClear={() => {
-                setSelfie(null);
-                setSelfieError(null);
-              }}
-              onContinue={next}
-            />
-          )}
-          {step === "email" && (
-            <div>
-              <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>Where should we keep your result?</h2>
-              <p style={{ color: "var(--ink-2)" }}>
-                One email. We save your result to it. Your photo is deleted as soon as we have read it.
-              </p>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  void submit();
-                }}
-                noValidate
-                style={{ marginTop: 16 }}
-              >
-                <label htmlFor="email" className="label" style={{ display: "block", marginBottom: 8 }}>
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  aria-invalid={emailError ? true : undefined}
-                  aria-describedby={emailError ? "email-error" : undefined}
-                  style={{
-                    width: "100%",
-                    padding: "16px 18px",
-                    fontSize: 18,
-                    border: "2px solid var(--ink)",
-                    borderRadius: 14,
-                    background: "var(--paper)",
-                  }}
-                />
-                {emailError && (
-                  <p id="email-error" role="alert" style={{ color: "var(--bad)", marginTop: 8 }}>
-                    {emailError}
-                  </p>
-                )}
-                {submitError && (
-                  <p role="alert" style={{ color: "var(--bad)", marginTop: 8 }}>
-                    {submitError}
-                  </p>
-                )}
-                <div style={{ marginTop: 20 }}>
-                  <Button door={accentDoor} size="lg" type="submit">
-                    Show my result
-                  </Button>
-                </div>
-              </form>
-            </div>
-          )}
-        </div>
-
-        {index > 0 && step !== "door" && (
-          <div style={{ marginTop: 32 }}>
-            <button
-              type="button"
-              onClick={back}
-              className="label"
-              style={{ background: "none", border: 0, padding: 0, cursor: "pointer", textDecoration: "underline" }}
-            >
-              Back
-            </button>
+    <Container className="section">
+      <div className="grid gap-10 md:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] md:gap-16">
+        <div className="flex min-w-0 flex-col gap-6">
+          <h1 style={{ margin: 0, fontSize: "clamp(2.25rem, 5.5vw, 4rem)" }}>Upload one full-length photo.</h1>
+          <p style={{ margin: 0, fontSize: "1.1875rem" }}>In about a minute, you see your colours, what already works on you, and the one thing to change. Free.</p>
+          <div className="mt-2 p-5 md:p-7" style={{ border: "3px solid var(--ink)", borderRadius: 28, boxShadow: "0 10px 0 var(--magenta)" }}>
+            {step}
           </div>
-        )}
-      </Container>
-    </div>
-  );
-}
-
-function Waiting({ door }: { door?: Door }) {
-  const [line, setLine] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setLine((l) => (l + 1) % THINKING_LINES.length), 2200);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <div data-door={door}>
-      <Container className="section">
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: 24 }}>
-          <DrapeFan door={door} state="thinking" size={180} />
-          <p role="status" aria-live="polite" className="label" style={{ fontSize: "1rem", margin: 0 }}>
-            {THINKING_LINES[line]}
-          </p>
-          <p style={{ color: "var(--ink-2)", margin: 0 }}>This takes about 15 seconds.</p>
         </div>
-      </Container>
-    </div>
-  );
-}
-
-function DoorStep({ onChoose }: { onChoose: (d: Door) => void }) {
-  return (
-    <div>
-      <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>Which door are you shopping at?</h2>
-      <div className="grid gap-4 sm:grid-cols-2" style={{ marginTop: 16 }}>
-        {(["men", "women"] as Door[]).map((d) => (
-          <button
-            key={d}
-            type="button"
-            onClick={() => onChoose(d)}
-            style={{
-              textAlign: "left",
-              padding: "40px 28px",
-              minHeight: 180,
-              borderRadius: 24,
-              border: "2px solid var(--ink)",
-              background: doorTheme[d].accent,
-              color: "#fff",
-              cursor: "pointer",
-            }}
-          >
-            <span style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: 36 }}>
-              {doorTheme[d].label}
-            </span>
-            <span style={{ display: "block", marginTop: 8, opacity: 0.95 }}>
-              {d === "men" ? "Shirts, kurtas, chinos, sneakers" : "Kurtas, dresses, separates, festive"}
-            </span>
-          </button>
-        ))}
+        <aside className="flex min-w-0 flex-col gap-4 md:pt-4" aria-label="A good photo">
+          <h2 style={{ margin: 0, fontSize: "1.375rem" }}>A good photo looks like this</h2>
+          <div className="flex gap-5 md:flex-col">
+            <div className="overflow-hidden" style={{ flex: "none", width: "min(42%, 220px)", borderRadius: 20, border: "3px solid var(--ink)" }}>
+              <Image src="/people/woman-1.jpg" alt="Example: a woman photographed head to toe against a plain wall in daylight" width={768} height={1376} sizes="220px" style={{ width: "100%", height: "auto", display: "block" }} />
+            </div>
+            <ul className="m-0 flex list-none flex-col gap-3 p-0">
+              {[...GUIDANCE, "Plain background"].map((g) => (
+                <li key={g} className="flex items-center gap-3" style={{ fontWeight: 600 }}>
+                  <span aria-hidden="true" style={{ color: "var(--good)", fontWeight: 800 }}>
+                    ✓
+                  </span>
+                  {g}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </aside>
       </div>
-    </div>
+    </Container>
   );
 }
 
-function Question({
-  title,
-  options,
-  value,
-  onPick,
-}: {
-  title: string;
-  options: Option[];
-  value?: string;
-  onPick: (v: string) => void;
-}) {
-  return (
-    <div>
-      <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>{title}</h2>
-      <OptionGrid>
-        {options.map((o) => (
-          <OptionButton key={o.value} option={o} selected={value === o.value} onClick={() => onPick(o.value)} />
-        ))}
-      </OptionGrid>
-    </div>
-  );
-}
-
-function OptionGrid({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="grid gap-3 sm:grid-cols-2" style={{ marginTop: 16 }} role="group">
-      {children}
-    </div>
-  );
-}
-
-function OptionButton({
-  option,
-  selected,
-  onClick,
-  multi = false,
-}: {
-  option: Option;
-  selected: boolean;
-  onClick: () => void;
-  multi?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={selected}
-      role={multi ? "checkbox" : undefined}
-      aria-checked={multi ? selected : undefined}
-      style={{
-        textAlign: "left",
-        padding: "20px 22px",
-        minHeight: 72,
-        borderRadius: 16,
-        border: `2px solid ${selected ? "var(--accent)" : "var(--ink)"}`,
-        background: selected ? "var(--accent)" : "var(--paper)",
-        color: selected ? "#fff" : "var(--ink)",
-        cursor: "pointer",
-        fontSize: 18,
-        fontWeight: 600,
-      }}
-    >
-      {option.label}
-      {option.hint && (
-        <span style={{ display: "block", fontSize: 14, fontWeight: 400, opacity: 0.85 }}>{option.hint}</span>
-      )}
-    </button>
-  );
-}
-
-function SelfieStep({
-  door,
-  selfie,
+function PhotoStep({
+  photos,
   error,
+  needDoor,
+  chosenDoor,
+  checking,
+  canSubmit,
+  onChooseDoor,
   onImage,
-  onClear,
-  onContinue,
+  onRemove,
+  onRecheck,
+  onSubmit,
 }: {
-  door?: Door;
-  selfie: PreparedImage | null;
+  photos: Photo[];
   error: string | null;
+  needDoor: boolean;
+  chosenDoor: Door | null;
+  checking: boolean;
+  canSubmit: boolean;
+  onChooseDoor: (d: Door) => void;
   onImage: (b: ImageSource, via: "camera" | "upload") => void | Promise<void>;
-  onClear: () => void;
-  onContinue: () => void;
+  onRemove: (id: number) => void;
+  onRecheck: (p: Photo) => void;
+  onSubmit: () => void;
 }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const [cameraOn, setCameraOn] = useState(false);
-  const [cameraError, setCameraError] = useState<string | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const pickRef = useRef<HTMLInputElement>(null);
+  const full = photos.length >= MAX_PHOTOS;
+  const room = Math.max(0, MAX_PHOTOS - photos.length);
 
-  const stopCamera = useCallback(() => {
-    streamRef.current?.getTracks().forEach((t) => t.stop());
-    streamRef.current = null;
-    setCameraOn(false);
-  }, []);
-
-  useEffect(() => () => streamRef.current?.getTracks().forEach((t) => t.stop()), []);
-
-  useEffect(() => {
-    if (cameraOn && videoRef.current && streamRef.current) {
-      videoRef.current.srcObject = streamRef.current;
-      void videoRef.current.play().catch(() => undefined);
-    }
-  }, [cameraOn]);
-
-  async function startCamera() {
-    setCameraError(null);
-    if (!navigator.mediaDevices?.getUserMedia) {
-      setCameraError("This browser cannot open the camera. Upload a photo instead.");
-      return;
-    }
-    try {
-      streamRef.current = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 1280 } },
-        audio: false,
-      });
-      setCameraOn(true);
-    } catch {
-      setCameraError("We could not open the camera. Allow camera access, or upload a photo instead.");
-    }
+  function take(files: FileList | null, via: "camera" | "upload") {
+    Array.from(files ?? [])
+      .filter((f) => f.type.startsWith("image/"))
+      .slice(0, room)
+      .forEach((f) => void onImage(f, via));
   }
 
-  async function capture() {
-    const video = videoRef.current;
-    if (!video) return;
-    await onImage(video, "camera");
-    stopCamera();
-  }
+  // With no photo yet, the main button opens the picker instead of sitting disabled.
+  const empty = photos.length === 0;
+  const blocked = !empty && !canSubmit;
+  const hint = checking
+    ? "Checking your photo"
+    : needDoor && !chosenDoor
+      ? "Choose who the styles are for"
+      : !empty && !canSubmit
+        ? "Add a photo we can use"
+        : null;
+
+  const pickInput = (via: "upload") => (
+    <input type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" onChange={(e) => (take(e.target.files, via), (e.target.value = ""))} />
+  );
 
   return (
-    <div>
-      <h2 style={{ fontSize: "clamp(1.4rem, 3vw, 2rem)" }}>Now one selfie</h2>
-      <ul className="label" style={{ listStyle: "none", padding: 0, margin: "12px 0 0", display: "flex", flexWrap: "wrap", gap: 8 }}>
-        {GUIDANCE.map((g) => (
-          <li key={g} style={{ border: "1.5px solid var(--ink)", borderRadius: 999, padding: "4px 12px" }}>
-            {g}
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-col gap-4">
+      {photos.length > 0 && (
+        <ul className="m-0 flex list-none flex-wrap gap-3 p-0">
+          {photos.map((p, i) => {
+            const bad = p.status === "bad" || p.status === "error";
+            return (
+              <li key={p.id} className="flex min-w-0 items-center gap-3 py-2 pr-4 pl-2" style={{ border: `2px solid ${bad ? "var(--bad)" : "var(--line)"}`, borderRadius: 16, flex: "1 1 260px", background: "var(--paper)" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.previewUrl} alt={`Your photo ${i + 1}`} style={{ width: 48, height: 64, objectFit: "cover", borderRadius: 10, flex: "none" }} />
+                <div className="flex min-w-0 flex-1 flex-col gap-0.5" style={{ fontSize: "0.9375rem" }}>
+                  {p.status === "checking" && (
+                    <p className="label" style={{ margin: 0 }}>
+                      <span className="checking-dot" aria-hidden="true" /> Checking your photo
+                    </p>
+                  )}
+                  {p.status === "ok" && (
+                    <p className="label" style={{ margin: 0, color: "var(--good)" }}>
+                      ✓ Good photo
+                    </p>
+                  )}
+                  {p.status === "ok" && p.check?.ask && <p className="muted" style={{ margin: 0 }}>{p.check.ask}</p>}
+                  {p.status === "bad" && (
+                    <p role="alert" style={{ margin: 0, color: "var(--bad)" }}>
+                      {p.check?.ask ?? "We can't use this photo. Try another."}
+                    </p>
+                  )}
+                  {p.status === "error" && (
+                    <p role="alert" style={{ margin: 0, color: "var(--bad)" }}>
+                      {p.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex flex-none gap-3">
+                  {p.status === "error" && (
+                    <button type="button" onClick={() => onRecheck(p)} style={linkBtn}>
+                      Check again
+                    </button>
+                  )}
+                  <button type="button" onClick={() => onRemove(p.id)} style={linkBtn}>
+                    Remove
+                  </button>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
 
-      <div style={{ marginTop: 20 }}>
-        {selfie ? (
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={selfie.previewUrl}
-              alt="Your selfie, shown only on this device"
-              style={{ width: 240, maxWidth: "100%", borderRadius: 20, border: "2px solid var(--ink)" }}
-            />
-            <div style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
-              <Button door={door} onClick={onContinue}>
-                Use this photo
-              </Button>
-              <Button variant="secondary" onClick={onClear}>
-                Retake
-              </Button>
-            </div>
-          </div>
-        ) : cameraOn ? (
-          <div>
-            <video
-              ref={videoRef}
-              muted
-              playsInline
-              style={{
-                width: 320,
-                maxWidth: "100%",
-                borderRadius: 20,
-                border: "2px solid var(--ink)",
-                transform: "scaleX(-1)",
-                background: "var(--ink)",
-              }}
-            />
-            <div style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
-              <Button door={door} onClick={() => void capture()}>
-                Capture
-              </Button>
-              <Button variant="secondary" onClick={stopCamera}>
-                Cancel
-              </Button>
+      {/* One object: the drop zone holds the main button. */}
+      <div
+        onDragOver={(e) => {
+          e.preventDefault();
+          if (!full) setDragging(true);
+        }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragging(false);
+          if (!full) take(e.dataTransfer.files, "upload");
+        }}
+        className={`drop-zone flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6 md:p-5 ${empty ? "is-empty" : "p-4"}`}
+        style={{
+          border: `2px dashed ${dragging ? "var(--magenta)" : "color-mix(in srgb, var(--ink) 35%, transparent)"}`,
+          background: dragging ? "color-mix(in srgb, var(--magenta) 8%, var(--paper))" : "color-mix(in srgb, var(--line) 35%, var(--paper))",
+          borderRadius: 20,
+          transition: "background 150ms, border-color 150ms",
+        }}
+      >
+        {!full ? (
+          <div className={`min-w-0 items-center gap-4 ${empty ? "hidden md:flex" : "flex"}`}>
+            <span aria-hidden="true" className="hidden flex-none items-center justify-center md:inline-flex" style={{ width: 48, height: 48, borderRadius: 14, background: "var(--ink)", color: "var(--paper)" }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 16V4M6 10l6-6 6 6M4 20h16" />
+              </svg>
+            </span>
+            <div className="flex min-w-0 flex-col">
+              <span className="hidden md:inline" style={{ fontWeight: 700, fontSize: "1.0625rem", lineHeight: 1.3 }}>
+                {empty ? "Drop a full-length photo" : "Add another photo (optional)"}
+              </span>
+              <span className="muted" style={{ fontSize: "0.9375rem" }}>
+                <span className="hidden md:inline">or </span>
+                <label style={{ textDecoration: "underline", cursor: "pointer", color: "var(--ink)", fontWeight: 600 }}>
+                  <span className="hidden md:inline">choose a file</span>
+                  <span className="md:hidden">Add another photo (optional)</span>
+                  {pickInput("upload")}
+                </label>
+              </span>
             </div>
           </div>
         ) : (
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Button door={door} size="lg" onClick={() => void startCamera()}>
-              Take a selfie
-            </Button>
-            <label
+          <span style={{ fontWeight: 700 }}>Four photos added</span>
+        )}
+        <input ref={pickRef} type="file" accept="image/jpeg,image/png,image/webp" multiple className="sr-only" tabIndex={-1} aria-hidden="true" onChange={(e) => (take(e.target.files, "upload"), (e.target.value = ""))} />
+        <Button size="lg" disabled={blocked} onClick={() => (empty ? pickRef.current?.click() : onSubmit())} className="w-full flex-none md:w-auto">
+          Generate my personal style
+        </Button>
+      </div>
+
+      {needDoor && (
+        <div role="group" aria-label="Show me styles for" className="flex flex-wrap items-center gap-3">
+          <span style={{ fontWeight: 700 }}>Show me styles for</span>
+          {(["women", "men"] as Door[]).map((d) => (
+            <button
+              key={d}
+              type="button"
+              aria-pressed={chosenDoor === d}
+              onClick={() => onChooseDoor(d)}
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                padding: "16px 32px",
+                padding: "8px 18px",
                 borderRadius: 999,
                 border: "2px solid var(--ink)",
-                fontWeight: 600,
-                fontSize: 18,
+                background: chosenDoor === d ? "var(--ink)" : "var(--paper)",
+                color: chosenDoor === d ? "var(--paper)" : "var(--ink)",
+                fontWeight: 700,
                 cursor: "pointer",
               }}
             >
-              Upload a photo
-              <input
-                type="file"
-                accept="image/jpeg,image/png,image/webp"
-                style={{ position: "absolute", width: 1, height: 1, opacity: 0 }}
-                onChange={(e) => {
-                  const f = e.target.files?.[0];
-                  e.target.value = "";
-                  if (f) void onImage(f, "upload");
-                }}
-              />
-            </label>
-          </div>
+              {d === "women" ? "Women" : "Men"}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {error && (
+        <p role="alert" style={{ color: "var(--bad)", margin: 0, fontWeight: 600 }}>
+          {error}
+        </p>
+      )}
+
+      <ul className="m-0 flex list-none flex-wrap items-center gap-x-5 gap-y-1 p-0" style={{ fontSize: "0.9375rem", fontWeight: 600 }}>
+        {hint ? (
+          <li className="muted">{hint}</li>
+        ) : (
+          <>
+            {GUIDANCE.map((g) => (
+              <li key={g} className="flex items-center gap-2">
+                <span aria-hidden="true" style={{ color: "var(--good)" }}>
+                  ✓
+                </span>
+                {g}
+              </li>
+            ))}
+            <li className="muted" style={{ fontWeight: 500 }}>
+              Free · about a minute
+            </li>
+          </>
         )}
-        {(error || cameraError) && (
-          <p role="alert" style={{ color: "var(--bad)", marginTop: 12 }}>
-            {error ?? cameraError}
-          </p>
-        )}
-      </div>
+      </ul>
     </div>
   );
 }
+
+const linkBtn = { background: "none", border: 0, padding: 0, cursor: "pointer", textDecoration: "underline", fontWeight: 600, color: "var(--ink)" } as const;

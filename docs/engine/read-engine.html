@@ -1,0 +1,243 @@
+<title>fitso Read Engine</title>
+<meta name="description" content="How one photo becomes the free read and the full Style Report: stages, models, checks, and the JSON that comes out.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500&display=swap">
+<style>
+/* Layout: one 1200px column; verdict first, then the flow drawing, then the JSON, then the decisions table. fitso's own tokens (paper, ink, magenta, cobalt, lime, tangerine). */
+:root{
+  --bg:#FFFDF8; --fg:#14121B; --fg2:#4B4757; --line:#E6E2EC; --panel:#F6F2EA;
+  --magenta:#F0127A; --cobalt:#2B3DF5; --lime:#C8F031; --tangerine:#FF6B1A; --good:#15735A; --warn:#965007; --bad:#B3261E;
+  --display:"Unbounded",system-ui,sans-serif; --body:"Hanken Grotesk",system-ui,sans-serif; --mono:"Spline Sans Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#14121B;--fg:#FFFDF8;--fg2:#B9B3C6;--line:#2E2A3A;--panel:#1E1A28;--good:#4CC39A;--warn:#E0A05A;--bad:#F07A74;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14121B;--fg:#FFFDF8;--fg2:#B9B3C6;--line:#2E2A3A;--panel:#1E1A28;--good:#4CC39A;--warn:#E0A05A;--bad:#F07A74;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.5;margin:0}
+.wrap{max-width:1200px;margin-inline:auto;padding-inline:16px;padding-block:40px 80px;display:flex;flex-direction:column;gap:48px}
+h1,h2,h3{font-family:var(--display);letter-spacing:-0.02em;line-height:1.08;margin:0}
+h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900}
+h2{font-size:clamp(1.4rem,2.6vw,2rem);font-weight:700}
+h3{font-size:1.1rem;font-weight:700}
+p,li{margin:0;max-width:none}
+.label{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2)}
+.verdict{border:3px solid var(--fg);border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:14px;background:var(--panel)}
+.verdict p{font-size:1.15rem}
+section{display:flex;flex-direction:column;gap:18px}
+figure{margin:0;display:flex;flex-direction:column;gap:12px}
+.scroll{overflow-x:auto}
+svg{display:block;max-width:100%;height:auto;min-width:720px}
+figcaption{color:var(--fg2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{border:2px solid var(--fg);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card .label{color:var(--fg)}
+.tag{display:inline-block;border-radius:999px;padding:3px 10px;font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:#fff}
+pre{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px;font-family:var(--mono);font-size:.82rem;line-height:1.5;overflow-x:auto;color:var(--fg)}
+code{font-family:var(--mono);font-size:.9em}
+table{border-collapse:collapse;width:100%;min-width:720px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--fg2)}
+.num{font-variant-numeric:tabular-nums}
+ul{padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.k{color:var(--cobalt)} .s{color:var(--good)} .c{color:var(--fg2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .k{color:#8EA0FF}}
+:root[data-theme="dark"] .k{color:#8EA0FF}
+</style>
+
+<div class="wrap">
+  <header style="display:flex;flex-direction:column;gap:12px">
+    <span class="label">fitso · engine design · 10 Oct 2026</span>
+    <h1>One photo in. One JSON out. Two things shown.</h1>
+    <p style="font-size:1.2rem;color:var(--fg2)">How the read engine turns a photo and five answers into the free read and the full Style Report, and why each stage is a separate model call.</p>
+  </header>
+
+  <div class="verdict">
+    <span class="label">Verdict</span>
+    <p><strong>Five stages, each with one job, each producing a typed object.</strong> A cheap gate rejects bad photos and reads the door and heritage. An observer writes down what is visible, with no opinions. A judge makes every call from those notes only, and names the note each call rests on. A second, independent model checks each free-read line against the notes and sends failures back. A writer turns the decisions into the stylist's voice. One run produces everything; the page shows the free slice at once and unlocks the rest on payment.</p>
+    <p>The design choice that matters most: <strong>the judge never sees the photo.</strong> It works from the observation, so every claim can be checked against a record of what was actually there. That is what keeps the flattery true and stops the model inventing a jawline.</p>
+  </div>
+
+  <section>
+    <h2>The flow</h2>
+    <figure>
+      <div class="scroll">
+      <svg viewBox="0 0 1180 520" role="img" aria-label="Photo and answers flow through gate, observer, judge, checker and writer; the judge works only from the observation; the checker can send the judge back once; one JSON is stored and rendered as the free read and the paid report." style="color:var(--fg)">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="currentColor"/></marker>
+          <marker id="arrw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#965007"/></marker>
+        </defs>
+        <!-- inputs -->
+        <rect x="20" y="60" width="130" height="64" rx="14" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="85" y="86" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="13" font-weight="700" fill="currentColor">photo</text>
+        <text x="85" y="106" text-anchor="middle" font-size="11" fill="currentColor" opacity=".7">bytes, never stored</text>
+        <rect x="20" y="300" width="130" height="64" rx="14" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="85" y="326" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="13" font-weight="700" fill="currentColor">answers</text>
+        <text x="85" y="346" text-anchor="middle" font-size="11" fill="currentColor" opacity=".7">life, climate, occasions, budget, vibe</text>
+
+        <!-- gate -->
+        <rect x="200" y="40" width="170" height="104" rx="16" fill="#C8F031" stroke="#14121B" stroke-width="2"/>
+        <text x="285" y="66" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="14" font-weight="900" fill="#14121B">1 · gate</text>
+        <text x="285" y="86" text-anchor="middle" font-size="11" font-family="Spline Sans Mono,monospace" fill="#14121B">claude-haiku-5-5</text>
+        <text x="285" y="106" text-anchor="middle" font-size="11" fill="#14121B">usable? door? heritage?</text>
+        <text x="285" y="124" text-anchor="middle" font-size="11" fill="#14121B">~2 s · runs before the questions</text>
+        <line x1="150" y1="92" x2="198" y2="92" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+        <!-- gate reject loop -->
+        <path d="M285 144 L285 200 L85 200 L85 126" fill="none" stroke="#B3261E" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arr)"/>
+        <text x="190" y="194" text-anchor="middle" font-size="11" fill="#B3261E">not usable: one kind ask, retake</text>
+
+        <!-- observe -->
+        <rect x="420" y="40" width="190" height="104" rx="16" fill="#2B3DF5" stroke="#14121B" stroke-width="2"/>
+        <text x="515" y="66" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="14" font-weight="900" fill="#fff">2 · observe</text>
+        <text x="515" y="86" text-anchor="middle" font-size="11" font-family="Spline Sans Mono,monospace" fill="#fff">claude-opus-5-5 · vision</text>
+        <text x="515" y="106" text-anchor="middle" font-size="11" fill="#fff">what is visible, no opinions</text>
+        <text x="515" y="124" text-anchor="middle" font-size="11" fill="#fff">skin, hair, eyes, face, build, every garment</text>
+        <line x1="370" y1="92" x2="418" y2="92" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="394" y="80" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7">photo</text>
+
+        <!-- observation record -->
+        <rect x="440" y="200" width="150" height="54" rx="10" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/>
+        <text x="515" y="223" text-anchor="middle" font-family="Spline Sans Mono,monospace" font-size="12" fill="currentColor">Observation</text>
+        <text x="515" y="242" text-anchor="middle" font-size="11" fill="currentColor" opacity=".7">typed JSON, no photo</text>
+        <line x1="515" y1="144" x2="515" y2="198" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+
+        <!-- judge -->
+        <rect x="660" y="160" width="200" height="130" rx="16" fill="#F0127A" stroke="#14121B" stroke-width="2"/>
+        <text x="760" y="188" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="14" font-weight="900" fill="#fff">3 · judge</text>
+        <text x="760" y="208" text-anchor="middle" font-size="11" font-family="Spline Sans Mono,monospace" fill="#fff">claude-opus-5-5 · effort high</text>
+        <text x="760" y="228" text-anchor="middle" font-size="11" fill="#fff">season, palette, archetype</text>
+        <text x="760" y="246" text-anchor="middle" font-size="11" fill="#fff">3 working + evidence, 1 change</text>
+        <text x="760" y="264" text-anchor="middle" font-size="11" fill="#fff">about you · about style · works</text>
+        <text x="760" y="282" text-anchor="middle" font-size="11" fill="#fff" opacity=".85">never sees the photo</text>
+        <line x1="590" y1="227" x2="658" y2="227" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="624" y="216" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7">notes</text>
+        <path d="M150 332 L760 332 L760 292" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="455" y="324" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7">answers (life, climate, budget)</text>
+
+        <!-- checker -->
+        <rect x="660" y="380" width="200" height="100" rx="16" fill="#FF6B1A" stroke="#14121B" stroke-width="2"/>
+        <text x="760" y="408" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="14" font-weight="900" fill="#14121B">4 · check</text>
+        <text x="760" y="428" text-anchor="middle" font-size="11" font-family="Spline Sans Mono,monospace" fill="#14121B">TypeSafe Jev · choice</text>
+        <text x="760" y="448" text-anchor="middle" font-size="11" fill="#14121B">each free line vs the notes:</text>
+        <text x="760" y="466" text-anchor="middle" font-size="11" fill="#14121B">supports · contradicts · says nothing</text>
+        <line x1="730" y1="290" x2="730" y2="378" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="700" y="340" text-anchor="end" font-size="10" fill="currentColor" opacity=".7">4 claims</text>
+        <path d="M790 380 L790 300" fill="none" stroke="#965007" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrw)"/>
+        <text x="865" y="345" text-anchor="start" font-size="11" fill="#965007">failing lines go back once</text>
+        <path d="M590 254 L590 430 L658 430" fill="none" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="600" y="400" text-anchor="start" font-size="10" fill="currentColor" opacity=".7">notes</text>
+
+        <!-- writer -->
+        <rect x="920" y="160" width="190" height="130" rx="16" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text x="1015" y="188" text-anchor="middle" font-family="Unbounded,sans-serif" font-size="14" font-weight="900" fill="currentColor">5 · write</text>
+        <text x="1015" y="208" text-anchor="middle" font-size="11" font-family="Spline Sans Mono,monospace" fill="currentColor">claude-sonnet-5-5</text>
+        <text x="1015" y="228" text-anchor="middle" font-size="11" fill="currentColor">the stylist's voice</text>
+        <text x="1015" y="246" text-anchor="middle" font-size="11" fill="currentColor">adds no facts, only words</text>
+        <text x="1015" y="264" text-anchor="middle" font-size="11" fill="currentColor">free slice + report sections</text>
+        <line x1="860" y1="225" x2="918" y2="225" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+        <text x="889" y="213" text-anchor="middle" font-size="10" fill="currentColor" opacity=".7">decisions</text>
+
+        <!-- output -->
+        <rect x="920" y="380" width="190" height="100" rx="16" fill="none" stroke="currentColor" stroke-width="3"/>
+        <text x="1015" y="408" text-anchor="middle" font-family="Spline Sans Mono,monospace" font-size="13" font-weight="700" fill="currentColor">ReadReport JSON</text>
+        <text x="1015" y="428" text-anchor="middle" font-size="11" fill="currentColor">decisions + text + checks</text>
+        <text x="1015" y="446" text-anchor="middle" font-size="11" fill="currentColor">stored on quick_wins.report</text>
+        <text x="1015" y="464" text-anchor="middle" font-size="11" fill="currentColor" opacity=".8">free slice shown · report unlocked on pay</text>
+        <line x1="1015" y1="290" x2="1015" y2="378" stroke="currentColor" stroke-width="2" marker-end="url(#arr)"/>
+      </svg>
+      </div>
+      <figcaption>Solid arrows carry data forward. The red dashed loop is the photo retake. The brown dashed arrow is the one allowed correction: when the checker finds a line the notes do not support, the judge runs again with those lines named. The observer is the only stage after the gate that sees the photo.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <h2>Why each stage is separate</h2>
+    <div class="grid">
+      <div class="card"><span class="tag" style="background:#14121B">gate</span><h3>Fail fast, ask once</h3><p>A photo that cannot be read costs a cheap call, not the whole pipeline. The gate returns a fixed list of issues and one friendly ask. It also reads how the person presents, so the page never asks men or women, and reads heritage with a confidence. Under 0.7, the flow asks the person. Over it, nothing is asked.</p></div>
+      <div class="card"><span class="tag" style="background:var(--cobalt)">observe</span><h3>A record, not a verdict</h3><p>The observer is told to record and never advise. It lists undertone evidence (how skin sits next to the colours worn, jewellery, flush), every garment with colour and fit, the build only as far as the frame shows, and how far the colour read can be trusted from this light.</p></div>
+      <div class="card"><span class="tag" style="background:var(--magenta)">judge</span><h3>Every call has an evidence field</h3><p>The judge cannot see the photo. For each working claim it must name the observation detail it rests on. That is the mechanism behind "every line points at something in your photo", and it is what the checker tests.</p></div>
+      <div class="card"><span class="tag" style="background:var(--tangerine);color:#14121B">check</span><h3>A different model, one question each</h3><p>TypeSafe Jev is a System One model: it returns a calibrated probability, not prose. For each free-read line it answers whether the notes support, contradict, or say nothing about it. A contradiction, or support below 0.6, sends the judge back with the failing lines named. Notes are stored with the report.</p></div>
+      <div class="card"><span class="tag" style="background:var(--good)">write</span><h3>Only the words</h3><p>The writer gets the decisions, not the observation, and is told it may choose words but add no facts. This keeps the voice consistent across every report and keeps claims from drifting in the rewrite.</p></div>
+      <div class="card"><span class="tag" style="background:var(--fg2)">one run</span><h3>Free and paid from the same JSON</h3><p>The report is generated in the same run as the free read. The page shows the free slice at once. Paying unlocks the rest in place: no second wait, no second photo, no ship date.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>The JSON that comes out</h2>
+    <p style="color:var(--fg2)">This is the stored object, shortened. The free read renders from <code>text.free</code> plus the palette; the Style Report renders from <code>text.report</code>; <code>decisions</code> is the audit trail behind both. Full schema: <code>packages/core/src/read.ts</code>.</p>
+    <pre>{
+  <span class="k">"door"</span>: "women",  <span class="k">"presented_as"</span>: "woman",
+  <span class="k">"decisions"</span>: {
+    <span class="k">"season"</span>: "autumn", <span class="k">"season_depth"</span>: "deep", <span class="k">"undertone"</span>: "warm", <span class="k">"contrast"</span>: "medium",
+    <span class="k">"palette"</span>: [ { "name": "rust", "hex": "#b8632f", "use": "a shirt near the face" }, <span class="c">… 8 total</span> ],
+    <span class="k">"avoid"</span>:   [ { "name": "icy pastel", "hex": "#dfe8f3", "why": "…" }, <span class="c">… 3</span> ],
+    <span class="k">"archetype"</span>: "Polished Ease", <span class="k">"archetype_why"</span>: "…",
+    <span class="k">"working"</span>: [
+      { <span class="k">"claim"</span>: "The magenta shirt sits right on your skin.",
+        <span class="k">"evidence"</span>: "outfit.items[0].colour_name = bright magenta; skin.undertone_evidence",
+        <span class="k">"why"</span>: "A clear warm pink lifts a warm, medium-deep skin." },
+      <span class="c">… 3 total</span>
+    ],
+    <span class="k">"change"</span>: { "what": "black ankle boot", "instead": "tan or cream flat", "why": "…", "evidence": "outfit.footwear" },
+    <span class="k">"about_you"</span>:   { "colouring": "…", "face": "…", "build": "…", "grooming": "…" },
+    <span class="k">"about_style"</span>: { "what_you_wear_now": "…", "what_it_says": "…", "archetype_fit": "…", "the_version_for_your_life": "…" },
+    <span class="k">"works"</span>: {
+      "colours": [ { "item": "rust and olive near the face", "verdict": "keep", "why": "…" }, <span class="c">…</span> ],
+      "cuts":    [ { "item": "a wide leg",                  "verdict": "keep", "why": "…" }, <span class="c">…</span> ],
+      "fabrics": [ <span class="c">…</span> ],  "details": [ <span class="c">…</span> ]
+    },
+    <span class="k">"confidence"</span>: 0.82
+  },
+  <span class="k">"text"</span>: {
+    <span class="k">"free"</span>: {
+      "headline": "Deep autumn, with a lot of warmth to use.",
+      "working_lines": [ "…", "…", "…" ],
+      "change_line": "Swap the black boot for tan or cream. It lengthens the leg.",
+      "palette_caption": "Wear the first three near your face."
+    },
+    <span class="k">"report"</span>: {
+      "about_you":   [ { "title": "Your colouring", "body": "60–110 words" }, <span class="c">…</span> ],
+      "about_style": [ { "title": "What you wear now", "body": "…" }, <span class="c">…</span> ],
+      "works": [ { "title": "Colours", "keep": [ "…" ], "change": [ "…" ], "why": "…" }, <span class="c">… 4</span> ],
+      "closing": "…"
+    }
+  },
+  <span class="k">"verification"</span>: [ { "claim": "…", "relation": <span class="s">"supports"</span>, "confidence": 0.93 }, <span class="c">… 4</span> ],
+  <span class="k">"models"</span>: { "observe": "claude-opus-5-5", "judge": "claude-opus-5-5", "write": "claude-sonnet-5-5", "verify": "jev-latest" },
+  <span class="k">"took_s"</span>: 48.2
+}</pre>
+  </section>
+
+  <section>
+    <h2>Stages, models, and what each costs</h2>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Stage</th><th>Model</th><th>Sees</th><th>Returns</th><th>Rough time</th><th>Rough cost / run</th></tr></thead>
+      <tbody>
+        <tr><td>gate</td><td><code>claude-haiku-5-5</code>, effort low</td><td>photo</td><td>PhotoGate</td><td class="num">1–3 s</td><td class="num">under $0.01</td></tr>
+        <tr><td>observe</td><td><code>claude-opus-5-5</code>, effort medium</td><td>photo + heritage hint</td><td>Observation</td><td class="num">10–20 s</td><td class="num">$0.03–0.06</td></tr>
+        <tr><td>judge</td><td><code>claude-opus-5-5</code>, effort high</td><td>observation + answers</td><td>Decisions</td><td class="num">20–40 s</td><td class="num">$0.08–0.15</td></tr>
+        <tr><td>check</td><td>TypeSafe <code>jev-latest</code></td><td>observation + 4 claims</td><td>4 × {relation, confidence}</td><td class="num">1–2 s</td><td class="num">under $0.01</td></tr>
+        <tr><td>write</td><td><code>claude-sonnet-5-5</code>, effort medium</td><td>decisions + answers</td><td>ReadText</td><td class="num">10–20 s</td><td class="num">$0.02–0.04</td></tr>
+        <tr><td><strong>total</strong></td><td></td><td></td><td>ReadReport</td><td class="num"><strong>45–85 s</strong></td><td class="num"><strong>$0.15–0.25</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="color:var(--fg2)">Times and costs are estimates from token counts, to be replaced by the eval script's measured numbers. One judge retry adds a judge's worth. At INR 499 a report, the engine cost is about 3 to 4 percent of price.</p>
+  </section>
+
+  <section>
+    <h2>What "best output" rests on</h2>
+    <ul>
+      <li><strong>Grounding by construction.</strong> The judge cannot describe what the observer did not record. A claim with no evidence field cannot pass the schema.</li>
+      <li><strong>A second opinion from a different kind of model.</strong> The checker is not another Claude call asked "is this good"; it is a calibrated probability from a model built for judgments. Disagreement is a signal, not noise.</li>
+      <li><strong>Global priors, local vocabulary.</strong> The gate reads heritage with a confidence and the flow asks when unsure. The judge uses it for skin behaviour and the garment words the person will recognise, never as a rule for what they should wear.</li>
+      <li><strong>Honest confidence.</strong> Photo quality caps confidence. A dim photo still gets a read, with a retake hint on the page, and a lower number stored.</li>
+      <li><strong>The eval loop.</strong> <code>apps/web/scripts/eval-read.ts</code> runs every stage on a folder of photos and writes each stage's JSON and a readable summary. Prompts are tuned by reading real output, starting with the two hero photos.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Open on your side</h2>
+    <ul>
+      <li>An API key for the new <strong>fitso</strong> workspace, added as <code>ANTHROPIC_API_KEY</code> in the root <code>.env</code>. The eval run waits on it.</li>
+      <li>More test photos. The two hero shots are the first set. Six to ten varied photos (skin depth, light, framing, heritage) would make the first tuning pass real.</li>
+    </ul>
+  </section>
+</div>

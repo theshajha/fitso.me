@@ -21,13 +21,18 @@ export const QuickWinProfile = z.object({
 });
 export type QuickWinProfile = z.infer<typeof QuickWinProfile>;
 
-/** The five answers (spec section 9). */
+/** Context the person may give. Since 2026-10-10 the flow asks nothing; every field is optional. */
 export const QuickWinAnswers = z.object({
-  life: z.string(),
-  climate: z.string(),
-  occasions: z.array(z.string()),
-  budget_per_item: z.string(),
-  vibe: z.string(),
+  life: z.string().optional(),
+  climate: z.string().optional(),
+  occasions: z.array(z.string()).optional(),
+  budget_per_item: z.string().optional(),
+  vibe: z.string().optional(),
+  /** Set when the gate was unsure and the person told us. Free text, optional. */
+  heritage: z.string().optional(),
+  /** Stated measurements, optional. They beat the photo estimate for proportions. */
+  height_cm: z.number().min(120).max(230).optional(),
+  waist_cm: z.number().min(50).max(160).optional(),
 });
 export type QuickWinAnswers = z.infer<typeof QuickWinAnswers>;
 

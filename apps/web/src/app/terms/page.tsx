@@ -4,7 +4,7 @@ import { Container } from "@/components/brand/Container";
 export const metadata: Metadata = {
   title: "Terms",
   description:
-    "The fitso service, founding and finish-today pricing, refunds within 7 days, and our honest-verdict promise.",
+    "The fitso service, pricing, and refunds within 7 days.",
   alternates: { canonical: "/terms" },
 };
 
@@ -21,36 +21,23 @@ export default function Page() {
 
       <h2 style={{ margin: "48px 0 16px" }}>The service</h2>
       <p>
-        fitso reads one selfie and five answers. It gives you a colour season, a style archetype, three strengths and
-        one upgrade. It also gives you honest verdicts on items you want to buy. The free quick win costs nothing.
-        The Style Report and Pro are paid products.
-      </p>
-      <p>
-        The Style Report ships by 14 December 2026. If you buy it before it ships, we tell you the delivery date at
-        checkout. Pro opens in January 2027, and your founding price is locked.
+        fitso is a personal stylist, on demand. You send one photo and get a free result, your personal style: what works on you and the one
+        thing to change. You can then pay for the Style Report. It has three parts: about you, about your style, and
+        what works and what does not. The Style Report opens as soon as you pay.
       </p>
 
       <h2 style={{ margin: "48px 0 16px" }}>Pricing</h2>
       <ul>
         <li>
-          <strong>Founding price.</strong> The Style Report is INR 499 (USD 10) and Pro is INR 1,999 (USD 39). The
-          founding price runs until founding sales reach USD 1,000 in total, then it ends for good.
+          <strong>Style Report.</strong> The Style Report has an introductory price of $10. The list price is $29.
+          The price may change. You pay the price you see at checkout.
         </li>
-        <li>
-          <strong>Finish-today price.</strong> After founding ends, the Style Report is INR 999 (USD 15) for 24 hours
-          from the moment your result was made. The 24 hours never restart.
-        </li>
-        <li>
-          <strong>List price.</strong> After that, the Style Report is INR 1,499 (USD 24) and Pro is INR 4,999
-          (USD 79).
-        </li>
-        <li>You see exactly one price at a time. We do not invent a countdown. The clock is real.</li>
         <li>Dodo Payments is the merchant of record. Taxes are added at checkout where the law requires them.</li>
       </ul>
 
       <h2 style={{ margin: "48px 0 16px" }}>Refunds</h2>
       <p>
-        You can ask for a refund within 7 days of your purchase, before the Report is delivered. We ask no questions
+        You can ask for a refund within 7 days of your purchase. We ask no questions
         and we refund the full amount. Email{" "}
         <a href="mailto:shashank@fitso.me" className="font-semibold">
           shashank@fitso.me
@@ -58,17 +45,11 @@ export default function Page() {
         from the address you used to buy.
       </p>
 
-      <h2 style={{ margin: "48px 0 16px" }}>Honest-verdict promise</h2>
-      <p>
-        A verdict can say no. We do not tune the answer to make a sale and we do not take payment from brands for a
-        yes. We show a link to an item only when the verdict is yes. We never give a face score or a percentile.
-      </p>
-
       <h2 style={{ margin: "48px 0 16px" }}>Not medical or professional advice</h2>
       <p>
         fitso gives style guidance from a photo and a few answers. It is not medical, dermatological or professional
         advice. A model reads your photo, so it can be wrong. Lighting and framing change the result, and we show a
-        confidence note when the read is weak. You decide what to buy and wear.
+        confidence note when the result is weak. You decide what to buy and wear.
       </p>
 
       <h2 style={{ margin: "48px 0 16px" }}>Your photo and your content</h2>

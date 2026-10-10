@@ -58,7 +58,14 @@ export const QUESTION_COPY = {
   occasions: "What do you dress for? Pick all that apply.",
   budget_per_item: "What do you usually spend per item?",
   vibe: "Which one sounds most like you?",
+  door: "Which stylist should read you?",
+  heritage: "Where are your roots?",
 } as const;
+
+export const HERITAGE_HINT = "Optional. It helps us read your colouring and use clothes you recognise.";
+export const PHOTO_COUNT_LINE =
+  "One photo is enough. Two to four, in different light or outfits, make the read sharper.";
+export const MAX_PHOTOS = 4;
 
 export const MAX_SELFIE_BYTES = 6 * 1024 * 1024;
 export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
@@ -68,7 +75,7 @@ export const HEADLINES: Record<string, string> = {
   "style-archetype": "Find your archetype",
   "does-this-suit-me": "Check it against your face first",
 };
-export const DEFAULT_HEADLINE = "Know what's working for you";
+export const DEFAULT_HEADLINE = "Let's look at you.";
 
 export function headlineFor(from: string | null | undefined): string {
   return (from && HEADLINES[from]) || DEFAULT_HEADLINE;

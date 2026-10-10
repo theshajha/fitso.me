@@ -28,18 +28,18 @@ const splineMono = Spline_Sans_Mono({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const description =
-  "Upload one selfie. Find out which colours and clothes are actually working for you. A clear yes or no before you buy.";
+  "Your personal stylist, on demand. Send one photo and get your personal style free: your palette, what works on you and the one thing to change. Then get the full Style Report for $10.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "fitso: know what's working for you", template: "%s · fitso" },
+  title: { default: "fitso: your personal stylist, on demand", template: "%s · fitso" },
   description,
   applicationName: "fitso",
   openGraph: {
     type: "website",
     siteName: "fitso",
     locale: "en_IN",
-    title: "fitso: know what's working for you",
+    title: "fitso: your personal stylist, on demand",
     description,
     url: "/",
   },

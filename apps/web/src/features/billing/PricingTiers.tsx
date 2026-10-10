@@ -2,23 +2,16 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import type { Currency, Product } from "@fitso/core";
-import { Button, Stamp } from "@/components/brand";
+import { Button } from "@/components/brand";
 import { track } from "@/lib/posthog";
-import { FOUNDING, LIST, formatMoney } from "@/lib/pricing";
+import { FOUNDING, LIST } from "@/lib/pricing";
 
 type CounterData = { founding_usd_cents: number; cap_usd_cents: number; founding_active: boolean };
 
-const money = (units: number, c: Currency) => formatMoney(units * 100, c);
+const CURRENCY: Currency = "USD";
+const money = (units: number) => `$${units}`;
 
-function guessCurrency(): Currency {
-  try {
-    return /-IN\b/i.test(navigator.language) ? "INR" : "USD";
-  } catch {
-    return "USD";
-  }
-}
-
-function BuyForm({ product, currency, tier }: { product: Product; currency: Currency; tier: string }) {
+function BuyForm({ product, tier }: { product: Product; tier: string }) {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -27,12 +20,12 @@ function BuyForm({ product, currency, tier }: { product: Product; currency: Curr
     e.preventDefault();
     setError(null);
     setBusy(true);
-    track("checkout_started", { product, tier, currency });
+    track("checkout_started", { product, tier, currency: CURRENCY });
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, product, currency }),
+        body: JSON.stringify({ email, product, currency: CURRENCY }),
       });
       const json = (await res.json().catch(() => ({}))) as { url?: string };
       if (!res.ok || !json.url) throw new Error("checkout failed");
@@ -46,7 +39,7 @@ function BuyForm({ product, currency, tier }: { product: Product; currency: Curr
   return (
     <form onSubmit={submit} style={{ display: "grid", gap: 10, marginTop: "auto" }}>
       <label className="label" htmlFor={`email-${product}`}>
-        Your email
+        Email for your receipt
       </label>
       <input
         id={`email-${product}`}
@@ -59,7 +52,7 @@ function BuyForm({ product, currency, tier }: { product: Product; currency: Curr
         style={{ border: "2px solid var(--line)", borderRadius: 12, padding: "12px 14px", font: "inherit", background: "#fff" }}
       />
       <Button type="submit" disabled={busy}>
-        {busy ? "Opening checkout" : product === "report" ? "Get the Style Report" : "Lock the Pro price"}
+        {busy ? "Opening checkout" : "Get my Style Report"}
       </Button>
       {error ? (
         <p role="alert" style={{ margin: 0, color: "var(--bad)" }}>
@@ -72,24 +65,19 @@ function BuyForm({ product, currency, tier }: { product: Product; currency: Curr
 
 const card: React.CSSProperties = {
   border: "2px solid var(--ink)",
-  borderRadius: 20,
+  borderRadius: 24,
   padding: 24,
-  background: "#fff",
+  background: "var(--paper)",
   display: "flex",
   flexDirection: "column",
   gap: 14,
 };
 
 export function PricingTiers() {
-  const [currency, setCurrency] = useState<Currency>("USD");
   const [counter, setCounter] = useState<CounterData | null>(null);
 
   useEffect(() => {
     let alive = true;
-    // Deferred so the first paint matches the static HTML (USD), then switches for Indian locales.
-    queueMicrotask(() => {
-      if (alive) setCurrency(guessCurrency());
-    });
     fetch("/api/counter")
       .then((r) => (r.ok ? (r.json() as Promise<CounterData>) : null))
       .then((d) => {
@@ -107,90 +95,40 @@ export function PricingTiers() {
 
   const founding = counter ? counter.founding_active : true;
   const tier = founding ? "founding" : "list";
-  const priceOf = (p: Product) => money(founding ? FOUNDING[p][currency] : LIST[p][currency], currency);
-  const listOf = (p: Product) => money(LIST[p][currency], currency);
+  const priceOf = (p: Product) => money(founding ? FOUNDING[p].USD : LIST[p].USD);
+  const listOf = (p: Product) => money(LIST[p].USD);
+
+  const price: React.CSSProperties = { margin: 0, fontSize: "2.5rem", fontFamily: "var(--font-display)", fontWeight: 900 };
 
   return (
-    <div>
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16, marginBottom: 24 }}>
-        <div role="group" aria-label="Currency" style={{ display: "inline-flex", border: "2px solid var(--ink)", borderRadius: 999, overflow: "hidden" }}>
-          {(["INR", "USD"] as const).map((c) => (
-            <button
-              key={c}
-              type="button"
-              aria-pressed={currency === c}
-              onClick={() => setCurrency(c)}
-              className="label"
-              style={{
-                padding: "8px 18px",
-                border: 0,
-                cursor: "pointer",
-                background: currency === c ? "var(--ink)" : "transparent",
-                color: currency === c ? "var(--paper)" : "var(--ink)",
-              }}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-        {founding ? (
-          <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-            <Stamp kind="founding" />
-            <span>Founding price for early members.</span>
-          </div>
-        ) : (
-          <span>The founding price has ended. These are the list prices.</span>
-        )}
-      </div>
+    <div className="grid gap-5 md:grid-cols-2">
+      <article style={card}>
+        <h3 style={{ margin: 0 }}>Your personal style</h3>
+        <p style={price}>Free</p>
+        <p style={{ margin: 0 }}>
+          Your palette, three things that already work on you, and the one thing to change. From one photo, in about a minute.
+        </p>
+        <Button href="/start" variant="secondary" className="mt-auto">
+          Generate my personal style
+        </Button>
+      </article>
 
-      <div style={{ display: "grid", gap: 20, gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}>
-        <article style={card}>
-          <h3 style={{ margin: 0 }}>Quick win</h3>
-          <p className="label" style={{ margin: 0 }}>Free</p>
-          <p style={{ margin: 0, fontSize: "2rem", fontWeight: 700 }}>{money(0, currency)}</p>
-          <p style={{ margin: 0 }}>
-            Your colour season, your style archetype, three things working for you, one thing to stop buying, and one
-            free verdict on an item.
-          </p>
-          <Button href="/app/quick-win" variant="secondary" className="mt-auto">
-            Run the free quick win
-          </Button>
-        </article>
-
-        <article style={card}>
-          <h3 style={{ margin: 0 }}>Style Report</h3>
-          <p className="label" style={{ margin: 0 }}>One time</p>
-          <p style={{ margin: 0, fontSize: "2rem", fontWeight: 700 }}>
-            {priceOf("report")}
-            {founding ? (
-              <span style={{ fontSize: "1rem", fontWeight: 400, marginLeft: 10, textDecoration: "line-through", color: "var(--ink-2)" }}>
-                {listOf("report")}
-              </span>
-            ) : null}
-          </p>
-          <p style={{ margin: 0 }}>
-            Your full report: palette, fit, and what your wardrobe needs. It ships by 14 December 2026. We email you the moment it is ready.
-          </p>
-          <BuyForm product="report" currency={currency} tier={tier} />
-        </article>
-
-        <article style={card}>
-          <h3 style={{ margin: 0 }}>Pro</h3>
-          <p className="label" style={{ margin: 0 }}>Per year</p>
-          <p style={{ margin: 0, fontSize: "2rem", fontWeight: 700 }}>
-            {priceOf("pro")}
-            {founding ? (
-              <span style={{ fontSize: "1rem", fontWeight: 400, marginLeft: 10, textDecoration: "line-through", color: "var(--ink-2)" }}>
-                {listOf("pro")}
-              </span>
-            ) : null}
-          </p>
-          <p style={{ margin: 0 }}>
-            Everything in the Report, plus ongoing verdicts and wardrobe planning. Pro opens in January 2027. A founding member keeps the founding price on every renewal.
-          </p>
-          <BuyForm product="pro" currency={currency} tier={tier} />
-        </article>
-      </div>
+      <article style={{ ...card, boxShadow: "0 8px 0 var(--ink)" }}>
+        <h3 style={{ margin: 0 }}>Style Report</h3>
+        <p style={price}>
+          {priceOf("report")}
+          {founding ? (
+            <span style={{ fontSize: "1.25rem", marginLeft: 10, textDecoration: "line-through", color: "var(--ink-2)" }}>
+              {listOf("report")}
+            </span>
+          ) : null}
+        </p>
+        <p className="label" style={{ margin: 0 }}>One time</p>
+        <p style={{ margin: 0 }}>
+          Three parts: about you, about your style, and what works and what does not, with the reason for each. Opens as soon as you pay.
+        </p>
+        <BuyForm product="report" tier={tier} />
+      </article>
     </div>
   );
 }

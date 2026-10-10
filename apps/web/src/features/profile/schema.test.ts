@@ -39,8 +39,9 @@ describe("parseQuickWinForm", () => {
     const r = parseQuickWinForm(form({ door: "women" }));
     expect(!r.ok && r.error.code).toBe("invalid_answers");
   });
-  it("rejects empty occasions and broken JSON", () => {
-    expect(parseQuickWinForm(form({ answers: JSON.stringify({ ...answers, occasions: [] }) })).ok).toBe(false);
+  it("accepts empty or missing answers, rejects broken JSON", () => {
+    expect(parseQuickWinForm(form({ answers: JSON.stringify({ ...answers, occasions: [] }) })).ok).toBe(true);
+    expect(parseQuickWinForm(form({ answers: "{}" })).ok).toBe(true);
     expect(parseQuickWinForm(form({ answers: "{" })).ok).toBe(false);
   });
   it("rejects a bad email", () => {
@@ -64,8 +65,8 @@ describe("headlineFor", () => {
     expect(headlineFor("colour-season")).toBe("Find your season");
     expect(headlineFor("style-archetype")).toBe("Find your archetype");
     expect(headlineFor("does-this-suit-me")).toBe("Check it against your face first");
-    expect(headlineFor(undefined)).toBe("Know what's working for you");
-    expect(headlineFor("wardrobe-gap")).toBe("Know what's working for you");
+    expect(headlineFor(undefined)).toBe("Let's look at you.");
+    expect(headlineFor("wardrobe-gap")).toBe("Let's look at you.");
   });
 });
 

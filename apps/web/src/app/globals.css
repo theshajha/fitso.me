@@ -26,15 +26,7 @@
   --gutter: 16px;
 }
 
-[data-door="men"] {
-  --accent: var(--cobalt);
-  --accent-2: var(--lime);
-}
-
-[data-door="women"] {
-  --accent: var(--magenta);
-  --accent-2: var(--tangerine);
-}
+/* One accent for everyone. The person's own palette supplies colour on the result page. */
 
 @media (min-width: 768px) {
   :root {
@@ -84,20 +76,30 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
   color: var(--ink);
+}
+
+/* The display face is for the one headline on a screen and for prices. */
+h1,
+.display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 
 h1 {
   font-size: clamp(2.25rem, 6vw, 4.5rem);
-  font-weight: 900;
 }
 
 h2 {
-  font-size: clamp(1.625rem, 3.4vw, 2.5rem);
+  font-size: clamp(1.75rem, 3.6vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
 }
 
 h3 {
@@ -119,12 +121,16 @@ li {
   margin: 0 0 1em;
 }
 
+/* Small labels. Sans, sentence case: the mono caps read like a dev console. */
 .label {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0;
+}
+
+.muted {
+  color: var(--ink-2);
 }
 
 .container {
@@ -139,7 +145,7 @@ li {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--cobalt);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -200,5 +206,83 @@ li {
   }
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Swatches drop in one by one when a palette arrives. */
+@keyframes swatch-in {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) rotate(-4deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.swatch-in {
+  animation: swatch-in 520ms cubic-bezier(0.2, 0.9, 0.25, 1.15) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swatch-in {
+    animation: none;
+  }
+}
+
+/* Photo picker buttons on phones (labels that wrap a file input). */
+.pick {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 140px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  cursor: pointer;
+}
+
+.pick:focus-within {
+  outline: 3px solid var(--cobalt);
+  outline-offset: 3px;
+}
+
+.checking-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 4px;
+  border-radius: 50%;
+  background: var(--magenta);
+  animation: checking 1.2s ease-in-out infinite;
+}
+
+@keyframes checking {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Disabled primary buttons read as waiting, not broken. */
+button:disabled.rounded-full {
+  background: var(--line) !important;
+  border-color: var(--line) !important;
+  color: var(--ink-2) !important;
+  opacity: 1 !important;
+}
+
+/* On phones the empty drop zone is just its button: nothing to drop onto. */
+@media (max-width: 767px) {
+  .drop-zone.is-empty {
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0;
   }
 }

@@ -128,7 +128,7 @@ export function getSeasons() {
   return loadAll().seasons;
 }
 
-export const STATIC_ROUTES = ["/", "/men", "/women", "/guides", "/tools", "/pricing", "/privacy", "/terms"] as const;
+export const STATIC_ROUTES = ["/", "/guides", "/tools", "/privacy", "/terms"] as const;
 
 /** Every content route with its last-modified date, for the sitemap. */
 export function allContentRoutes(): { path: string; lastModified: string }[] {

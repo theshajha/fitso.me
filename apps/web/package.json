@@ -12,6 +12,7 @@
     "prebuild": "tsc -p ../../packages/core/tsconfig.json"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
     "@fitso/core": "*",
     "@supabase/supabase-js": "^2.117.3",
     "ai": "^7.0.137",

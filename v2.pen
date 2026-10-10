@@ -1,4 +1,2980 @@
 {
-  "version": "2.11",
-  "children": []
+  "version": "2.20",
+  "children": [
+    {
+      "type": "frame",
+      "id": "FdLTi",
+      "x": 0,
+      "y": 0,
+      "name": "Brand Board",
+      "clip": true,
+      "width": 1440,
+      "fill": "$paper",
+      "layout": "vertical",
+      "gap": 56,
+      "padding": 64,
+      "children": [
+        {
+          "type": "frame",
+          "id": "emcgB",
+          "name": "Top",
+          "width": "fill_container",
+          "justifyContent": "space_between",
+          "alignItems": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "O5kEy",
+              "name": "Wordmark",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Fixqc",
+                  "name": "fitso",
+                  "fill": "$ink",
+                  "content": "fitso.",
+                  "lineHeight": 0.95,
+                  "fontFamily": "$font-display",
+                  "fontSize": 96,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                },
+                {
+                  "type": "text",
+                  "id": "piLf6",
+                  "name": "Tagline",
+                  "fill": "$ink-2",
+                  "content": "Know what's working for you.",
+                  "fontFamily": "$font-body",
+                  "fontSize": 28,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ddiaY",
+              "name": "Meta",
+              "layout": "vertical",
+              "gap": 6,
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "y5j8Fm",
+                  "name": "BRAND BOARD v2",
+                  "fill": "$ink-2",
+                  "content": "BRAND BOARD v2",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "rGZ2u",
+                  "name": "2026-10-10",
+                  "fill": "$ink-2",
+                  "content": "2026-10-10",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "si59I",
+                  "name": "LOUD · LIVELY · HONEST",
+                  "fill": "$ink-2",
+                  "content": "LOUD · LIVELY · SPECIFIC",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "j0iEmf",
+          "name": "Palette",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "D9GyX6",
+              "name": "Section Palette",
+              "fill": "$ink-2",
+              "content": "PALETTE",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 2
+            },
+            {
+              "type": "frame",
+              "id": "pZ7e8",
+              "name": "Swatches",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "b4v0F",
+                  "name": "Swatch Paper",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$paper",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "lgt75",
+                      "name": "Name",
+                      "fill": "$ink",
+                      "content": "Paper",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "cIIBI",
+                      "name": "Var",
+                      "fill": "$ink",
+                      "content": "$paper",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cTUrO",
+                  "name": "Swatch Ink",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$ink",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "GOAY7",
+                      "name": "Name",
+                      "fill": "$paper",
+                      "content": "Ink",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "xqS6X",
+                      "name": "Var",
+                      "fill": "$paper",
+                      "content": "$ink",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "chBme",
+                  "name": "Swatch Magenta",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$magenta",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "M5ZQn",
+                      "name": "Name",
+                      "fill": "$paper",
+                      "content": "Magenta",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "blDhA",
+                      "name": "Var",
+                      "fill": "$paper",
+                      "content": "$magenta",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "otTFc",
+                  "name": "Swatch Tangerine",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$tangerine",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rPjDI",
+                      "name": "Name",
+                      "fill": "$ink",
+                      "content": "Tangerine",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "NV5BK",
+                      "name": "Var",
+                      "fill": "$ink",
+                      "content": "$tangerine",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "CvUNO",
+                  "name": "Swatch Cobalt",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$cobalt",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "wHZqj",
+                      "name": "Name",
+                      "fill": "$paper",
+                      "content": "Cobalt",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "IZx8l",
+                      "name": "Var",
+                      "fill": "$paper",
+                      "content": "$cobalt",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "sFeHJ",
+                  "name": "Swatch Lime",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$lime",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "m0PHY",
+                      "name": "Name",
+                      "fill": "$ink",
+                      "content": "Lime",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "romfm",
+                      "name": "Var",
+                      "fill": "$ink",
+                      "content": "$lime",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L7Upk",
+                  "name": "Swatch Good",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$good",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "R0IE2f",
+                      "name": "Name",
+                      "fill": "$paper",
+                      "content": "Good",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "B9lPI",
+                      "name": "Var",
+                      "fill": "$paper",
+                      "content": "$good",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "IBj4W",
+                  "name": "Swatch Warn",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$warn",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "B2cjND",
+                      "name": "Name",
+                      "fill": "$paper",
+                      "content": "Warn",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "dIW8s",
+                      "name": "Var",
+                      "fill": "$paper",
+                      "content": "$warn",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "f59VSb",
+                  "name": "Swatch Bad",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$bad",
+                  "cornerRadius": "$radius",
+                  "stroke": "$line",
+                  "strokeWidth": 1,
+                  "layout": "vertical",
+                  "gap": 2,
+                  "padding": 12,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ur7uQ",
+                      "name": "Name",
+                      "fill": "$paper",
+                      "content": "Bad",
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "UirbN",
+                      "name": "Var",
+                      "fill": "$paper",
+                      "content": "$bad",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "Lltyz",
+              "name": "Internal rule",
+              "fill": "$ink-2",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Internal rule, never customer copy: lime is never text. Season colours are data colours only, used in the drape fan and palette strips, never on buttons.",
+              "fontFamily": "$font-body",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "zGxkR",
+          "name": "Type",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "T5vFv0",
+              "name": "Section Type",
+              "fill": "$ink-2",
+              "content": "TYPE",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 2
+            },
+            {
+              "type": "frame",
+              "id": "JfKjy",
+              "name": "Type Rows",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "kqQcv",
+                  "name": "Display / Unbounded 900",
+                  "width": "fill_container",
+                  "gap": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "sEc1y",
+                      "name": "Spec",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": 220,
+                      "content": "Display / Unbounded 900",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "S8bcMT",
+                      "name": "Sample",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Your colours are an autumn.",
+                      "fontFamily": "$font-display",
+                      "fontSize": 64,
+                      "fontWeight": "900",
+                      "letterSpacing": -2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "Y1EXT",
+                  "name": "H2 / Unbounded 700",
+                  "width": "fill_container",
+                  "gap": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "l7S5MO",
+                      "name": "Spec",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": 220,
+                      "content": "H2 / Unbounded 700",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "q54oD",
+                      "name": "Sample",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Three things working for you",
+                      "fontFamily": "$font-display",
+                      "fontSize": 36,
+                      "fontWeight": "700",
+                      "letterSpacing": -1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "cuKwQ",
+                  "name": "Body / Hanken Grotesk 400",
+                  "width": "fill_container",
+                  "gap": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "W3QjnD",
+                      "name": "Spec",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": 220,
+                      "content": "Body / Hanken Grotesk 400",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "EnXaL",
+                      "name": "Sample",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "One selfie. Five questions. An honest answer before you buy.",
+                      "fontFamily": "$font-body",
+                      "fontSize": 20
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "ZGf3G",
+                  "name": "Label / Spline Sans Mono",
+                  "width": "fill_container",
+                  "gap": 24,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "MY746",
+                      "name": "Spec",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": 220,
+                      "content": "Label / Spline Sans Mono",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "VFXIW",
+                      "name": "Sample",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "FOUNDING PRICE · ₹499 · PAY ONCE",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 13,
+                      "fontWeight": "500",
+                      "letterSpacing": 2
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "oRt3U",
+          "name": "Signature",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "fylg6",
+              "name": "Section Signature · the drape fan",
+              "fill": "$ink-2",
+              "content": "SIGNATURE · THE DRAPE FAN",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 2
+            },
+            {
+              "type": "frame",
+              "id": "NhO4J",
+              "name": "Signature Row",
+              "width": "fill_container",
+              "gap": 48,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "u9SyPS",
+                  "name": "Drape Fan",
+                  "reusable": true,
+                  "width": 380,
+                  "height": 420,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 55,
+                      "id": "P67sFM",
+                      "x": 339.473198565894,
+                      "y": 100.69620298018134,
+                      "name": "Chip Spring",
+                      "rotation": -36,
+                      "fill": "$spring",
+                      "width": 110,
+                      "height": 330,
+                      "stroke": "$paper",
+                      "strokeWidth": 4,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#14121B2E",
+                        "offset": {
+                          "x": 0,
+                          "y": 10
+                        },
+                        "blur": 30
+                      }
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 55,
+                      "id": "IT3aw",
+                      "x": 239.6674997474992,
+                      "y": 69.15541493197725,
+                      "name": "Chip Summer",
+                      "rotation": -18,
+                      "fill": "$summer",
+                      "width": 110,
+                      "height": 330,
+                      "stroke": "$paper",
+                      "strokeWidth": 4,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#14121B2E",
+                        "offset": {
+                          "x": 0,
+                          "y": 10
+                        },
+                        "blur": 30
+                      }
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 55,
+                      "id": "QRySz",
+                      "x": 135,
+                      "y": 70,
+                      "name": "Chip Autumn",
+                      "fill": "$autumn",
+                      "width": 110,
+                      "height": 330,
+                      "stroke": "$paper",
+                      "strokeWidth": 4,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#14121B2E",
+                        "offset": {
+                          "x": 0,
+                          "y": 10
+                        },
+                        "blur": 30
+                      }
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 55,
+                      "id": "bGyd2",
+                      "x": 35.71628346003391,
+                      "y": 103.14728431322146,
+                      "name": "Chip Winter",
+                      "rotation": 18,
+                      "fill": "$winter",
+                      "width": 110,
+                      "height": 330,
+                      "stroke": "$paper",
+                      "strokeWidth": 4,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#14121B2E",
+                        "offset": {
+                          "x": 0,
+                          "y": 10
+                        },
+                        "blur": 30
+                      }
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 55,
+                      "id": "xq8V2",
+                      "x": -48.46506794713824,
+                      "y": 165.35258073235337,
+                      "name": "Chip You",
+                      "rotation": 36,
+                      "fill": "$magenta",
+                      "width": 110,
+                      "height": 330,
+                      "stroke": "$paper",
+                      "strokeWidth": 4,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#14121B2E",
+                        "offset": {
+                          "x": 0,
+                          "y": 10
+                        },
+                        "blur": 30
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "r7kjw1",
+                  "name": "Signature Copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "HHQ52",
+                      "name": "Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Five chips, one answer.",
+                      "fontFamily": "$font-display",
+                      "fontSize": 36,
+                      "fontWeight": "700",
+                      "letterSpacing": -1
+                    },
+                    {
+                      "type": "text",
+                      "id": "vQzDo",
+                      "name": "Body",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "The fan is the colour-drape session a stylist runs in person. Four season chips and one chip in the brand colour that stands for you. It is the only illustration the brand uses: hero, share card and result page, same five colours, same order.",
+                      "lineHeight": 1.5,
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Cym86",
+          "name": "Stamps",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "u7wry",
+              "name": "Section Verdict stamps",
+              "fill": "$ink-2",
+              "content": "VERDICT STAMPS",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 2
+            },
+            {
+              "type": "frame",
+              "id": "eJiXb",
+              "name": "Stamp Row",
+              "gap": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "JnVDM",
+                  "name": "Stamp",
+                  "reusable": true,
+                  "rotation": -4,
+                  "cornerRadius": 8,
+                  "stroke": "$good",
+                  "strokeWidth": 3,
+                  "gap": 10,
+                  "padding": [
+                    10,
+                    18
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "J9kkb0",
+                      "name": "Stamp Label",
+                      "fill": "$good",
+                      "content": "YES",
+                      "fontFamily": "$font-display",
+                      "fontSize": 28,
+                      "fontWeight": "900",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "id": "ck9te",
+                  "type": "ref",
+                  "ref": "JnVDM",
+                  "name": "Stamp YES, IF",
+                  "stroke": "$warn",
+                  "descendants": {
+                    "J9kkb0": {
+                      "content": "YES, IF",
+                      "fill": "$warn"
+                    }
+                  }
+                },
+                {
+                  "id": "Yc6ks",
+                  "type": "ref",
+                  "ref": "JnVDM",
+                  "name": "Stamp NO",
+                  "stroke": "$bad",
+                  "descendants": {
+                    "J9kkb0": {
+                      "content": "NO",
+                      "fill": "$bad"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "id": "m20uin",
+              "name": "Internal rule",
+              "fill": "$ink-2",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Internal rule, never customer copy: a stamp is three words at most. Green says buy. Amber says buy only if the condition on the next line is true. Red says do not buy, and the page says how much money that kept in the pocket.",
+              "fontFamily": "$font-body",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "YkAmD",
+          "name": "Buttons",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "uunuA",
+              "name": "Section Buttons",
+              "fill": "$ink-2",
+              "content": "BUTTONS",
+              "fontFamily": "$font-mono",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 2
+            },
+            {
+              "type": "frame",
+              "id": "cxp9a",
+              "name": "Button Row",
+              "gap": 16,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "DvRH8",
+                  "name": "Button",
+                  "reusable": true,
+                  "fill": "$ink",
+                  "cornerRadius": 999,
+                  "gap": 10,
+                  "padding": [
+                    18,
+                    28
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "EXM82",
+                      "name": "Button Label",
+                      "fill": "$paper",
+                      "content": "Start with a selfie",
+                      "fontFamily": "$font-body",
+                      "fontSize": 18,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "mUPRX",
+                      "name": "Button Icon",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "arrow-right",
+                      "library": "lucide",
+                      "fill": "$paper"
+                    }
+                  ]
+                },
+                {
+                  "id": "XEByz",
+                  "type": "ref",
+                  "ref": "DvRH8",
+                  "name": "Button Women",
+                  "fill": "$magenta"
+                },
+                {
+                  "id": "jtsFJ",
+                  "type": "ref",
+                  "ref": "DvRH8",
+                  "name": "Button Men",
+                  "fill": "$cobalt",
+                  "descendants": {
+                    "EXM82": {
+                      "fill": "$lime"
+                    },
+                    "mUPRX": {
+                      "fill": "$lime"
+                    }
+                  }
+                },
+                {
+                  "id": "faXSH",
+                  "type": "ref",
+                  "ref": "DvRH8",
+                  "name": "Button Ghost",
+                  "fill": "#00000000",
+                  "stroke": "$ink",
+                  "strokeWidth": 2,
+                  "descendants": {
+                    "EXM82": {
+                      "content": "See a sample result",
+                      "fill": "$ink"
+                    },
+                    "mUPRX": {
+                      "fill": "$ink"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "UUncP",
+      "x": 1560,
+      "y": 0,
+      "name": "Landing · Desktop",
+      "clip": true,
+      "width": 1440,
+      "fill": "$paper",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "xWWgv",
+          "name": "Nav",
+          "width": "fill_container",
+          "padding": [
+            20,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "LoApW",
+              "name": "Logo",
+              "fill": "$ink",
+              "content": "fitso.",
+              "fontFamily": "$font-display",
+              "fontSize": 28,
+              "fontWeight": "900",
+              "letterSpacing": -1
+            },
+            {
+              "type": "frame",
+              "id": "QCMZ5",
+              "name": "Links",
+              "gap": 32,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "lTk7D",
+                  "name": "Women",
+                  "fill": "$ink",
+                  "content": "Women",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "LsEGD",
+                  "name": "Men",
+                  "fill": "$ink",
+                  "content": "Men",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "i94R2s",
+                  "name": "Guides",
+                  "fill": "$ink",
+                  "content": "Guides",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "CmD6R",
+                  "name": "Pricing",
+                  "fill": "$ink",
+                  "content": "Pricing",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "id": "bmByL",
+                  "type": "ref",
+                  "ref": "DvRH8",
+                  "name": "Nav CTA",
+                  "padding": [
+                    12,
+                    20
+                  ],
+                  "descendants": {
+                    "EXM82": {
+                      "content": "Get my read",
+                      "fontSize": 15
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "lUxgS",
+          "name": "Hero",
+          "width": "fill_container",
+          "gap": 48,
+          "padding": [
+            56,
+            64,
+            72,
+            64
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "QrtH5",
+              "name": "Hero Copy",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "eZoNL",
+                  "name": "Kicker",
+                  "fill": "$ink-2",
+                  "content": "YOUR PERSONAL STYLIST, ON DEMAND",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 13,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "z69Siw",
+                  "name": "Headline",
+                  "fill": "$ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "A stylist who has actually looked at you.",
+                  "lineHeight": 0.98,
+                  "fontFamily": "$font-display",
+                  "fontSize": 72,
+                  "fontWeight": "900",
+                  "letterSpacing": -4
+                },
+                {
+                  "type": "text",
+                  "id": "IjjoT",
+                  "name": "Sub",
+                  "fill": "$ink-2",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Send one photo. Your stylist tells you what is working on you and the one thing to change. Free, under a minute.",
+                  "lineHeight": 1.45,
+                  "fontFamily": "$font-body",
+                  "fontSize": 21,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "t6s4p",
+                  "name": "Doors",
+                  "gap": 16,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "id": "MvbEY",
+                      "type": "ref",
+                      "ref": "DvRH8",
+                      "name": "Hero CTA",
+                      "fill": "$magenta",
+                      "descendants": {
+                        "EXM82": {
+                          "content": "Get my read"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "R8UfE",
+              "name": "Hero Visual",
+              "width": 560,
+              "height": 620,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 28,
+                  "id": "BWYwv",
+                  "x": 0,
+                  "y": 40,
+                  "name": "Photo Man",
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "generated-1.png",
+                    "mode": "cover"
+                  },
+                  "width": 300,
+                  "height": 540,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#14121B2E",
+                    "offset": {
+                      "x": 0,
+                      "y": 16
+                    },
+                    "blur": 40
+                  }
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 28,
+                  "id": "f5238c",
+                  "x": 250,
+                  "y": 0,
+                  "name": "Photo Woman",
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "generated.png",
+                    "mode": "cover"
+                  },
+                  "width": 300,
+                  "height": 540,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#14121B2E",
+                    "offset": {
+                      "x": 0,
+                      "y": 16
+                    },
+                    "blur": 40
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "QGyh9",
+                  "x": 24,
+                  "y": 190,
+                  "name": "Chip Man Works",
+                  "fill": "$good",
+                  "cornerRadius": 999,
+                  "stroke": "$good",
+                  "strokeWidth": 2,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#14121B",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    }
+                  },
+                  "gap": 8,
+                  "padding": [
+                    6,
+                    12,
+                    6,
+                    8
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "cpYVK",
+                      "name": "Tag",
+                      "fill": "#FFFFFF38",
+                      "cornerRadius": 999,
+                      "padding": [
+                        3,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "V4dV5W",
+                          "name": "Tag Text",
+                          "fill": "$paper",
+                          "content": "WORKS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 0.06
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "Gk7qh",
+                      "name": "Text",
+                      "fill": "$paper",
+                      "content": "Tan on your warm skin",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "R55Uso",
+                  "x": 8,
+                  "y": 536,
+                  "name": "Chip Man Change",
+                  "fill": "$paper",
+                  "cornerRadius": 999,
+                  "stroke": "$cobalt",
+                  "strokeWidth": 2,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#14121B",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    }
+                  },
+                  "gap": 8,
+                  "padding": [
+                    6,
+                    12,
+                    6,
+                    8
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "plDV7",
+                      "name": "Tag",
+                      "fill": "$cobalt",
+                      "cornerRadius": 999,
+                      "padding": [
+                        3,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Jepmf",
+                          "name": "Tag Text",
+                          "fill": "$paper",
+                          "content": "CHANGE",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 0.06
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "glovM",
+                      "name": "Text",
+                      "fill": "$ink",
+                      "content": "White sneaker fights the tan. Go suede.",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "kWsuX",
+                  "x": 330,
+                  "y": 150,
+                  "name": "Chip Woman Works",
+                  "fill": "$good",
+                  "cornerRadius": 999,
+                  "stroke": "$good",
+                  "strokeWidth": 2,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#14121B",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    }
+                  },
+                  "gap": 8,
+                  "padding": [
+                    6,
+                    12,
+                    6,
+                    8
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "QU4op",
+                      "name": "Tag",
+                      "fill": "#FFFFFF38",
+                      "cornerRadius": 999,
+                      "padding": [
+                        3,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "EEVQ0",
+                          "name": "Tag Text",
+                          "fill": "$paper",
+                          "content": "WORKS",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 0.06
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "XqQ2u",
+                      "name": "Text",
+                      "fill": "$paper",
+                      "content": "That magenta on your skin",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L0Pzz",
+                  "x": 296,
+                  "y": 470,
+                  "name": "Chip Woman Change",
+                  "fill": "$paper",
+                  "cornerRadius": 999,
+                  "stroke": "$magenta",
+                  "strokeWidth": 2,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#14121B",
+                    "offset": {
+                      "x": 0,
+                      "y": 4
+                    }
+                  },
+                  "gap": 8,
+                  "padding": [
+                    6,
+                    12,
+                    6,
+                    8
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "IXV0y",
+                      "name": "Tag",
+                      "fill": "$magenta",
+                      "cornerRadius": 999,
+                      "padding": [
+                        3,
+                        8
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nyNm5",
+                          "name": "Tag Text",
+                          "fill": "$paper",
+                          "content": "CHANGE",
+                          "fontFamily": "$font-mono",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 0.06
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "rrBwB",
+                      "name": "Text",
+                      "fill": "$ink",
+                      "content": "Black boot cuts you off. Go tan.",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "D7kyK7",
+          "name": "What You Get Band",
+          "width": "fill_container",
+          "fill": "$ink",
+          "gap": 48,
+          "padding": [
+            28,
+            64
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "n1Gbc",
+              "name": "Band What works",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "BPEDg",
+                  "name": "Band Title",
+                  "fill": "$lime",
+                  "content": "What works on you",
+                  "fontFamily": "$font-display",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "fDljE",
+                  "name": "Band Body",
+                  "fill": "$paper",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Three things you already do right, each one pointing at your photo.",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "brOgl",
+              "name": "Band One change",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "x0uuVb",
+                  "name": "Band Title",
+                  "fill": "$lime",
+                  "content": "The one thing to change",
+                  "fontFamily": "$font-display",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "DvQGH",
+                  "name": "Band Body",
+                  "fill": "$paper",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "One swap that lifts the whole look. Not a list of faults.",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "jpraP",
+              "name": "Band Works or not",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 6,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "jkK4w",
+                  "name": "Band Title",
+                  "fill": "$lime",
+                  "content": "What works, what does not",
+                  "fontFamily": "$font-display",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "Y6XfO",
+                  "name": "Band Body",
+                  "fill": "$paper",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Colours, cuts, fabrics and details. What to keep, what to change, and why.",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "xGJsk",
+          "name": "The Full Report",
+          "width": "fill_container",
+          "fill": "#F3F1FF",
+          "layout": "vertical",
+          "gap": 32,
+          "padding": [
+            72,
+            64
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "utCz8",
+              "name": "WS Head",
+              "width": "fill_container",
+              "gap": 48,
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "N5Qtyc",
+                  "name": "H2",
+                  "fill": "$ink",
+                  "textGrowth": "fixed-width",
+                  "width": 720,
+                  "content": "Your Style Report, in three parts.",
+                  "lineHeight": 1.1,
+                  "fontFamily": "$font-display",
+                  "fontSize": 40,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.5
+                },
+                {
+                  "type": "text",
+                  "id": "l4Syp",
+                  "name": "Body",
+                  "fill": "$ink-2",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "One report that should feel worth ten times its price. About you, about your style, and what works and what does not, each line tied to your photo.",
+                  "lineHeight": 1.45,
+                  "fontFamily": "$font-body",
+                  "fontSize": 17,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "VFcHo",
+              "name": "Report Parts",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "f5TGl",
+                  "name": "Part 1",
+                  "width": "fill_container",
+                  "fill": "$paper",
+                  "cornerRadius": 24,
+                  "stroke": "$ink",
+                  "strokeWidth": 2,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "DZ4wx",
+                      "name": "Num",
+                      "width": 56,
+                      "height": 56,
+                      "fill": "$cobalt",
+                      "cornerRadius": 18,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "p8epU",
+                          "name": "N",
+                          "fill": "$paper",
+                          "content": "1",
+                          "fontFamily": "$font-display",
+                          "fontSize": 24,
+                          "fontWeight": "900"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "lCueO",
+                      "name": "Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "About you",
+                      "fontFamily": "$font-display",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "y5Lzjc",
+                      "name": "Body",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Your colouring and palette, your face and features, your build and proportions. What the photo shows, in plain words.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-body",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "r5vWMp",
+                  "name": "Part 2",
+                  "width": "fill_container",
+                  "fill": "$paper",
+                  "cornerRadius": 24,
+                  "stroke": "$ink",
+                  "strokeWidth": 2,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "pWbFk",
+                      "name": "Num",
+                      "width": 56,
+                      "height": 56,
+                      "fill": "$magenta",
+                      "cornerRadius": 18,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "cahUA",
+                          "name": "N",
+                          "fill": "$paper",
+                          "content": "2",
+                          "fontFamily": "$font-display",
+                          "fontSize": 24,
+                          "fontWeight": "900"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "Rk2vS",
+                      "name": "Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "About your style",
+                      "fontFamily": "$font-display",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "poK4p",
+                      "name": "Body",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "What you wear now and what it says about you. Your archetype, and the version of it that fits your life.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-body",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "u8AUf",
+                  "name": "Part 3",
+                  "width": "fill_container",
+                  "fill": "$paper",
+                  "cornerRadius": 24,
+                  "stroke": "$ink",
+                  "strokeWidth": 2,
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "quHnP",
+                      "name": "Num",
+                      "width": 56,
+                      "height": 56,
+                      "fill": "$tangerine",
+                      "cornerRadius": 18,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "r1nRe7",
+                          "name": "N",
+                          "fill": "$ink",
+                          "content": "3",
+                          "fontFamily": "$font-display",
+                          "fontSize": 24,
+                          "fontWeight": "900"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "Ofv01",
+                      "name": "Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "What works, what does not",
+                      "fontFamily": "$font-display",
+                      "fontSize": 22,
+                      "fontWeight": "700"
+                    },
+                    {
+                      "type": "text",
+                      "id": "AvrAN",
+                      "name": "Body",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Colours, cuts, fabrics, lengths and details. What to keep, what to change, and why, each one tied to you.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-body",
+                      "fontSize": 16,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "H4QtB",
+          "name": "How It Works",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 40,
+          "padding": [
+            80,
+            64
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "W8xNv",
+              "name": "H2",
+              "fill": "$ink",
+              "content": "How it works",
+              "fontFamily": "$font-display",
+              "fontSize": 44,
+              "fontWeight": "700",
+              "letterSpacing": -1.5
+            },
+            {
+              "type": "frame",
+              "id": "ZZyVZ",
+              "name": "Steps",
+              "width": "fill_container",
+              "gap": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "a3tS9",
+                  "name": "Step 01",
+                  "width": "fill_container",
+                  "stroke": "$tangerine",
+                  "strokeWidth": {
+                    "top": 6
+                  },
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": [
+                    28,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nkQ1K",
+                      "name": "Num",
+                      "fill": "$ink-2",
+                      "content": "01",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 13,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "p0RVq",
+                      "name": "Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Send one photo",
+                      "lineHeight": 1.15,
+                      "fontFamily": "$font-display",
+                      "fontSize": 24,
+                      "fontWeight": "700",
+                      "letterSpacing": -0.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "qGBhY",
+                      "name": "Body",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Daylight, no filter, full length if you can. Your phone is enough.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "lBE6n",
+                  "name": "Step 02",
+                  "width": "fill_container",
+                  "stroke": "$magenta",
+                  "strokeWidth": {
+                    "top": 6
+                  },
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": [
+                    28,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "O98DQk",
+                      "name": "Num",
+                      "fill": "$ink-2",
+                      "content": "02",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 13,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "PVKQS",
+                      "name": "Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Tell your stylist a bit",
+                      "lineHeight": 1.15,
+                      "fontFamily": "$font-display",
+                      "fontSize": 24,
+                      "fontWeight": "700",
+                      "letterSpacing": -0.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "z4P50",
+                      "name": "Body",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Your week, your occasions, your budget. A few taps.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "o4L2L",
+                  "name": "Step 03",
+                  "width": "fill_container",
+                  "stroke": "$cobalt",
+                  "strokeWidth": {
+                    "top": 6
+                  },
+                  "layout": "vertical",
+                  "gap": 14,
+                  "padding": [
+                    28,
+                    0,
+                    0,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "NjU0u",
+                      "name": "Num",
+                      "fill": "$ink-2",
+                      "content": "03",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 13,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "ftM15",
+                      "name": "Title",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Get your read",
+                      "lineHeight": 1.15,
+                      "fontFamily": "$font-display",
+                      "fontSize": 24,
+                      "fontWeight": "700",
+                      "letterSpacing": -0.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "LIJkt",
+                      "name": "Body",
+                      "fill": "$ink-2",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "What is working on you and the one thing to change. Under a minute, free.",
+                      "lineHeight": 1.45,
+                      "fontFamily": "$font-body",
+                      "fontSize": 17,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "k36Bl",
+          "name": "Sample Result",
+          "width": "fill_container",
+          "fill": "#FFF3E8",
+          "gap": 56,
+          "padding": 64,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "yAFYq",
+              "name": "Result Card",
+              "reusable": true,
+              "width": 520,
+              "fill": "$paper",
+              "cornerRadius": 24,
+              "stroke": "$line",
+              "strokeWidth": 1,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#14121B1F",
+                "offset": {
+                  "x": 0,
+                  "y": 16
+                },
+                "blur": 40
+              },
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 32,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "d82C3K",
+                  "name": "Card Head",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rv7Vb",
+                      "name": "Card Logo",
+                      "fill": "$ink",
+                      "content": "fitso.",
+                      "fontFamily": "$font-display",
+                      "fontSize": 18,
+                      "fontWeight": "900"
+                    },
+                    {
+                      "type": "text",
+                      "id": "q2ZHrh",
+                      "name": "Card Tag",
+                      "fill": "$ink-2",
+                      "content": "YOUR READ · WOMEN",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "Z2CCQC",
+                  "name": "Card Season",
+                  "fill": "$autumn",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "You're a Warm Autumn.",
+                  "lineHeight": 1.05,
+                  "fontFamily": "$font-display",
+                  "fontSize": 34,
+                  "fontWeight": "900",
+                  "letterSpacing": -1.5
+                },
+                {
+                  "type": "text",
+                  "id": "Y9LDUd",
+                  "name": "Card Arch",
+                  "fill": "$ink",
+                  "content": "Archetype: Grounded Classic",
+                  "fontFamily": "$font-body",
+                  "fontSize": 18,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "uUkDt",
+                  "name": "Card Palette",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 10,
+                      "id": "qmtdA",
+                      "name": "Palette #B8632F",
+                      "fill": "#B8632F",
+                      "width": "fill_container",
+                      "height": 44
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 10,
+                      "id": "TZw3H",
+                      "name": "Palette #D99A3E",
+                      "fill": "#D99A3E",
+                      "width": "fill_container",
+                      "height": 44
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 10,
+                      "id": "ql6mG",
+                      "name": "Palette #6B6B2E",
+                      "fill": "#6B6B2E",
+                      "width": "fill_container",
+                      "height": 44
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 10,
+                      "id": "dOgIw",
+                      "name": "Palette #8C3B2A",
+                      "fill": "#8C3B2A",
+                      "width": "fill_container",
+                      "height": 44
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 10,
+                      "id": "ndLH8",
+                      "name": "Palette #2F4F4F",
+                      "fill": "#2F4F4F",
+                      "width": "fill_container",
+                      "height": 44
+                    },
+                    {
+                      "type": "rectangle",
+                      "cornerRadius": 10,
+                      "id": "IdtEo",
+                      "name": "Palette #E8D5B5",
+                      "fill": "#E8D5B5",
+                      "width": "fill_container",
+                      "height": 44
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "LmbVY",
+                  "name": "Strengths",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 10,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ZXGLd",
+                      "name": "Strengths Label",
+                      "fill": "$good",
+                      "content": "THREE THINGS WORKING FOR YOU",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ICfmF",
+                      "name": "Strength",
+                      "width": "fill_container",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "ide2H",
+                          "name": "Check",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "check",
+                          "library": "lucide",
+                          "fill": "$good"
+                        },
+                        {
+                          "type": "text",
+                          "id": "beYSQ",
+                          "name": "Strength Text",
+                          "fill": "$ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Your skin warms up next to camel and olive. Keep them close to the face.",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "Q0fPun",
+                      "name": "Strength",
+                      "width": "fill_container",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "njmL3",
+                          "name": "Check",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "check",
+                          "library": "lucide",
+                          "fill": "$good"
+                        },
+                        {
+                          "type": "text",
+                          "id": "olzLW",
+                          "name": "Strength Text",
+                          "fill": "$ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Your proportions carry a straight-cut trouser. No taper needed.",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "qr3S9",
+                      "name": "Strength",
+                      "width": "fill_container",
+                      "gap": 10,
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "LTrQS",
+                          "name": "Check",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "check",
+                          "library": "lucide",
+                          "fill": "$good"
+                        },
+                        {
+                          "type": "text",
+                          "id": "m0kOLc",
+                          "name": "Strength Text",
+                          "fill": "$ink",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "Matte textures suit you more than shine. Your instinct is already right.",
+                          "lineHeight": 1.4,
+                          "fontFamily": "$font-body",
+                          "fontSize": 15,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "FkayR",
+                  "name": "Upgrade",
+                  "width": "fill_container",
+                  "fill": "#FFF3E8",
+                  "cornerRadius": 14,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ucwQq",
+                      "name": "Upgrade Label",
+                      "fill": "$warn",
+                      "content": "ONE UPGRADE",
+                      "fontFamily": "$font-mono",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "VIWXm",
+                      "name": "Upgrade Text",
+                      "fill": "$ink",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "Swap pure black near the face for espresso or deep olive. Same formality, more warmth.",
+                      "lineHeight": 1.4,
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "fCILk",
+              "name": "Sample Copy",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "r1EMLv",
+                  "name": "H2",
+                  "fill": "$ink",
+                  "content": "Your read, in words.",
+                  "fontFamily": "$font-display",
+                  "fontSize": 44,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.5
+                },
+                {
+                  "type": "text",
+                  "id": "GSAqV",
+                  "name": "Body",
+                  "fill": "$ink-2",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Three things you already do right, then one change. Every line points at something in your photo. Share it or keep it.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 19,
+                  "fontWeight": "normal"
+                },
+                {
+                  "id": "jvatW",
+                  "type": "ref",
+                  "ref": "DvRH8",
+                  "name": "Sample CTA",
+                  "descendants": {
+                    "EXM82": {
+                      "content": "Get my read"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "sTthl",
+          "name": "Founding Price",
+          "width": "fill_container",
+          "gap": 56,
+          "padding": [
+            80,
+            64
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "klpz6",
+              "name": "Price Copy",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "x4Pn6C",
+                  "name": "Kicker",
+                  "fill": "$magenta",
+                  "content": "THE FULL REPORT",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 13,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "wWXtc",
+                  "name": "H2",
+                  "fill": "$ink",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Your Style Report. ₹499.",
+                  "lineHeight": 1.08,
+                  "fontFamily": "$font-display",
+                  "fontSize": 44,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.5
+                },
+                {
+                  "type": "text",
+                  "id": "qlyCE",
+                  "name": "Body",
+                  "fill": "$ink-2",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Pay once. Yours to keep. About you, about your style, and what works and what does not. Ships by 14 December 2026.",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 19,
+                  "fontWeight": "normal"
+                },
+                {
+                  "id": "uMk1d",
+                  "type": "ref",
+                  "ref": "DvRH8",
+                  "name": "Price CTA",
+                  "fill": "$magenta",
+                  "descendants": {
+                    "EXM82": {
+                      "content": "Get my Style Report"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k5QAmp",
+              "name": "Price Tag",
+              "width": 480,
+              "fill": "$ink",
+              "cornerRadius": 24,
+              "layout": "vertical",
+              "gap": 8,
+              "padding": 36,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "y3eyLd",
+                  "name": "Counter Label",
+                  "fill": "$lime",
+                  "content": "PAY ONCE",
+                  "fontFamily": "$font-mono",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "WBg1S",
+                  "name": "Counter Value",
+                  "fill": "$paper",
+                  "content": "₹499",
+                  "fontFamily": "$font-display",
+                  "fontSize": 56,
+                  "fontWeight": "900",
+                  "letterSpacing": -2
+                },
+                {
+                  "type": "text",
+                  "id": "hWj69",
+                  "name": "Counter Note",
+                  "fill": "#FFFDF8CC",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "Usually ₹1,499. Ships by 14 December 2026.",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "sIzbX",
+          "name": "Footer",
+          "width": "fill_container",
+          "stroke": "$line",
+          "strokeWidth": {
+            "top": 1
+          },
+          "padding": [
+            32,
+            64
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "wGHAm",
+              "name": "Footer Logo",
+              "fill": "$ink",
+              "content": "fitso.",
+              "fontFamily": "$font-display",
+              "fontSize": 20,
+              "fontWeight": "900"
+            },
+            {
+              "type": "frame",
+              "id": "PeB4P",
+              "name": "Footer Links",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Onysg",
+                  "name": "Guides",
+                  "fill": "$ink-2",
+                  "content": "Guides",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "ejGhy",
+                  "name": "Tools",
+                  "fill": "$ink-2",
+                  "content": "Tools",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "onuAk",
+                  "name": "Pricing",
+                  "fill": "$ink-2",
+                  "content": "Pricing",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "vw15x",
+                  "name": "Privacy",
+                  "fill": "$ink-2",
+                  "content": "Privacy",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "SFCj3",
+                  "name": "Terms",
+                  "fill": "$ink-2",
+                  "content": "Terms",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "KHLaN",
+                  "name": "Your closet → closet.fitso.me",
+                  "fill": "$ink-2",
+                  "content": "Closet app",
+                  "fontFamily": "$font-body",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "YCjzi",
+      "x": 3120,
+      "y": 0,
+      "name": "Share · Story 1080x1920",
+      "clip": true,
+      "width": 1080,
+      "height": 1920,
+      "fill": "$paper",
+      "layout": "vertical",
+      "padding": 72,
+      "justifyContent": "space_between",
+      "children": [
+        {
+          "type": "frame",
+          "id": "t74dAT",
+          "name": "Story Head",
+          "width": "fill_container",
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "S0fPp",
+              "name": "Logo",
+              "fill": "$ink",
+              "content": "fitso.",
+              "fontFamily": "$font-display",
+              "fontSize": 44,
+              "fontWeight": "900",
+              "letterSpacing": -2
+            },
+            {
+              "type": "text",
+              "id": "hcAEm",
+              "name": "Tag",
+              "fill": "$ink-2",
+              "content": "MY COLOUR SEASON",
+              "fontFamily": "$font-mono",
+              "fontSize": 20,
+              "fontWeight": "normal",
+              "letterSpacing": 4
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "MaYqq",
+          "name": "Story Mid",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 40,
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "Q0c9mL",
+              "type": "ref",
+              "ref": "u9SyPS",
+              "name": "Story Fan",
+              "width": 380,
+              "height": 420
+            },
+            {
+              "type": "text",
+              "id": "wJGKQ",
+              "name": "Season",
+              "fill": "$autumn",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Warm Autumn.",
+              "lineHeight": 1,
+              "textAlign": "center",
+              "fontFamily": "$font-display",
+              "fontSize": 104,
+              "fontWeight": "900",
+              "letterSpacing": -5
+            },
+            {
+              "type": "text",
+              "id": "utIEO",
+              "name": "Arch",
+              "fill": "$ink",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Grounded Classic · camel, olive, espresso",
+              "textAlign": "center",
+              "fontFamily": "$font-body",
+              "fontSize": 34,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "gLEpL",
+              "name": "Story Palette",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 16,
+                  "id": "J7r4e",
+                  "name": "P #B8632F",
+                  "fill": "#B8632F",
+                  "width": "fill_container",
+                  "height": 72
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 16,
+                  "id": "XXb9N",
+                  "name": "P #D99A3E",
+                  "fill": "#D99A3E",
+                  "width": "fill_container",
+                  "height": 72
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 16,
+                  "id": "PAD4W",
+                  "name": "P #6B6B2E",
+                  "fill": "#6B6B2E",
+                  "width": "fill_container",
+                  "height": 72
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 16,
+                  "id": "OZelU",
+                  "name": "P #8C3B2A",
+                  "fill": "#8C3B2A",
+                  "width": "fill_container",
+                  "height": 72
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 16,
+                  "id": "VYiNy",
+                  "name": "P #2F4F4F",
+                  "fill": "#2F4F4F",
+                  "width": "fill_container",
+                  "height": 72
+                },
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 16,
+                  "id": "eyiLW",
+                  "name": "P #E8D5B5",
+                  "fill": "#E8D5B5",
+                  "width": "fill_container",
+                  "height": 72
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "vLr68",
+          "name": "Story Foot",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "PiQPr",
+              "name": "CTA",
+              "fill": "$magenta",
+              "content": "Get your read free at fitso.me",
+              "fontFamily": "$font-display",
+              "fontSize": 30,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "sgqIu",
+              "name": "Note",
+              "fill": "$ink-2",
+              "content": "Free. Under a minute.",
+              "fontFamily": "$font-body",
+              "fontSize": 24,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "paper": {
+      "type": "color",
+      "value": "#FFFDF8"
+    },
+    "ink": {
+      "type": "color",
+      "value": "#14121B"
+    },
+    "ink-2": {
+      "type": "color",
+      "value": "#4B4757"
+    },
+    "line": {
+      "type": "color",
+      "value": "#E6E2EC"
+    },
+    "magenta": {
+      "type": "color",
+      "value": "#F0127A"
+    },
+    "tangerine": {
+      "type": "color",
+      "value": "#FF6B1A"
+    },
+    "cobalt": {
+      "type": "color",
+      "value": "#2B3DF5"
+    },
+    "lime": {
+      "type": "color",
+      "value": "#C8F031"
+    },
+    "good": {
+      "type": "color",
+      "value": "#15735A"
+    },
+    "warn": {
+      "type": "color",
+      "value": "#965007"
+    },
+    "bad": {
+      "type": "color",
+      "value": "#B3261E"
+    },
+    "spring": {
+      "type": "color",
+      "value": "#FF7A45"
+    },
+    "summer": {
+      "type": "color",
+      "value": "#7FA8D9"
+    },
+    "autumn": {
+      "type": "color",
+      "value": "#B8632F"
+    },
+    "winter": {
+      "type": "color",
+      "value": "#2642E5"
+    },
+    "font-display": {
+      "type": "string",
+      "value": "Unbounded"
+    },
+    "font-body": {
+      "type": "string",
+      "value": "Hanken Grotesk"
+    },
+    "font-mono": {
+      "type": "string",
+      "value": "Spline Sans Mono"
+    },
+    "space-s": {
+      "type": "number",
+      "value": 12
+    },
+    "space-m": {
+      "type": "number",
+      "value": 24
+    },
+    "space-l": {
+      "type": "number",
+      "value": 48
+    },
+    "radius": {
+      "type": "number",
+      "value": 16
+    }
+  },
+  "fileToken": "cd06569d-35ea-4069-b1c4-6a2022fed62b"
 }

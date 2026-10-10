@@ -131,9 +131,9 @@ export function GuideView({ page }: { page: ContentPage }) {
                 key={d}
                 door={d}
                 size="lg"
-                href={`/app/quick-win?door=${d}&from=${from}`}
+                href={`/start?door=${d}&from=${from}`}
               >
-                {page.door === "both" ? `Start with the ${d === "men" ? "men's" : "women's"} door` : "Show me what works for me"}
+                {page.door === "both" ? `Start with the ${d === "men" ? "men's" : "women's"} door` : "Generate my personal style"}
               </Button>
             ))}
           </div>

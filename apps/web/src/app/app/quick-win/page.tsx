@@ -1,22 +1,16 @@
-import type { Metadata } from "next";
-import { Door } from "@fitso/core";
-import { QuickWinFlow } from "@/features/profile/QuickWinFlow";
-import { headlineFor } from "@/features/profile/questions";
+import { permanentRedirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = Promise<{ door?: string | string[]; from?: string | string[] }>;
-
-const first = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
-
-export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
-  const { from } = await searchParams;
-  return { title: headlineFor(first(from)), robots: { index: false } };
-}
+type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
 export default async function Page({ searchParams }: { searchParams: SearchParams }) {
   const sp = await searchParams;
-  const door = Door.safeParse(first(sp.door));
-  const from = first(sp.from) ?? null;
-  return <QuickWinFlow initialDoor={door.success ? door.data : null} from={from} />;
+  const qs = new URLSearchParams();
+  for (const [k, v] of Object.entries(sp)) {
+    if (Array.isArray(v)) v.forEach((x) => qs.append(k, x));
+    else if (v !== undefined) qs.append(k, v);
+  }
+  const s = qs.toString();
+  permanentRedirect(s ? `/start?${s}` : "/start");
 }

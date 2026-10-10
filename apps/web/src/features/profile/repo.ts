@@ -1,4 +1,5 @@
-import { QuickWinProfile, Door } from "@fitso/core";
+import { QuickWinProfile, Door, ReadReport } from "@fitso/core";
+import { env } from "@/lib/env";
 import { getDb } from "@/lib/supabase";
 import { isShareToken } from "@/lib/ids";
 
@@ -12,10 +13,14 @@ export type PublicQuickWin = {
   shared_at: string | null;
   finish_today_expires_at: string;
   verdict_credits: number;
+  created_at: string;
+  report: ReadReport | null;
+  /** True when an email is saved. The address itself never leaves the server. */
+  has_email: boolean;
 };
 
 const PUBLIC_COLUMNS =
-  "id, door, profile, confidence, share_token, shared_at, finish_today_expires_at, verdict_credits";
+  "id, created_at, door, profile, confidence, share_token, shared_at, finish_today_expires_at, verdict_credits, report, email";
 
 export async function loadPublicQuickWin(token: string): Promise<PublicQuickWin | null> {
   if (!isShareToken(token)) return null;
@@ -32,6 +37,7 @@ export async function loadPublicQuickWin(token: string): Promise<PublicQuickWin 
   if (!door.success || !profile.success) return null;
   return {
     id: String(row.id),
+    created_at: String(row.created_at ?? new Date().toISOString()),
     door: door.data,
     profile: profile.data,
     confidence: Number(row.confidence),
@@ -39,6 +45,8 @@ export async function loadPublicQuickWin(token: string): Promise<PublicQuickWin 
     shared_at: (row.shared_at as string | null) ?? null,
     finish_today_expires_at: new Date(row.finish_today_expires_at as string).toISOString(),
     verdict_credits: Number(row.verdict_credits),
+    report: row.report ? (() => { const r = ReadReport.safeParse(row.report); return r.success ? r.data : null; })() : null,
+    has_email: typeof row.email === "string" && row.email.length > 0,
   };
 }
 
@@ -50,4 +58,22 @@ export async function readFoundingCents(): Promise<number> {
     .eq("key", "founding_revenue_usd_cents")
     .maybeSingle();
   return Number((data as { value_minor?: number } | null)?.value_minor ?? 0);
+}
+
+/** True when this quick win has a paid report order (or a test order outside production). */
+export async function loadReportUnlock(quickWinId: string): Promise<boolean> {
+  const { data, error } = await getDb()
+    .from("orders")
+    .select("id, status")
+    .eq("quick_win_id", quickWinId)
+    .eq("product", "report");
+  if (error) throw new Error(`orders read failed: ${error.message}`);
+  const rows = (data ?? []) as { status: string }[];
+  return rows.some((r) => r.status === "paid" || (!env.isProd && r.status === "test"));
+}
+
+export async function setQuickWinEmail(token: string, email: string): Promise<boolean> {
+  if (!isShareToken(token)) return false;
+  const { error } = await getDb().from("quick_wins").update({ email }).eq("share_token", token);
+  return !error;
 }

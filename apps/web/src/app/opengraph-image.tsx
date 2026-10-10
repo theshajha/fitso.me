@@ -31,10 +31,10 @@ export default function Image() {
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 640 }}>
           <div style={{ fontSize: 40, fontWeight: 900, letterSpacing: -1 }}>fitso</div>
           <div style={{ fontSize: 76, fontWeight: 900, lineHeight: 1.02, marginTop: 24, letterSpacing: -2 }}>
-            Know what&apos;s working for you.
+            The world&apos;s best stylist. For the price of a coffee.
           </div>
           <div style={{ fontSize: 28, marginTop: 28, color: "#4B4757" }}>
-            One selfie. Five questions. Your season, your three strengths, an honest answer before you buy.
+            Send one photo. Get your personal style, free, in about a minute.
           </div>
         </div>
         <div style={{ display: "flex", position: "relative", width: 380, height: 420 }}>

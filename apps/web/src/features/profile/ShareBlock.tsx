@@ -7,11 +7,10 @@ import type { Door } from "@fitso/core";
 
 export function ShareBlock({
   token,
-  door,
   title,
 }: {
   token: string;
-  door: Door;
+  door?: Door;
   title: string;
 }) {
   const [note, setNote] = useState<string | null>(null);
@@ -63,29 +62,17 @@ export function ShareBlock({
   }
 
   return (
-    <div data-door={door}>
-      <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-        <Button door={door} onClick={() => void copy("copy")}>
+    <div style={{ border: "2px solid var(--ink)", borderRadius: 24, padding: 22, background: "var(--paper)" }}>
+      <h2 style={{ margin: 0, fontSize: "1.125rem" }}>Share your palette</h2>
+      <p className="muted" style={{ margin: "4px 0 0" }}>Send it to a friend, or post the card.</p>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center", marginTop: 12 }}>
+        <Button onClick={() => void share()}>Share</Button>
+        <button type="button" onClick={() => void copy("copy")} style={{ background: "none", border: 0, padding: 0, fontWeight: 700, textDecoration: "underline", cursor: "pointer", color: "var(--ink)" }}>
           Copy link
-        </Button>
-        <a
-          href={`/r/${token}/card.png`}
-          download="fitso-result.png"
-          onClick={() => {
-            track("card_downloaded");
-            markShared();
-          }}
-          className="inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold no-underline"
-          style={{ border: "2px solid var(--ink)", color: "var(--ink)" }}
-        >
-          Download card
-        </a>
-        <Button door={door} variant="secondary" onClick={() => void share()}>
-          Share
-        </Button>
+        </button>
       </div>
       {note && (
-        <p role="status" className="label" style={{ marginTop: 12 }}>
+        <p role="status" style={{ margin: "10px 0 0", fontWeight: 600, overflowWrap: "anywhere" }}>
           {note}
         </p>
       )}

@@ -1,0 +1,1337 @@
+{
+  "made_at": "2026-10-10T09:40:22.553Z",
+  "photo": "/people/man-1.jpg",
+  "answers": {
+    "life": "hybrid",
+    "climate": "hot and humid",
+    "occasions": [
+      "formal work",
+      "dates and evenings"
+    ],
+    "budget_per_item": "1,500 to 4,000",
+    "height_cm": 180
+  },
+  "profile": {
+    "season": "autumn",
+    "season_depth": "deep",
+    "undertone": "warm",
+    "archetype": "Easy Classic",
+    "working_for_you": [
+      "Olive works at your face. Its muted warmth keeps your skin golden, not flat.",
+      "The camel overshirt works. It shows warm mid-tones suit you, so shop camel, tan and khaki.",
+      "Your slim dark jeans fit well. The clean leg balances your shoulders and adds length."
+    ],
+    "stop_buying": "Swap the white sneakers for espresso suede loafers. They take the same outfit to dates.",
+    "palette": [
+      "#5f6b3a",
+      "#1f5c5c",
+      "#9c4a2b",
+      "#6b2632",
+      "#2f4a35",
+      "#b08556",
+      "#b8862b",
+      "#4a2f23"
+    ],
+    "confidence": 0.75,
+    "retake_hint": null
+  },
+  "report": {
+    "door": "men",
+    "presented_as": "man",
+    "photo_count": 1,
+    "colour": {
+      "undertone": "warm",
+      "depth": "deep",
+      "contrast": "medium",
+      "clarity": "muted",
+      "season": "autumn",
+      "season_depth": "deep",
+      "reasoning": "All three observers agree, so I followed record 3 as the most specific. Its golden-brown skin with amber jaw and neck shadows, no ashen cast beside the camel overshirt and muted warm rose-brown lips settle the temperature as warm. That holds even after discounting the mild warm/peach backdrop cast, and the silver watch is uninformative. The very deep near-black hair and dark brown eyes against medium skin give a deep overall read at medium contrast, and the dusty camel and olive sit harmoniously, which points to muted rather than clear: deep autumn.",
+      "confidence": 0.62,
+      "votes": 5,
+      "agreement": 1,
+      "runner_up": null
+    },
+    "observations": [
+      {
+        "photo_index": 1,
+        "heritage": {
+          "read": "South Asian",
+          "source": "photo",
+          "confidence": 0.75
+        },
+        "skin": {
+          "depth": "medium",
+          "apparent_undertone": "warm",
+          "undertone_evidence": "Skin reads golden-tan; it sits close in value and warmth to the camel overshirt without looking sallow or grey. Shadows under the jaw and on the hands are warm brown, not ashen. Lips are a muted warm rose-brown. Only metal is a silver-toned watch, which reads bright against the wrist but gives little undertone signal. The warm cream backdrop may be adding some warmth."
+        },
+        "hair": {
+          "colour": "black to very dark brown",
+          "depth": "very_deep",
+          "texture": "wavy",
+          "length": "short",
+          "style_notes": "Short tapered sides, longer top swept up and back into a pompadour-style quiff with volume; neat, defined hairline; no visible grey."
+        },
+        "eyes": {
+          "colour": "dark brown"
+        },
+        "contrast": "medium",
+        "face": {
+          "shape": "oval",
+          "notable_features": [
+            "Strong, dark, fairly straight brows",
+            "Wide open-mouthed smile showing teeth",
+            "Defined cheekbones",
+            "Jawline covered by full trimmed beard",
+            "Neat, even front hairline lifted by the quiff"
+          ],
+          "facial_hair": "Full beard, short and trimmed close, with connected moustache; shaped cheek line, density fuller at chin",
+          "glasses": false,
+          "makeup_or_grooming_notes": "Well-groomed: beard edges defined, hair styled with product."
+        },
+        "build": {
+          "frame": "average",
+          "shoulders_vs_hips": "wider",
+          "torso_vs_legs": "longer_legs",
+          "height_impression": "tall",
+          "posture_notes": "Stated height 180 cm. Upright, relaxed stance, weight slightly on one leg, right hand in front jeans pocket, left arm loose at side; slight lean of head to his right. Lean-to-average build."
+        },
+        "outfit": {
+          "items": [
+            {
+              "garment": "overshirt / button-front shirt worn open as a layer",
+              "colour_name": "camel",
+              "colour_hex_estimate": "#B08556",
+              "fit": "relaxed",
+              "fabric_guess": "cotton twill or brushed canvas",
+              "notes": "Point collar, single left chest patch pocket, tonal buttons, sleeves rolled to mid-forearm, small white label at hem, hem falls to upper hip."
+            },
+            {
+              "garment": "crew-neck t-shirt",
+              "colour_name": "olive green",
+              "colour_hex_estimate": "#6E7451",
+              "fit": "regular",
+              "fabric_guess": "cotton jersey, slightly textured knit",
+              "notes": "Untucked, hem sits just over waistband."
+            },
+            {
+              "garment": "jeans",
+              "colour_name": "dark indigo / raw denim",
+              "colour_hex_estimate": "#1F2638",
+              "fit": "slim",
+              "fabric_guess": "raw or rinse-wash selvedge-style denim",
+              "notes": "Straight-slim leg, cuffed once at hem showing lighter inner side, ends just above ankle; contrast tan stitching."
+            }
+          ],
+          "accessories": [
+            "silver-toned analogue watch with metal bracelet on right wrist",
+            "brown wooden bead bracelet on left wrist"
+          ],
+          "footwear": "White leather minimal low-top lace-up sneakers with navy/dark socks visible at the ankle",
+          "formality": "smart_casual"
+        },
+        "photo": {
+          "lighting": "Soft, diffuse daylight-like studio light from the left, gentle shadows",
+          "background": "Seamless warm cream/beige backdrop with pale concrete floor",
+          "colour_cast": "Mild warm/peach cast from the backdrop and grading",
+          "colour_read_confidence": 0.75
+        }
+      },
+      {
+        "photo_index": 1,
+        "heritage": {
+          "read": "South Asian",
+          "source": "photo",
+          "confidence": 0.7
+        },
+        "skin": {
+          "depth": "medium",
+          "apparent_undertone": "warm",
+          "undertone_evidence": "Skin reads golden-tan in the face and hands; it sits close in tone to the camel overshirt without looking ashy or grey beside it. Shadows under the jaw and in the beard line read warm brown rather than grey. Lips are a muted warm rose-brown. Only metal visible is a silver-tone steel watch, which reads bright against the wrist rather than blending. The warm-cream background may push the skin slightly warmer than it is."
+        },
+        "hair": {
+          "colour": "near-black dark brown",
+          "depth": "very_deep",
+          "texture": "wavy",
+          "length": "short",
+          "style_notes": "Short tapered sides, longer on top swept up and back into a voluminous quiff with a soft wave; neat, defined hairline at the temples."
+        },
+        "eyes": {
+          "colour": "dark brown"
+        },
+        "contrast": "medium",
+        "face": {
+          "shape": "oval",
+          "notable_features": [
+            "Strong, dark, fairly straight brows",
+            "Full, wide smile showing upper teeth",
+            "Defined jaw largely covered by beard",
+            "Moderate cheekbones visible above the beard line",
+            "Medium-length neck"
+          ],
+          "facial_hair": "Full short beard and moustache, dark, neatly trimmed with a clean cheek line and shaped neckline",
+          "glasses": false,
+          "makeup_or_grooming_notes": "Well-groomed: beard edges sharp, hair styled with product for volume."
+        },
+        "build": {
+          "frame": "average",
+          "shoulders_vs_hips": "wider",
+          "torso_vs_legs": "balanced",
+          "height_impression": "tall",
+          "posture_notes": "Stated height 180 cm. Upright, relaxed stance, weight even, left hand in front jeans pocket, right arm hanging loose, slight head tilt."
+        },
+        "outfit": {
+          "items": [
+            {
+              "garment": "overshirt / long-sleeve button-front shirt worn open",
+              "colour_name": "camel tan",
+              "colour_hex_estimate": "#B4875A",
+              "fit": "regular",
+              "fabric_guess": "cotton twill or light canvas",
+              "notes": "Worn unbuttoned and untucked, sleeves rolled once to forearm, single chest patch pocket on left side, small white label near hem, tonal buttons."
+            },
+            {
+              "garment": "crew-neck t-shirt",
+              "colour_name": "olive green",
+              "colour_hex_estimate": "#6E7351",
+              "fit": "regular",
+              "fabric_guess": "cotton jersey with slight textured knit",
+              "notes": "Untucked, hem ends around upper hip."
+            },
+            {
+              "garment": "jeans",
+              "colour_name": "dark indigo raw-wash",
+              "colour_hex_estimate": "#242C3D",
+              "fit": "slim",
+              "fabric_guess": "denim, selvedge-style with turned-up cuffs",
+              "notes": "Straight-to-slim leg, single cuff at ankle showing lighter reverse, contrast orange-tan stitching, ends just above the shoe."
+            }
+          ],
+          "accessories": [
+            "silver-tone stainless steel watch on left wrist with metal bracelet and white dial",
+            "brown wooden bead bracelet on right wrist"
+          ],
+          "footwear": "White leather low-top lace-up minimalist sneakers worn with dark navy socks",
+          "formality": "smart_casual"
+        },
+        "photo": {
+          "lighting": "Soft, diffused daylight-style light from the left, even on face and body, minimal harsh shadows",
+          "background": "Seamless warm cream backdrop with a pale concrete-grey floor",
+          "colour_cast": "Mild warm/peach cast from the cream backdrop and warm grading",
+          "colour_read_confidence": 0.75
+        }
+      },
+      {
+        "photo_index": 1,
+        "heritage": {
+          "read": "South Asian",
+          "source": "photo",
+          "confidence": 0.7
+        },
+        "skin": {
+          "depth": "medium",
+          "apparent_undertone": "warm",
+          "undertone_evidence": "Skin reads golden-brown with warm, slightly amber shadows along the jaw and neck. It sits close in value to the camel overshirt without looking ashen or grey beside it. Lips are a muted warm rose-brown. He wears a silver-tone steel watch, which does not visibly cool or wash out the skin, so the metal is not strong evidence. The warm-cream backdrop and warm light may be amplifying the golden read."
+        },
+        "hair": {
+          "colour": "near-black dark brown",
+          "depth": "very_deep",
+          "texture": "wavy",
+          "length": "short",
+          "style_notes": "Short, tapered sides with longer top volume swept up and back into a pompadour-style quiff. Hairline is full and slightly squared at the temples."
+        },
+        "eyes": {
+          "colour": "dark brown"
+        },
+        "contrast": "medium",
+        "face": {
+          "shape": "oval",
+          "notable_features": [
+            "Strong, dark, fairly straight brows",
+            "Full, wide smile showing upper teeth; eyes crinkle when smiling",
+            "Defined cheekbones",
+            "Jawline shaped by the beard rather than visible bare",
+            "Average neck length"
+          ],
+          "facial_hair": "Full, short, neatly trimmed beard with connected moustache, near-black, with clean cheek lines",
+          "glasses": false,
+          "makeup_or_grooming_notes": "Beard edges are neatly groomed and the hair is styled with product holding the volume."
+        },
+        "build": {
+          "frame": "average",
+          "shoulders_vs_hips": "wider",
+          "torso_vs_legs": "balanced",
+          "height_impression": "tall",
+          "posture_notes": "Stated height is 180 cm. He stands upright and relaxed with weight slightly shifted, right hand in the front jeans pocket, and a slim-to-average build."
+        },
+        "outfit": {
+          "items": [
+            {
+              "garment": "Overshirt / button-front shirt worn open",
+              "colour_name": "camel tan",
+              "colour_hex_estimate": "#B08550",
+              "fit": "regular",
+              "fabric_guess": "cotton twill or brushed cotton",
+              "notes": "Worn unbuttoned as a layer, with sleeves rolled to the forearm. It has a single left chest patch pocket, tonal buttons and a small white label tab near the hem. Length falls to the upper hip."
+            },
+            {
+              "garment": "Crew-neck T-shirt",
+              "colour_name": "olive green",
+              "colour_hex_estimate": "#6E7253",
+              "fit": "regular",
+              "fabric_guess": "cotton jersey, possibly slub or fine waffle texture",
+              "notes": "Untucked."
+            },
+            {
+              "garment": "Jeans",
+              "colour_name": "dark indigo raw denim",
+              "colour_hex_estimate": "#1F2638",
+              "fit": "slim",
+              "fabric_guess": "selvedge denim",
+              "notes": "Slim-straight leg with a single cuff at the hem showing a lighter selvedge edge. Hem sits just above the ankle."
+            },
+            {
+              "garment": "Socks",
+              "colour_name": "navy",
+              "colour_hex_estimate": "#1E2433",
+              "fit": "unknown",
+              "fabric_guess": "cotton",
+              "notes": "Barely visible between the jean cuff and the shoes."
+            }
+          ],
+          "accessories": [
+            "Silver-tone stainless steel analogue watch with link bracelet on left wrist",
+            "Brown wooden bead bracelet on right wrist"
+          ],
+          "footwear": "White leather low-top minimalist lace-up sneakers",
+          "formality": "smart_casual"
+        },
+        "photo": {
+          "lighting": "Soft, diffused natural-looking light from the left with gentle, low-contrast shadows",
+          "background": "Cream seamless paper backdrop over a pale grey-beige concrete floor",
+          "colour_cast": "Mild warm/peach cast across the whole frame",
+          "colour_read_confidence": 0.75
+        }
+      }
+    ],
+    "decisions": {
+      "season": "autumn",
+      "season_depth": "deep",
+      "undertone": "warm",
+      "contrast": "medium",
+      "clarity": "muted",
+      "palette": [
+        {
+          "name": "Olive",
+          "hex": "#5f6b3a",
+          "use": "A crew-neck tee or knit polo near the face, your proven anchor shade"
+        },
+        {
+          "name": "Deep teal",
+          "hex": "#1f5c5c",
+          "use": "A linen or cotton shirt for formal work under a camel or navy blazer"
+        },
+        {
+          "name": "Rust terracotta",
+          "hex": "#9c4a2b",
+          "use": "A linen shirt for dates and evenings"
+        },
+        {
+          "name": "Oxblood",
+          "hex": "#6b2632",
+          "use": "A knit polo for evenings or a festive kurta"
+        },
+        {
+          "name": "Forest green",
+          "hex": "#2f4a35",
+          "use": "A Nehru jacket or bandhgala for formal events"
+        },
+        {
+          "name": "Camel",
+          "hex": "#b08556",
+          "use": "An unstructured linen blazer or overshirt"
+        },
+        {
+          "name": "Antique ochre",
+          "hex": "#b8862b",
+          "use": "A cotton kurta or a casual weekend shirt"
+        },
+        {
+          "name": "Chocolate brown",
+          "hex": "#4a2f23",
+          "use": "A piqué polo or fine-knit tee for evenings"
+        }
+      ],
+      "neutrals": [
+        {
+          "name": "Espresso",
+          "hex": "#3b2a20",
+          "use": "Suede loafers, belts and a watch strap"
+        },
+        {
+          "name": "Ink navy",
+          "hex": "#1f2638",
+          "use": "Trousers, dark jeans and a work blazer"
+        },
+        {
+          "name": "Warm ivory",
+          "hex": "#ede3cf",
+          "use": "Your white shirt for formal work, and summer chinos"
+        },
+        {
+          "name": "Stone khaki",
+          "hex": "#a89a7a",
+          "use": "Chinos and linen trousers for hot days"
+        }
+      ],
+      "metal": "gold",
+      "metal_why": "Your warm undertone shows in golden-brown skin and warm amber shadows, so brushed gold, bronze or a brown leather strap will echo it. Choose brushed or matte gold over bright yellow gold to suit your muted colouring. The steel watch you wear now is not wrong, but warm metal will pull your whole look together.",
+      "flow": [
+        {
+          "name": "Deep aubergine",
+          "hex": "#4b2840",
+          "keep": "Keep it deep and dusty, never bright purple"
+        },
+        {
+          "name": "Dark pine",
+          "hex": "#1e4d3a",
+          "keep": "Keep it muted, not jewel-bright emerald"
+        },
+        {
+          "name": "Burnt pumpkin",
+          "hex": "#b5602b",
+          "keep": "Keep it softened and brown-based, not bright orange"
+        }
+      ],
+      "must_axis": "undertone",
+      "must_axis_why": "Your warmth is what keeps your skin glowing and your beard line soft. Cool colours like icy grey, blue-pink and stark white turn the shadows at your jaw ashen. Whatever you buy, it must lean golden, brown or olive.",
+      "flexible_axis": "depth",
+      "flexible_axis_why": "Your skin is medium even though your hair is near-black, so mid-tone warm shades like camel work as well as deep ones. That gives you room for lighter linens in the heat, as long as they stay warm.",
+      "avoid": [
+        {
+          "name": "Icy silver grey",
+          "hex": "#c9ced6",
+          "why": "Its cold, pale cast greys out the golden in your skin and makes your beard look harsh against it."
+        },
+        {
+          "name": "Optic white near the face",
+          "hex": "#ffffff",
+          "why": "It is too stark for your muted colouring and pulls attention away from your face. Warm ivory gives you the same crispness without the glare."
+        },
+        {
+          "name": "Cool pastel pink or lavender",
+          "hex": "#d8c3e0",
+          "why": "Its blue base drains the warm rose-brown from your lips and leaves your skin looking flat."
+        }
+      ],
+      "changing_room_test": "Take the shirt to a window and hold it under your chin. If the shadows along your jaw and neck stay warm brown and your skin looks golden, buy it. If those shadows turn grey or your beard suddenly looks heavier and darker, put it back.",
+      "archetype": "Easy Classic",
+      "archetype_why": "You already build outfits from timeless pieces: a camel overshirt, an olive crew-neck and cuffed selvedge denim, worn relaxed with sleeves rolled. The next step is the same calm, classic logic in sharper fabrics for formal work and evenings.",
+      "style_words": [
+        "warm",
+        "polished",
+        "easy"
+      ],
+      "style_words_why": "Warm comes from what you wear now, the camel and olive pairing that suits you. Polished is the reach for your formal work days and dates, through linen blazers, leather loafers and crisp ivory shirts. Easy ties it all together: the relaxed stance, the rolled sleeves, and breathable fabrics that suit your hot, humid climate.",
+      "working": [
+        {
+          "claim": "Olive is one of your strongest shades, and you are already wearing it right at your face.",
+          "evidence": "Olive green crew-neck tee (#6E7451) under the overshirt; all three records note skin sits harmoniously with the dusty olive and camel.",
+          "why": "Its muted warmth matches your undertone, so your skin looks even and golden rather than flat."
+        },
+        {
+          "claim": "Your camel overshirt flatters you and makes an ideal relaxed layer.",
+          "evidence": "Camel twill overshirt (#B08556), worn open with sleeves rolled; skin 'sits close in value and warmth to the camel overshirt without looking ashen or grey beside it'.",
+          "why": "It shows that warm mid-tones work on you, giving you a whole lane of camel, tan and khaki to shop from."
+        },
+        {
+          "claim": "Your jeans fit your height and proportions well.",
+          "evidence": "Slim-straight dark indigo selvedge jeans, cuffed once and ending just above the ankle; stated height 180 cm, shoulders read wider than hips.",
+          "why": "The clean leg and dark wash lengthen your frame and balance your shoulders. The same cut in navy or stone trousers will carry straight into the office."
+        }
+      ],
+      "change": {
+        "swap_out": "White leather minimalist sneakers",
+        "swap_in": "Espresso or dark brown suede penny loafers, worn sockless or with no-show socks",
+        "why": "The bright white is the one stark, cool note in an otherwise warm, muted outfit, and it keeps the look casual. Brown suede picks up your camel and wood bead bracelet and moves the same jeans-and-overshirt outfit into dates and evenings. Swap the tee for a polo or linen shirt and the loafers take you to formal work too. Suede loafers are also cooler than boots in humid heat and fit your 1,500 to 4,000 budget.",
+        "evidence": "Footwear: white leather low-top sneakers with navy socks, against a camel, olive and indigo outfit. The muted reasoning was based on the dusty camel and olive. Stated occasions: formal work, dates and evenings. Climate: hot and humid."
+      },
+      "confidence": 0.78,
+      "line": {
+        "face": {
+          "shape": "Oval: balanced length and width, defined cheekbones, strong straight brows and a jaw framed by a full, short beard.",
+          "necklines": [
+            {
+              "what": "Open collars with one or two buttons undone, or a soft V-neck tee or knit, for evenings and dates",
+              "why": "Your oval face needs no correcting, and an open V repeats the clean lines of your beard and brows. It also lets air in, which matters in the heat.",
+              "evidence": "All three records: face shape oval; strong, dark, fairly straight brows; full short beard with shaped neckline; medium or average neck length."
+            },
+            {
+              "what": "Keep the crew-neck tee as your casual base, with a close collar that sits just at the base of the neck",
+              "why": "A crew neck already works on you. A snug band frames your neat beard line without crowding it.",
+              "evidence": "All records: olive crew-neck tee, regular fit, worn under the open overshirt; neck read as medium or average length."
+            },
+            {
+              "what": "Band or mandarin necks: a bandhgala, a Nehru jacket over a kurta, or a band-collar linen shirt for formal occasions and evenings",
+              "why": "With an average-length neck and a trimmed beard, a band collar sits cleanly below the beard line. It gives you a sharp formal option that suits the climate better than a tie.",
+              "evidence": "Records 2 and 3: medium or average neck; all records: beard has a clean, shaped neckline; heritage read South Asian, so this is a familiar vocabulary; stated occasions are formal work and evenings."
+            }
+          ],
+          "collars": [
+            {
+              "what": "Point or semi-spread collars of medium height, about 7 to 8 cm points, on work shirts",
+              "why": "A medium collar suits your average frame and your oval face. It holds its shape under a blazer and still looks right open-necked when you leave the jacket off in the heat.",
+              "evidence": "Overshirt has a point collar that sits well open; build average frame, tall; face oval."
+            },
+            {
+              "what": "Cuban or camp collars on short-sleeve shirts for evenings",
+              "why": "A flat, open collar gives you the open-neck line that suits you and stays cool in humid evenings.",
+              "evidence": "Stated climate hot and humid; stated occasions include dates and evenings; open-collar layering in the outfit already flatters you."
+            }
+          ],
+          "glasses": {
+            "what": "You wear none now. If you add frames or sunglasses, choose a medium-weight soft rectangle or rounded square in warm tortoiseshell or dark brown acetate, with the top line following your brows",
+            "why": "Your oval face carries most shapes. A medium frame matches the weight of your strong, straight brows and beard, while a very thin wire would look slight next to them.",
+            "evidence": "All records: glasses false; face oval; strong, dark, fairly straight brows; full beard."
+          },
+          "hair": {
+            "what": "Keep the short tapered sides with length and lift on top, swept up and back",
+            "why": "Height on top lengthens the oval and balances the weight of the beard. The tapered sides keep the shape clean and stop it feeling hot.",
+            "evidence": "All records: wavy, very deep near-black hair, short tapered sides, longer top in a pompadour-style quiff, neat defined hairline, styled with product."
+          },
+          "earrings_or_scale": {
+            "what": "Watch dials of 38 to 41 mm with a slim-to-medium case, and collar points of medium height",
+            "why": "At 180 cm with an average frame, this middle scale looks deliberate. A tiny dial reads lost on your wrist, and an oversized one reads heavy.",
+            "evidence": "Stated height 180 cm; build average frame across records; current analogue watch on a metal bracelet looks in proportion."
+          }
+        },
+        "body": {
+          "summary": "Tall at 180 cm with an average, lean-to-average frame, shoulders wider than hips and balanced to slightly long legs: a naturally tapered build that suits clean, straight lines.",
+          "silhouettes": [
+            {
+              "what": "A structured, unlined or half-lined single-breasted blazer with natural shoulders and a gentle waist suppression, two buttons",
+              "why": "Your shoulders are already wider than your hips, so you need no padding. A light waist shape shows off your taper for formal work without adding heat.",
+              "evidence": "All records: shoulders wider than hips, average frame; stated occasion formal work; stated climate hot and humid."
+            },
+            {
+              "what": "Slim-straight trousers and jeans with a gentle taper below the knee",
+              "why": "A straight-slim leg keeps your tall frame streamlined and balances wider shoulders without looking skinny.",
+              "evidence": "All records: slim, straight-slim dark indigo jeans that look sharp on you; build tall, average frame."
+            },
+            {
+              "what": "Open overshirt or light jacket over a tee, ending at the upper hip",
+              "why": "This layer already works on you. Ending at the upper hip keeps your legs looking long.",
+              "evidence": "All records: camel overshirt worn open, hem at upper hip, over an olive tee."
+            },
+            {
+              "what": "Kurta or kurta-and-Nehru-jacket for evenings and occasions: a straight cut, slightly fitted through the chest",
+              "why": "Your height carries a longer line well, and a straight cut keeps it crisp.",
+              "evidence": "Heritage read South Asian across records; stated height 180 cm; stated occasions include evenings."
+            }
+          ],
+          "rise_and_lengths": [
+            {
+              "what": "Mid-rise trousers that sit at or just below the navel, with shirts tucked for work",
+              "why": "With legs balanced or slightly long, a mid-rise keeps your torso and legs in even proportion and holds a tucked shirt neatly.",
+              "evidence": "Stated height 180 cm; torso vs legs read balanced in records 2 and 3 and longer legs in record 1."
+            },
+            {
+              "what": "Formal trousers hemmed full length with a slight or no break, no turn-up; keep the single cuff just above the ankle for jeans only",
+              "why": "A clean hem on formal trousers keeps your long leg line unbroken. The cuffed jean is a casual move that already suits you.",
+              "evidence": "All records: jeans cuffed once, ending just above the ankle, worn with white low-top sneakers."
+            },
+            {
+              "what": "Shirt sleeves that show about 1 cm of cuff below a jacket; untucked casual shirts and tees ending at mid-fly",
+              "why": "Your tee hem sitting just over the waistband is exactly right. Matching that length on untucked shirts keeps your legs looking long.",
+              "evidence": "Record 1: tee hem sits just over the waistband; overshirt sleeves rolled to the forearm."
+            },
+            {
+              "what": "Kurta length just above the knee; blazer length covering the seat",
+              "why": "At 180 cm these lengths look in proportion and do not cut your leg short.",
+              "evidence": "Stated height 180 cm; build tall."
+            }
+          ],
+          "print_scale": {
+            "what": "Small-to-medium prints: fine checks, narrow stripes, small geometrics and textured weaves such as slub, waffle and seersucker",
+            "why": "An average frame suits mid-scale pattern. Texture adds interest within your muted deep autumn palette without looking loud.",
+            "evidence": "Build average frame; colour analysis muted clarity; olive tee in a slightly textured knit already sits harmoniously."
+          },
+          "accessory_scale": {
+            "what": "Medium: 38 to 41 mm watch, belts 3 to 3.5 cm wide, one bracelet at a time",
+            "why": "This matches your frame and keeps the focus on your face and smile.",
+            "evidence": "Stated height 180 cm; average frame; current watch on a metal bracelet plus a wooden bead bracelet."
+          },
+          "fabric_weight": {
+            "what": "Light and breathable: linen, cotton-linen, seersucker, open-weave cotton and tropical wool for formal suiting, with unlined or half-lined jackets",
+            "why": "Your climate is hot and humid, and the twill overshirt is better kept for air-conditioned spaces. Light, textured cloth keeps you cool and still drapes well on your frame.",
+            "evidence": "Stated climate hot and humid; stated life hybrid; overshirt fabric read as cotton twill or brushed canvas."
+          },
+          "fit_fixes": [
+            {
+              "what": "Have blazer and shirt shoulder seams set at your natural shoulder edge, and take in the waist slightly",
+              "why": "Your shoulders are your strong point, so a seam that sits right there and a slightly shaped waist show your taper.",
+              "evidence": "All records: shoulders wider than hips; overshirt read relaxed to regular fit."
+            },
+            {
+              "what": "Have formal trousers hemmed to just touch the shoe, with a slight taper from knee to ankle",
+              "why": "This gives you the same clean leg line as your slim jeans in a work-appropriate finish.",
+              "evidence": "All records: slim-straight jeans ending just above the ankle look sharp; stated occasion formal work."
+            },
+            {
+              "what": "Keep relaxed overshirts sized so the sleeve can roll neatly to mid-forearm without bunching",
+              "why": "Rolled sleeves suit you and help in the heat, but extra width bunches at the elbow.",
+              "evidence": "All records: overshirt sleeves rolled to the forearm; record 1 reads the fit as relaxed."
+            }
+          ]
+        }
+      },
+      "grooming": [
+        {
+          "area": "hair",
+          "verdict": "keep",
+          "what": "Keep the tapered sides and the voluminous quiff. In humidity, use a matte clay or light paste rather than a high-shine gel, and refresh the taper every 3 to 4 weeks.",
+          "why": "The shape flatters your oval face. A humidity-resistant matte hold keeps the lift on your wavy hair through the day.",
+          "evidence": "All records: wavy, near-black hair, short tapered sides, quiff styled with product, neat hairline; stated climate hot and humid."
+        },
+        {
+          "area": "beard",
+          "verdict": "keep",
+          "what": "Keep the full, short trimmed beard with clean cheek lines. Hold the neckline about a finger-width above the Adam's apple and keep the chin a touch fuller than the sides.",
+          "why": "It defines your jaw and frames your smile. Keeping the sides short stops the face looking wider.",
+          "evidence": "All records: full short beard with connected moustache, sharp edges, shaped cheek line and neckline, density fuller at the chin."
+        },
+        {
+          "area": "skin",
+          "verdict": "keep",
+          "what": "Keep your skin's natural warmth. Use a light gel moisturiser and a non-greasy SPF daily, plus a beard oil used sparingly so the skin under the beard stays comfortable.",
+          "why": "Your golden-brown skin looks even and healthy. Light layers suit the humidity and keep that glow from turning shiny.",
+          "evidence": "All records: skin golden-tan or golden-brown, warm shadows, not ashen; stated climate hot and humid."
+        },
+        {
+          "area": "jewellery",
+          "verdict": "keep",
+          "what": "Keep the analogue watch and its scale. For formal work and evenings, wear it alone and leave the wooden bead bracelet for casual days.",
+          "why": "A single watch reads polished in a work or date setting. The bead bracelet adds easy warmth to your casual looks.",
+          "evidence": "All records: analogue watch on a metal bracelet, plus a brown wooden bead bracelet on the other wrist; stated occasions formal work and dates."
+        },
+        {
+          "area": "jewellery",
+          "verdict": "change",
+          "what": "Add a second strap option for the watch in dark brown leather, or a brown or olive canvas strap, for evenings and casual wear",
+          "why": "A warm strap links the watch to your camel and olive pieces and the wooden bracelet, so your accessories read as one set.",
+          "evidence": "Outfit is camel overshirt, olive tee and brown wooden bracelet; watch currently on a metal link bracelet; colour analysis deep autumn, warm."
+        }
+      ]
+    },
+    "plan": {
+      "outfits": [
+        {
+          "occasion": "hybrid",
+          "name": "The hybrid Tuesday",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Crew-neck t-shirt",
+              "colour_name": "Olive",
+              "hex": "#5f6b3a",
+              "cut": "Regular fit, close collar at the base of the neck, ending at mid-fly",
+              "fabric": "Slub cotton jersey",
+              "from_photo": true
+            },
+            {
+              "slot": "layer",
+              "item": "Overshirt worn open",
+              "colour_name": "Camel",
+              "hex": "#b08556",
+              "cut": "Relaxed, ending at the upper hip",
+              "fabric": "Cotton twill",
+              "from_photo": true
+            },
+            {
+              "slot": "bottom",
+              "item": "Jeans",
+              "colour_name": "Ink navy",
+              "hex": "#1f2638",
+              "cut": "Slim-straight, single cuff just above the ankle",
+              "fabric": "Raw selvedge denim",
+              "from_photo": true
+            },
+            {
+              "slot": "shoes",
+              "item": "Suede penny loafers, no-show socks",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Low-profile penny loafer",
+              "fabric": "Suede",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Wooden bead bracelet",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Single strand",
+              "fabric": "Wood",
+              "from_photo": true
+            }
+          ],
+          "why": "This is your photo outfit with one change: the tee, overshirt, jeans and bracelet all come from it, with the tee's slightly grey olive moved to the deeper Olive in your palette and the bracelet read as Espresso. Swapping the white sneakers for espresso loafers keeps the warm, easy line unbroken from shoulder to floor and makes it polished enough for a day in the office."
+        },
+        {
+          "occasion": "formal work",
+          "name": "The Monday meeting",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Formal shirt, tucked",
+              "colour_name": "Warm ivory",
+              "hex": "#ede3cf",
+              "cut": "Slim, about 1 cm of cuff showing below the jacket",
+              "fabric": "Cotton poplin",
+              "from_photo": false
+            },
+            {
+              "slot": "outerwear",
+              "item": "Two-button single-breasted blazer",
+              "colour_name": "Ink navy",
+              "hex": "#1f2638",
+              "cut": "Natural shoulder, gentle waist suppression, covering the seat, half-lined",
+              "fabric": "Tropical wool",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Suit trousers",
+              "colour_name": "Ink navy",
+              "hex": "#1f2638",
+              "cut": "Mid-rise, slim-straight, full length with a slight break, no turn-up",
+              "fabric": "Tropical wool",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Penny loafers",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Classic penny loafer",
+              "fabric": "Suede",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Gold watch on a leather strap",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Slim round case",
+              "fabric": "Gold-tone steel, leather",
+              "from_photo": false
+            }
+          ],
+          "why": "Warm ivory replaces optic white at your face, and the ink navy suit gives your tapered build a clean, straight line from wide shoulders to full-length trouser. Gold and espresso swap in for the silver watch from your photo, keeping every accent warm and in step with your deep autumn colouring."
+        },
+        {
+          "occasion": "formal work, hot and humid",
+          "name": "Client day in the heat",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Shirt, tucked",
+              "colour_name": "Deep teal",
+              "hex": "#1f5c5c",
+              "cut": "Slim, point collar",
+              "fabric": "Linen-cotton",
+              "from_photo": false
+            },
+            {
+              "slot": "outerwear",
+              "item": "Unlined two-button blazer",
+              "colour_name": "Camel",
+              "hex": "#b08556",
+              "cut": "Natural shoulder, soft waist, covering the seat",
+              "fabric": "Linen",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Trousers",
+              "colour_name": "Ink navy",
+              "hex": "#1f2638",
+              "cut": "Mid-rise, slim-straight, no break",
+              "fabric": "Tropical wool",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Penny loafers",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Classic penny loafer",
+              "fabric": "Suede",
+              "from_photo": false
+            },
+            {
+              "slot": "accessory",
+              "item": "Belt",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "3 cm, gold-tone buckle",
+              "fabric": "Suede",
+              "from_photo": false
+            }
+          ],
+          "why": "Deep teal against camel is a muted, rich pairing that sits with your warm undertone, and the unlined linen blazer keeps you formal without trapping heat. Camel already works on you in the overshirt from your photo, so this is the same shade dressed up into structure."
+        },
+        {
+          "occasion": "hot and humid",
+          "name": "Humid Saturday",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Band-collar casual shirt, untucked",
+              "colour_name": "Antique ochre",
+              "hex": "#b8862b",
+              "cut": "Straight, ending at mid-fly, sleeves rolled",
+              "fabric": "Cotton-linen",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Drawstring linen trousers",
+              "colour_name": "Stone khaki",
+              "hex": "#a89a7a",
+              "cut": "Mid-rise, slim-straight, ankle length",
+              "fabric": "Linen",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Penny loafers, sockless",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Unlined penny loafer",
+              "fabric": "Suede",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Wooden bead bracelet",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Single strand",
+              "fabric": "Wood",
+              "from_photo": true
+            }
+          ],
+          "why": "Ochre and stone khaki are light in weight and warm in tone, so you stay cool without washing out your medium contrast. The wooden bead bracelet from your photo, read here as Espresso, ties the shoes and wrist together for an easy weekend finish."
+        },
+        {
+          "occasion": "dates and evenings",
+          "name": "Dinner for two",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Shirt, two buttons open, tucked",
+              "colour_name": "Rust terracotta",
+              "hex": "#9c4a2b",
+              "cut": "Slim, soft collar",
+              "fabric": "Linen",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Jeans",
+              "colour_name": "Ink navy",
+              "hex": "#1f2638",
+              "cut": "Slim-straight, single cuff just above the ankle",
+              "fabric": "Raw selvedge denim",
+              "from_photo": true
+            },
+            {
+              "slot": "shoes",
+              "item": "Penny loafers, no-show socks",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Low-profile penny loafer",
+              "fabric": "Suede",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Gold watch on a leather strap",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Slim round case",
+              "fabric": "Gold-tone steel, leather",
+              "from_photo": false
+            }
+          ],
+          "why": "Rust at an open collar warms your skin and frames the beard, and the dark jeans from your photo ground it so the shirt does the talking. Gold at the wrist instead of silver keeps the look polished and warm right through the evening."
+        },
+        {
+          "occasion": "dates and evenings",
+          "name": "Evening event, band collar",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Straight kurta",
+              "colour_name": "Oxblood",
+              "hex": "#6b2632",
+              "cut": "Straight, slightly fitted through the chest, just above the knee",
+              "fabric": "Cotton silk",
+              "from_photo": false
+            },
+            {
+              "slot": "layer",
+              "item": "Nehru jacket",
+              "colour_name": "Forest green",
+              "hex": "#2f4a35",
+              "cut": "Band collar, close to the body, hip length",
+              "fabric": "Linen blend",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Straight trousers",
+              "colour_name": "Warm ivory",
+              "hex": "#ede3cf",
+              "cut": "Slim-straight, ankle length",
+              "fabric": "Cotton",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Penny loafers",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Classic penny loafer",
+              "fabric": "Suede",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Gold watch on a leather strap",
+              "colour_name": "Espresso",
+              "hex": "#3b2a20",
+              "cut": "Slim round case",
+              "fabric": "Gold-tone steel, leather",
+              "from_photo": false
+            }
+          ],
+          "why": "Oxblood and forest green are your deepest muted shades, and the band collar gives your oval face and strong jaw a clean frame. The straight kurta and fitted Nehru jacket follow your tapered line, while warm ivory below keeps it light enough for a humid night."
+        }
+      ],
+      "built_for": {
+        "settings": [
+          "hybrid",
+          "hot and humid",
+          "formal work",
+          "dates and evenings"
+        ],
+        "source": "stated"
+      },
+      "audit": {
+        "keep": [
+          {
+            "item": "Camel overshirt worn open",
+            "why": "Its colour matches your Camel almost exactly. It warms your skin and gives you an easy layer that ends at the upper hip, which suits your tapered build."
+          },
+          {
+            "item": "Olive crew-neck tee",
+            "why": "Olive is one of your strongest shades near the face, and the close crew collar is your casual base. The tee you wore is a slightly greyer olive, so buy replacements in the deeper Olive from your palette."
+          },
+          {
+            "item": "Dark indigo selvedge jeans",
+            "why": "The wash reads as Ink navy, your default neutral. The slim-straight cut and single cuff fit your height and leg length well."
+          },
+          {
+            "item": "Wooden bead bracelet",
+            "why": "It reads as Espresso, which ties your wrist to the shoes and belt and keeps the look warm and easy."
+          }
+        ],
+        "retire": [
+          {
+            "item": "White leather minimalist sneakers",
+            "why": "Bright white at the floor breaks the warm line from your shoulder to your foot, and it pulls your outfits toward optic white.",
+            "instead": "Espresso suede penny loafers, worn sockless or with no-show socks"
+          },
+          {
+            "item": "Silver-tone steel watch on a link bracelet",
+            "why": "Silver is a cool metal and fights your warm undertone, while gold works with it.",
+            "instead": "A slim gold-tone watch on an Espresso leather strap"
+          },
+          {
+            "item": "Dark navy socks showing at the ankle",
+            "why": "With the cuffed jeans they add a dark break at the ankle and make the look heavier.",
+            "instead": "No-show socks with loafers, or no socks in the heat"
+          }
+        ]
+      },
+      "buy": [
+        {
+          "priority": 1,
+          "item": "Suede penny loafers",
+          "search_terms": "dark brown suede penny loafers unlined men",
+          "colour_name": "Espresso",
+          "hex": "#3b2a20",
+          "fabric": "Suede",
+          "cut": "Low-profile penny loafer",
+          "length_or_fit": "True to size, snug at the heel, worn with no-show socks",
+          "wear_with": "Your camel overshirt and ink navy jeans",
+          "unlocks": "Every planned outfit: hybrid Tuesday, Monday meeting, client day in the heat, humid Saturday, dinner for two, evening event",
+          "budget_tier": "mid"
+        },
+        {
+          "priority": 2,
+          "item": "Two-button suit, blazer and trousers",
+          "search_terms": "navy tropical wool suit two-button half-lined slim-straight trousers",
+          "colour_name": "Ink navy",
+          "hex": "#1f2638",
+          "fabric": "Tropical wool",
+          "cut": "Single-breasted, natural shoulder, gentle waist suppression, half-lined",
+          "length_or_fit": "Blazer covers the seat; trousers mid-rise, full length, slight break, no turn-up",
+          "wear_with": "A warm ivory shirt and espresso suede loafers",
+          "unlocks": "The Monday meeting; the trousers also complete client day in the heat",
+          "budget_tier": "investment"
+        },
+        {
+          "priority": 3,
+          "item": "Formal shirt",
+          "search_terms": "ivory cream cotton poplin formal shirt slim fit men",
+          "colour_name": "Warm ivory",
+          "hex": "#ede3cf",
+          "fabric": "Cotton poplin",
+          "cut": "Slim, point collar",
+          "length_or_fit": "Long enough to stay tucked; sleeves show about 1 cm of cuff below the jacket",
+          "wear_with": "The ink navy suit and your ink navy jeans with the camel overshirt",
+          "unlocks": "The Monday meeting, plus a white-shirt option that won't wash you out",
+          "budget_tier": "basic"
+        },
+        {
+          "priority": 4,
+          "item": "Watch on a leather strap",
+          "search_terms": "gold tone slim round watch dark brown leather strap men",
+          "colour_name": "Espresso",
+          "hex": "#3b2a20",
+          "fabric": "Gold-tone steel, leather",
+          "cut": "Slim round case",
+          "length_or_fit": "Case 38 to 40 mm, strap sitting just above the wrist bone",
+          "wear_with": "Your wooden bead bracelet on the other wrist and a rust linen shirt",
+          "unlocks": "The Monday meeting, dinner for two, evening event",
+          "budget_tier": "mid"
+        },
+        {
+          "priority": 5,
+          "item": "Unlined blazer",
+          "search_terms": "camel linen unstructured blazer unlined two-button men",
+          "colour_name": "Camel",
+          "hex": "#b08556",
+          "fabric": "Linen",
+          "cut": "Two-button, natural shoulder, soft waist",
+          "length_or_fit": "Covers the seat; about 1 cm of shirt cuff showing",
+          "wear_with": "Your olive crew-neck tee and ink navy jeans",
+          "unlocks": "Client day in the heat, and a dressier version of the hybrid Tuesday",
+          "budget_tier": "mid"
+        },
+        {
+          "priority": 6,
+          "item": "Shirt",
+          "search_terms": "teal linen cotton shirt slim fit point collar men",
+          "colour_name": "Deep teal",
+          "hex": "#1f5c5c",
+          "fabric": "Linen-cotton",
+          "cut": "Slim, point collar",
+          "length_or_fit": "Long enough to tuck; ends at mid-fly if worn untucked",
+          "wear_with": "The camel linen blazer and your ink navy jeans",
+          "unlocks": "Client day in the heat",
+          "budget_tier": "basic"
+        },
+        {
+          "priority": 7,
+          "item": "Linen shirt",
+          "search_terms": "rust terracotta linen shirt slim fit soft collar men",
+          "colour_name": "Rust terracotta",
+          "hex": "#9c4a2b",
+          "fabric": "Linen",
+          "cut": "Slim, soft collar, worn two buttons open",
+          "length_or_fit": "Tucked for evenings; ends at mid-fly if worn untucked",
+          "wear_with": "Your ink navy selvedge jeans and espresso loafers",
+          "unlocks": "Dinner for two",
+          "budget_tier": "basic"
+        },
+        {
+          "priority": 8,
+          "item": "Nehru jacket",
+          "search_terms": "forest green linen Nehru jacket band collar slim men",
+          "colour_name": "Forest green",
+          "hex": "#2f4a35",
+          "fabric": "Linen blend",
+          "cut": "Band collar, close to the body",
+          "length_or_fit": "Hip length, closes without pulling across the chest",
+          "wear_with": "An oxblood straight kurta and your olive crew-neck tee",
+          "unlocks": "Evening event, band collar",
+          "budget_tier": "mid"
+        }
+      ],
+      "stop_buying": [
+        {
+          "item": "White leather sneakers",
+          "why": "They are the one piece holding your photo outfit back. Bright white at the foot breaks your warm, polished line."
+        },
+        {
+          "item": "Silver-tone watches and steel accessories",
+          "why": "Icy silver is on your avoid list. Gold is your metal and keeps every accent in step with your warm undertone."
+        },
+        {
+          "item": "Optic white, pastel pink or lavender shirts",
+          "why": "Cool, bright shades near the face flatten your deep autumn colouring. Warm ivory, olive and rust do the opposite."
+        }
+      ],
+      "filters": [
+        "Keep olive, rust, teal or oxblood near your face.",
+        "Default to ink navy when unsure.",
+        "Choose gold buckles, watch cases and hardware, never silver.",
+        "Pick slim-straight legs and natural shoulders, nothing boxy.",
+        "Ask: is it warm, polished and easy? If not, leave it."
+      ],
+      "this_week": "Buy espresso suede penny loafers and wear them with your camel overshirt, olive tee and jeans instead of the white sneakers."
+    },
+    "text": {
+      "free": {
+        "headline": "You're a deep autumn.",
+        "subline": "Warm, muted colour. Gold. Olive and camel.",
+        "working_lines": [
+          "Olive works at your face. Its muted warmth keeps your skin golden, not flat.",
+          "The camel overshirt works. It shows warm mid-tones suit you, so shop camel, tan and khaki.",
+          "Your slim dark jeans fit well. The clean leg balances your shoulders and adds length."
+        ],
+        "change_line": "Swap the white sneakers for espresso suede loafers. They take the same outfit to dates.",
+        "palette_caption": "Wear these near your face. Keep ink navy and espresso for trousers and shoes."
+      },
+      "report": {
+        "summary": {
+          "you_are": "You're a deep autumn with warm golden skin, an oval face and a tall tapered frame.",
+          "five_lines": [
+            "Keep colours warm and muted. Olive, rust and teal belong near your face.",
+            "Wear ink navy and espresso. Gold is your metal, not silver.",
+            "Keep legs slim-straight and shoulders natural. Nothing boxy.",
+            "Your words are warm, polished and easy.",
+            "Buy espresso suede loafers and drop the white sneakers."
+          ]
+        },
+        "seen": {
+          "lead": "Three facts decide this. Your colouring is warm and muted, your face is oval and your frame is tall and tapered.",
+          "points": [
+            "Your skin is golden-brown with a warm undertone. The shadows read amber, not grey.",
+            "Your hair is near-black and wavy. Your skin is medium, so contrast sits in the middle.",
+            "Your face is oval with strong straight brows. The full short beard defines your jaw.",
+            "You are 180 cm with an average frame. Your shoulders are wider than your hips and your legs are balanced to slightly long.",
+            "You wore a camel overshirt, an olive tee, dark selvedge jeans, white sneakers and a silver watch."
+          ],
+          "detail": ""
+        },
+        "colours": {
+          "lead": "Wear warm, muted colours. Cool and stark shades turn your jaw ashen.",
+          "points": [
+            "Olive is your anchor. Rust, oxblood, deep teal, forest green and ochre sit beside it.",
+            "Your neutrals are ink navy, espresso, warm ivory and stone khaki. Your metal is brushed gold.",
+            "Undertone is the one thing you cannot bend. Everything must lean golden, brown or olive.",
+            "Depth can move. Mid-tones like camel work as well as deep shades, so lighter linens are fine in the heat.",
+            "Skip icy grey, optic white near the face, and cool pink or lavender. Use warm ivory for crisp white."
+          ],
+          "detail": "Hold the shirt under your chin at a window. If your jaw shadows stay warm brown, buy it. If they turn grey or your beard looks heavier, put it back."
+        },
+        "face": {
+          "lead": "Keep the neckline open and clean. Open V, crew or band collar all work.",
+          "points": [
+            "Open one or two buttons for dates. A soft V-neck tee or knit does the same job.",
+            "Keep the crew-neck tee as your casual base. Choose a close band at the base of the neck.",
+            "Wear band collars for formal evenings. A bandhgala, a Nehru jacket or a band-collar linen shirt suits your neck and beard line.",
+            "Choose point collars with 7 to 8 cm points on work shirts. Use camp collars on short sleeves in the evening.",
+            "If you add glasses, pick medium tortoiseshell or dark brown rectangles. Skip thin wire.",
+            "Keep the tapered sides and the height on top. Wear a 38 to 41 mm watch."
+          ],
+          "detail": "Your oval face needs no correcting. Medium scale matches your strong brows and beard, so nothing should look tiny or heavy."
+        },
+        "body": {
+          "lead": "Keep lines clean and straight. Your taper does the work.",
+          "points": [
+            "Wear a half-lined, two-button blazer with natural shoulders and a light waist shape.",
+            "Choose mid-rise trousers. Hem formal pairs with a slight or no break and no turn-up.",
+            "Pick small-to-medium prints and textures like slub, waffle and seersucker.",
+            "Choose linen, cotton-linen and tropical wool. Keep the twill overshirt for air-conditioned rooms.",
+            "Set shoulder seams at your natural edge. Take the waist in slightly."
+          ],
+          "detail": "At a stated 180 cm with shoulders wider than hips, you need no padding. Straight lines and a shaped waist show your build."
+        },
+        "style": {
+          "lead": "You're an Easy Classic. Your three words are warm, polished and easy.",
+          "points": [
+            "Camel overshirt, olive tee and cuffed denim with rolled sleeves prove it.",
+            "Keep the camel overshirt, olive tee, dark selvedge jeans and wooden bracelet.",
+            "Retire the white sneakers, the silver watch and the navy socks at the ankle."
+          ],
+          "detail": "Use the words as a check when you shop. Is it warm in tone, polished in fabric and easy in fit? Buy only if all three are yes."
+        },
+        "outfits": {
+          "lead": "Six outfits cover hybrid days, formal work, heat, dates and evenings.",
+          "points": [
+            "Hybrid Tuesday: your olive tee, camel overshirt and jeans, with espresso loafers.",
+            "Monday meeting: ink navy suit, warm ivory shirt and gold watch.",
+            "Client day in the heat: camel linen blazer over a deep teal shirt.",
+            "Humid Saturday: ochre band-collar shirt and stone linen trousers.",
+            "Dinner for two: rust linen shirt, open at the collar, with your jeans.",
+            "Evening event: oxblood kurta under a forest green Nehru jacket."
+          ],
+          "detail": ""
+        },
+        "buy": {
+          "lead": "Buy the loafers first. They change every outfit you own.",
+          "points": [
+            "Espresso suede penny loafers. They work with all six outfits.",
+            "Ink navy tropical wool suit. It anchors formal work.",
+            "Warm ivory poplin shirt. It replaces white.",
+            "Gold-tone watch on a brown leather strap.",
+            "Camel unlined linen blazer for hot formal days.",
+            "Deep teal linen-cotton shirt.",
+            "Rust linen shirt for evenings.",
+            "Forest green linen Nehru jacket."
+          ],
+          "detail": "Paste the search terms into the shop search box as written. Check the colour in daylight against your palette."
+        },
+        "grooming": {
+          "lead": "Keep what works. Add a brown leather strap to your watch.",
+          "points": [
+            "Keep the tapered sides and quiff. Use matte clay in humidity and trim every 3 to 4 weeks.",
+            "Keep the short full beard. Hold the neckline a finger-width above your Adam's apple.",
+            "Use a light gel moisturiser and non-greasy SPF. Use beard oil sparingly.",
+            "Wear the watch alone for work and evenings. Save the bead bracelet for casual days.",
+            "Add a dark brown leather or olive canvas strap for the watch."
+          ],
+          "detail": "A warm strap ties the watch to your camel, olive and wooden bracelet."
+        },
+        "week": {
+          "lead": "Buy espresso suede loafers. Wear them with your camel overshirt, olive tee and jeans.",
+          "points": [
+            "Keep olive, rust, teal or oxblood near your face.",
+            "Default to ink navy when unsure.",
+            "Choose gold buckles and watch cases. Never silver.",
+            "Pick slim-straight legs and natural shoulders. Nothing boxy.",
+            "Ask if it is warm, polished and easy. If not, leave it."
+          ],
+          "detail": "Your photo outfit is already close. One shoe swap fixes the cold note."
+        }
+      }
+    },
+    "card": {
+      "season": "Deep autumn",
+      "palette": [
+        {
+          "name": "Olive",
+          "hex": "#5f6b3a",
+          "use": "A crew-neck tee or knit polo near the face, your proven anchor shade"
+        },
+        {
+          "name": "Deep teal",
+          "hex": "#1f5c5c",
+          "use": "A linen or cotton shirt for formal work under a camel or navy blazer"
+        },
+        {
+          "name": "Rust terracotta",
+          "hex": "#9c4a2b",
+          "use": "A linen shirt for dates and evenings"
+        },
+        {
+          "name": "Oxblood",
+          "hex": "#6b2632",
+          "use": "A knit polo for evenings or a festive kurta"
+        },
+        {
+          "name": "Forest green",
+          "hex": "#2f4a35",
+          "use": "A Nehru jacket or bandhgala for formal events"
+        },
+        {
+          "name": "Camel",
+          "hex": "#b08556",
+          "use": "An unstructured linen blazer or overshirt"
+        },
+        {
+          "name": "Antique ochre",
+          "hex": "#b8862b",
+          "use": "A cotton kurta or a casual weekend shirt"
+        },
+        {
+          "name": "Chocolate brown",
+          "hex": "#4a2f23",
+          "use": "A piqué polo or fine-knit tee for evenings"
+        }
+      ],
+      "neutrals": [
+        {
+          "name": "Espresso",
+          "hex": "#3b2a20",
+          "use": "Suede loafers, belts and a watch strap"
+        },
+        {
+          "name": "Ink navy",
+          "hex": "#1f2638",
+          "use": "Trousers, dark jeans and a work blazer"
+        },
+        {
+          "name": "Warm ivory",
+          "hex": "#ede3cf",
+          "use": "Your white shirt for formal work, and summer chinos"
+        },
+        {
+          "name": "Stone khaki",
+          "hex": "#a89a7a",
+          "use": "Chinos and linen trousers for hot days"
+        }
+      ],
+      "metal": "gold",
+      "words": [
+        "warm",
+        "polished",
+        "easy"
+      ],
+      "filters": [
+        "Keep olive, rust, teal or oxblood near your face.",
+        "Default to ink navy when unsure.",
+        "Choose gold buckles, watch cases and hardware, never silver.",
+        "Pick slim-straight legs and natural shoulders, nothing boxy.",
+        "Ask: is it warm, polished and easy? If not, leave it."
+      ]
+    },
+    "visuals": [],
+    "verification": [
+      {
+        "claim": "Olive is one of your strongest shades, and you are already wearing it right at your face.",
+        "relation": "supports",
+        "confidence": 0.28
+      },
+      {
+        "claim": "Your camel overshirt flatters you and makes an ideal relaxed layer.",
+        "relation": "supports",
+        "confidence": 0.62
+      },
+      {
+        "claim": "Your jeans fit your height and proportions well.",
+        "relation": "supports",
+        "confidence": 0.27
+      },
+      {
+        "claim": "Swap the White leather minimalist sneakers (worn in the photo) for Espresso or dark brown suede penny loafers, worn sockless or with no-show socks.",
+        "relation": "supports",
+        "confidence": 0.56
+      }
+    ],
+    "models": {
+      "observe": "claude-opus-5-5",
+      "judge": "claude-opus-5-5",
+      "write": "claude-sonnet-5-5",
+      "verify": "jev-latest"
+    },
+    "took_s": 166.8
+  },
+  "rewritten_at": "2026-10-10T10:03:26.812Z"
+}

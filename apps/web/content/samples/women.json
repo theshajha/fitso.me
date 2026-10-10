@@ -1,0 +1,1331 @@
+{
+  "made_at": "2026-10-10T09:41:06.891Z",
+  "photo": "/people/woman-1.jpg",
+  "answers": {
+    "life": "office",
+    "climate": "hot and humid",
+    "occasions": [
+      "formal work",
+      "weddings and festive"
+    ],
+    "budget_per_item": "1,500 to 4,000",
+    "height_cm": 165
+  },
+  "profile": {
+    "season": "spring",
+    "season_depth": "bright",
+    "undertone": "neutral",
+    "archetype": "Polished Ease",
+    "working_for_you": [
+      "The magenta works. Your skin stays golden next to it, not grey.",
+      "Keep the tucked shirt and high-rise wide leg. Your legs look long at 165 cm.",
+      "Keep the centre-parted waves. They soften the sharp collar and pressed creases."
+    ],
+    "stop_buying": "Swap the black wide-leg trousers for the same cut in ink navy crepe.",
+    "palette": [
+      "#c2185b",
+      "#00a3a1",
+      "#e2453c",
+      "#f0a202",
+      "#009a5b",
+      "#1f5bc6",
+      "#f27468",
+      "#7b3fbf"
+    ],
+    "confidence": 0.78,
+    "retake_hint": null
+  },
+  "report": {
+    "door": "women",
+    "presented_as": "woman",
+    "photo_count": 1,
+    "colour": {
+      "undertone": "neutral",
+      "depth": "medium",
+      "contrast": "medium",
+      "clarity": "clear",
+      "season": "spring",
+      "season_depth": "bright",
+      "reasoning": "Temperature first: all three observers report golden-brown highlights and warm brown shadows under the jaw and neck that read 'not grey' in neutral daylight, so I read the undertone as warm. The slight cool cast from the walls would, if anything, understate that warmth, and silver that 'does not clash' only nudges her toward neutral-warm. Clarity is clear because the saturated magenta (#C21E6A) 'sits clearly' without making her look sallow and the silver reads crisp, so warm plus clear gives a bright spring with medium skin and very deep hair. On contrast, two observers said medium and one said high; I followed observer 1, whose undertone notes were the most specific, and placed contrast at medium-leaning-high, consistent with medium skin against black hair and dark brown eyes. The close alternative is deep winter if her undertone is truly neutral. The analysts split on warm versus cool, so the undertone is recorded as neutral.",
+      "confidence": 0.48,
+      "votes": 5,
+      "agreement": 0.8,
+      "runner_up": {
+        "season": "winter",
+        "season_depth": "deep",
+        "votes": 1
+      }
+    },
+    "observations": [
+      {
+        "photo_index": 1,
+        "heritage": {
+          "read": "South Asian",
+          "source": "photo",
+          "confidence": 0.7
+        },
+        "skin": {
+          "depth": "medium",
+          "apparent_undertone": "warm",
+          "undertone_evidence": "Golden-brown highlights on the forehead, cheeks and collarbone in neutral daylight. The shadows under the jaw and at the neck read warm brown, not grey. The skin sits clearly against the bright magenta blouse without looking sallow. Lips are a rosy brown. She wears silver-toned jewellery (hoops, fine necklace, rings), which reads cleanly on her but does not clash, so she may sit close to neutral-warm."
+        },
+        "hair": {
+          "colour": "black to very dark brown, no visible highlights",
+          "depth": "very_deep",
+          "texture": "wavy",
+          "length": "long",
+          "style_notes": "Worn loose with a centre parting. Soft, loose waves fall past the chest, in front of both shoulders. Full volume through the lengths."
+        },
+        "eyes": {
+          "colour": "dark brown"
+        },
+        "contrast": "medium",
+        "face": {
+          "shape": "oval",
+          "notable_features": [
+            "Defined, medium-thick dark brows",
+            "Wide open smile showing teeth",
+            "Rounded cheekbones that lift when smiling",
+            "Centre-parted hairline with hair framing the face",
+            "Medium-length neck"
+          ],
+          "facial_hair": null,
+          "glasses": false,
+          "makeup_or_grooming_notes": "Natural-looking makeup with defined brows and a neutral rosy lip. Possible light eye definition."
+        },
+        "build": {
+          "frame": "slight",
+          "shoulders_vs_hips": "balanced",
+          "torso_vs_legs": "balanced",
+          "height_impression": "average",
+          "posture_notes": "Standing upright with weight on one leg and the other knee slightly bent. Left hand in trouser pocket, right arm relaxed at side. Shoulders level and relaxed. Stated height 165 cm."
+        },
+        "outfit": {
+          "items": [
+            {
+              "garment": "long-sleeve button-up blouse with point collar",
+              "colour_name": "bright magenta",
+              "colour_hex_estimate": "#C21E6A",
+              "fit": "relaxed",
+              "fabric_guess": "silk or satin with a soft sheen",
+              "notes": "Concealed placket, open at the neck. Buttoned cuffs. Fully tucked into the trousers. Fabric drapes and blouses slightly at the waist."
+            },
+            {
+              "garment": "high-waisted wide-leg tailored trousers",
+              "colour_name": "black",
+              "colour_hex_estimate": "#141414",
+              "fit": "relaxed",
+              "fabric_guess": "wool crepe or textured suiting",
+              "notes": "Sits at the natural waist with a waistband and belt loops. Front pressed creases and slanted side pockets. Full-length hem that breaks over the boots."
+            }
+          ],
+          "accessories": [
+            "small silver-toned hoop earrings",
+            "fine silver-toned chain necklace",
+            "stacked silver-toned rings on right hand"
+          ],
+          "footwear": "black leather pointed-toe ankle boots with a low heel",
+          "formality": "business"
+        },
+        "photo": {
+          "lighting": "Soft diffused natural daylight from a window at frame left. Even exposure with gentle shadows.",
+          "background": "Pale grey textured plaster wall with a light grey concrete floor. Minimal studio-like interior.",
+          "colour_cast": "very slight cool grey from the walls; negligible",
+          "colour_read_confidence": 0.85
+        }
+      },
+      {
+        "photo_index": 1,
+        "heritage": {
+          "read": "South Asian",
+          "source": "photo",
+          "confidence": 0.6
+        },
+        "skin": {
+          "depth": "medium",
+          "apparent_undertone": "warm",
+          "undertone_evidence": "Skin reads golden-brown in soft daylight with warm, slightly bronzed shadows along the jaw, neck and hands. Sits clearly against the saturated cool magenta blouse without looking grey or ashy. Lips are a warm rosy-brown. Jewellery is silver-toned (hoops, stacked rings) and reads crisp but does not change how the skin looks; the fine necklace is too thin to confirm its metal."
+        },
+        "hair": {
+          "colour": "black to very dark brown",
+          "depth": "very_deep",
+          "texture": "wavy",
+          "length": "long",
+          "style_notes": "Centre part, worn loose in soft loose waves falling past the shoulders to mid-chest, with volume at the lengths and smooth at the crown."
+        },
+        "eyes": {
+          "colour": "dark brown"
+        },
+        "contrast": "high",
+        "face": {
+          "shape": "oval",
+          "notable_features": [
+            "Medium-strong dark brows, softly arched",
+            "Wide open-mouth smile showing upper teeth",
+            "Defined cheekbones with tapered chin",
+            "Even centre-parted hairline",
+            "Moderate neck length, visible at open collar"
+          ],
+          "facial_hair": null,
+          "glasses": false,
+          "makeup_or_grooming_notes": "Natural-looking makeup with even skin and a soft rosy-brown lip; no strong eye makeup visible."
+        },
+        "build": {
+          "frame": "slight",
+          "shoulders_vs_hips": "balanced",
+          "torso_vs_legs": "longer_legs",
+          "height_impression": "average",
+          "posture_notes": "Stated height 165 cm. Standing upright facing camera, weight on one leg with the other knee slightly bent and crossing forward, left hand in trouser pocket, right arm relaxed at side."
+        },
+        "outfit": {
+          "items": [
+            {
+              "garment": "Long-sleeve collared blouse with concealed button placket, collar open, fully tucked in",
+              "colour_name": "bright magenta",
+              "colour_hex_estimate": "#C2185B",
+              "fit": "relaxed",
+              "fabric_guess": "silk or satin with a soft sheen",
+              "notes": "Buttoned cuffs; fabric drapes and blouses slightly at the waist above the tuck."
+            },
+            {
+              "garment": "High-rise wide-leg tailored trousers with front pressed creases and slant pockets",
+              "colour_name": "black",
+              "colour_hex_estimate": "#151515",
+              "fit": "relaxed",
+              "fabric_guess": "wool crepe or textured suiting",
+              "notes": "Waistband sits at natural waist; hem falls to cover most of the boot, near floor length."
+            }
+          ],
+          "accessories": [
+            "Medium silver hoop earrings",
+            "Fine chain necklace at collarbone",
+            "Stacked silver rings on right hand"
+          ],
+          "footwear": "Black leather pointed-toe ankle boots with low heel",
+          "formality": "smart_casual"
+        },
+        "photo": {
+          "lighting": "Soft, diffuse natural daylight coming from a window at the left of frame, even across face and body with gentle shadows.",
+          "background": "Plain light grey textured plaster wall and pale grey concrete floor; minimal studio-like interior.",
+          "colour_cast": "Very slight cool neutral tone from the grey surroundings; no significant cast.",
+          "colour_read_confidence": 0.85
+        }
+      },
+      {
+        "photo_index": 1,
+        "heritage": {
+          "read": "South Asian",
+          "source": "photo",
+          "confidence": 0.7
+        },
+        "skin": {
+          "depth": "medium",
+          "apparent_undertone": "warm",
+          "undertone_evidence": "Skin reads golden-brown with warm brown shadows under the jaw and on the neck. The face and hands show a slight golden sheen in daylight. The bright magenta blouse sits next to the skin without making it look grey or sallow. She wears silver-toned hoops, a fine silver-toned chain and silver rings, and these read clearly against the skin. Lips are a natural muted rose-brown."
+        },
+        "hair": {
+          "colour": "black to very dark brown",
+          "depth": "very_deep",
+          "texture": "wavy",
+          "length": "long",
+          "style_notes": "Centre part, worn loose past the shoulders to mid-chest. Soft defined waves from about chin level down, smoother at the crown. Some volume through the lengths, with front sections falling forward over both shoulders."
+        },
+        "eyes": {
+          "colour": "dark brown"
+        },
+        "contrast": "medium",
+        "face": {
+          "shape": "oval",
+          "notable_features": [
+            "dark, well-defined medium-thick brows",
+            "wide open smile showing teeth",
+            "rounded cheekbones that lift with the smile",
+            "soft, tapered jawline and chin",
+            "straight centre-part hairline; neck of average length partly visible at the open collar"
+          ],
+          "facial_hair": null,
+          "glasses": false,
+          "makeup_or_grooming_notes": "Natural-looking makeup: even skin, defined brows, possibly light eye definition, lips in a muted rose-brown. Small silver-toned hoop earrings."
+        },
+        "build": {
+          "frame": "slight",
+          "shoulders_vs_hips": "balanced",
+          "torso_vs_legs": "longer_legs",
+          "height_impression": "average",
+          "posture_notes": "Stated height 165 cm. Standing upright, facing the camera, weight on one leg with the other knee slightly crossed in front. Left hand in trouser pocket, right arm relaxed at her side. The longer-leg read is helped by the high-rise waistband with the blouse tucked in."
+        },
+        "outfit": {
+          "items": [
+            {
+              "garment": "long-sleeve button-front blouse with point collar, top buttons open, tucked in",
+              "colour_name": "bright magenta",
+              "colour_hex_estimate": "#C2266E",
+              "fit": "relaxed",
+              "fabric_guess": "silk or satin-finish crepe with soft sheen",
+              "notes": "Concealed placket, buttoned cuffs, soft drape, slightly blousy at the waist where tucked."
+            },
+            {
+              "garment": "high-rise wide-leg tailored trousers with front pleat or crease",
+              "colour_name": "black",
+              "colour_hex_estimate": "#141414",
+              "fit": "relaxed",
+              "fabric_guess": "wool or wool-blend suiting with slight texture",
+              "notes": "Belt loops, front slant pockets, full length reaching the boot."
+            }
+          ],
+          "accessories": [
+            "small silver-toned hoop earrings",
+            "fine silver-toned chain necklace",
+            "stacked silver-toned rings on right hand"
+          ],
+          "footwear": "black leather pointed-toe ankle boots with a low block heel",
+          "formality": "smart_casual"
+        },
+        "photo": {
+          "lighting": "Soft, diffuse natural daylight from a large window on the left, even across the body with gentle shadows.",
+          "background": "Light grey textured plaster wall and pale grey concrete floor, minimal studio-like interior.",
+          "colour_cast": "Very slight cool/neutral tone from the grey surroundings; no strong cast.",
+          "colour_read_confidence": 0.85
+        }
+      }
+    ],
+    "decisions": {
+      "season": "spring",
+      "season_depth": "bright",
+      "undertone": "neutral",
+      "contrast": "medium",
+      "clarity": "clear",
+      "palette": [
+        {
+          "name": "Bright magenta",
+          "hex": "#c2185b",
+          "use": "A silk shirt or blouse worn open at the neck, near the face"
+        },
+        {
+          "name": "Clear turquoise",
+          "hex": "#00a3a1",
+          "use": "A festive kurta or a silk saree blouse"
+        },
+        {
+          "name": "Warm coral red",
+          "hex": "#e2453c",
+          "use": "A wedding lehenga, saree or anarkali"
+        },
+        {
+          "name": "Marigold",
+          "hex": "#f0a202",
+          "use": "A festive dupatta or a silk kurta for day functions"
+        },
+        {
+          "name": "Clear emerald",
+          "hex": "#009a5b",
+          "use": "A silk saree or a statement work blouse"
+        },
+        {
+          "name": "Cobalt blue",
+          "hex": "#1f5bc6",
+          "use": "A crisp office shirt under a navy blazer"
+        },
+        {
+          "name": "Coral pink",
+          "hex": "#f27468",
+          "use": "A breathable cotton or linen shirt for hot office days"
+        },
+        {
+          "name": "Clear violet",
+          "hex": "#7b3fbf",
+          "use": "A festive kurta set or an evening silk top"
+        }
+      ],
+      "neutrals": [
+        {
+          "name": "Ink navy",
+          "hex": "#1f2a44",
+          "use": "Tailored wide-leg trousers, blazers and workday suiting"
+        },
+        {
+          "name": "Black",
+          "hex": "#141414",
+          "use": "Trousers, boots and bags kept below the waist, with colour at the face"
+        },
+        {
+          "name": "Warm ivory",
+          "hex": "#f4eddc",
+          "use": "Shirts, kurtas and a lightweight summer blazer"
+        },
+        {
+          "name": "Light camel",
+          "hex": "#c99a66",
+          "use": "Bags, belts, sandals and a linen jacket"
+        }
+      ],
+      "metal": "both",
+      "metal_why": "Your undertone sits right on the line, so both metals work as long as they are polished and bright. Choose high-shine silver for everyday hoops and rings, and polished yellow gold for festive and bridal jewellery, where it picks up the golden warmth in your skin. Skip oxidised, antiqued or brushed matte finishes; they look dull next to clear colour.",
+      "flow": [
+        {
+          "name": "True crimson",
+          "hex": "#b0102c",
+          "keep": "Keep it clear: a blue-based red with no brown or rust in it"
+        },
+        {
+          "name": "Deep sapphire",
+          "hex": "#0f4c9e",
+          "keep": "Keep it saturated: jewel-bright, never greyed or denim-faded"
+        },
+        {
+          "name": "Jewel emerald",
+          "hex": "#00674f",
+          "keep": "Keep it clear: a pure green, not olive or forest"
+        },
+        {
+          "name": "Aubergine",
+          "hex": "#5b1a4a",
+          "keep": "Keep it saturated, and keep a bright colour or polished metal at the face"
+        }
+      ],
+      "must_axis": "clarity",
+      "must_axis_why": "Clear, saturated colour is what makes your skin glow. Magenta silk and bright silver both sit crisply on you. Dusty, greyed or muddy shades flatten you whatever their temperature, so clarity is the one rule you cannot bend.",
+      "flexible_axis": "undertone",
+      "flexible_axis_why": "Your undertone sits between warm and cool. That means you can move from warm brights like coral and marigold into cooler jewel tones like sapphire, crimson and aubergine, as long as the colour stays clear. This is how you shop beyond the fan without going wrong.",
+      "avoid": [
+        {
+          "name": "Dusty mauve",
+          "hex": "#b49a9e",
+          "why": "Greyed pinks drain the golden-brown in your skin and make the shadows along your jaw look ashy"
+        },
+        {
+          "name": "Muted olive khaki",
+          "hex": "#8b875c",
+          "why": "Muddy greens pull your skin toward sallow and take the light out of your dark eyes"
+        },
+        {
+          "name": "Greige taupe",
+          "hex": "#b5a99a",
+          "why": "Near your face it is too soft against your black hair, so your colouring looks washed out rather than vivid"
+        }
+      ],
+      "changing_room_test": "Take the fabric to a window and hold it right under your chin. If the shadows under your jaw stay warm brown and your eyes and brows look sharper, buy it. If your skin looks dusty or greyish, or the colour arrives before your face does, put it back.",
+      "archetype": "Polished Ease",
+      "archetype_why": "You pair a soft, draping silk shirt, tucked in loosely, with sharply pressed wide-leg trousers and pointed boots. That is tailoring worn relaxed, with one hand in the pocket and nothing stiff about it. It is polish that looks effortless.",
+      "style_words": [
+        "polished",
+        "breezy",
+        "joyful"
+      ],
+      "style_words_why": "Polished: you already wear pressed creases, a neat tuck and pointed-toe boots. Breezy: in a hot, humid climate, the next step is the same shapes in linen-blends, cotton silk and light crepe that breathe through an office day and a wedding season. Joyful: your wide smile and bright magenta show that colour is where you look most yourself, so every piece should earn its place by lighting you up.",
+      "working": [
+        {
+          "claim": "Bright, clear colour at your face is already your strongest move. The magenta silk makes your skin look golden and alive.",
+          "evidence": "All three records: bright magenta blouse (#C21E6A / #C2185B / #C2266E) 'sits clearly against' the skin 'without looking sallow' or 'grey or ashy' in neutral daylight.",
+          "why": "Saturated, clear colour near the face is the core of a bright spring palette, and you are already wearing it well."
+        },
+        {
+          "claim": "The high-rise, wide-leg trousers with your shirt fully tucked give you a long, clean leg line.",
+          "evidence": "High-waisted wide-leg tailored trousers at the natural waist, blouse fully tucked, full-length hem breaking over pointed boots; two records read torso_vs_legs as longer_legs; stated height 165 cm.",
+          "why": "At 165 cm, a high rise plus a near-floor hem over a pointed toe adds visual height. Keep this cut in every trouser you buy."
+        },
+        {
+          "claim": "Your long, centre-parted waves frame your oval face and soften the sharp tailoring.",
+          "evidence": "Long wavy black hair, centre parting, loose waves falling forward over both shoulders; oval face shape noted by all three records.",
+          "why": "The soft movement of the waves balances the crisp collar and pressed trousers, which is exactly the Polished Ease mix."
+        }
+      ],
+      "change": {
+        "swap_out": "Black wool-crepe wide-leg trousers",
+        "swap_in": "The same high-rise, wide-leg, pressed-crease cut in ink navy lightweight crepe or a linen-viscose blend (well within your 1,500 to 4,000 budget)",
+        "why": "You keep the long line that works so well. Ink navy gives your brights a richer, cleaner base than flat black at your medium contrast, and it still reads formal for the office. A lighter, breathable fabric makes the look wearable through a hot, humid workday.",
+        "evidence": "Black #141414 trousers in 'wool crepe or textured suiting'; contrast decided as medium; stated climate 'hot and humid'; stated life 'office' with formal work occasions; stated height 165 cm for keeping the high rise and full-length hem."
+      },
+      "confidence": 0.78,
+      "line": {
+        "face": {
+          "shape": "Oval, with rounded cheekbones that lift when you smile, a soft tapered chin and a medium-length neck. It is a balanced face that most necklines suit, so choose them for mood and occasion, not correction.",
+          "necklines": [
+            {
+              "what": "Open collars and soft V-necks, two buttons undone on shirts or a V-placket on a kurta",
+              "why": "The open point collar you already wear frames your face well. A V adds a little length through your medium neck and points the eye up to your smile.",
+              "evidence": "All three reads: oval face, medium/moderate neck length visible at the open collar of the magenta blouse"
+            },
+            {
+              "what": "A sweetheart or deep U-neck on saree and lehenga blouses for weddings and festive events",
+              "why": "The curve echoes your rounded cheekbones. It also opens the collarbone, which carries the golden highlights that make your skin glow.",
+              "evidence": "Rounded cheekbones that lift when smiling; golden-brown highlights on forehead, cheeks and collarbone"
+            },
+            {
+              "what": "A boat neck kept just below the collarbone, for formal work tops and festive blouses",
+              "why": "It gives your shoulders a touch of width, which suits a slight frame. Your neck is long enough to carry the horizontal line without looking shortened.",
+              "evidence": "Slight frame, balanced shoulders and hips; medium-length neck"
+            },
+            {
+              "what": "Keep high, closed necklines like turtlenecks and high-neck blouses for cooler evenings, and pair them with hair worn back",
+              "why": "On a medium neck, a closed high neck worn with long hair falling in front crowds the space around your face. Moving the hair back fixes that.",
+              "evidence": "Medium-length neck; hair worn loose with front sections falling forward over both shoulders"
+            }
+          ],
+          "collars": [
+            {
+              "what": "Point collars worn open, as on your magenta blouse",
+              "why": "This collar already works for you. It is crisp enough for formal work, and open it frames your face without adding bulk to your frame.",
+              "evidence": "Long-sleeve blouse with point collar, open at the neck, on an oval face and slight frame"
+            },
+            {
+              "what": "A mandarin or band collar on kurtas and work shirts, slim (2–3 cm high) and with a short slit at the front",
+              "why": "It is a clean, office-ready line that suits your neck length. The slit stops it from closing the neck in heat and humidity.",
+              "evidence": "Medium-length neck; stated climate hot and humid; office life"
+            },
+            {
+              "what": "Small to medium notch lapels on blazers and Nehru jackets",
+              "why": "Narrow-to-medium lapels stay in scale with a slight frame. Wide lapels would take over your shoulders.",
+              "evidence": "Slight frame, balanced shoulders"
+            }
+          ],
+          "glasses": {
+            "what": "If you wear frames for screens or sun, choose soft rectangles or gently upswept cat-eye shapes in medium-weight acetate, no wider than your face",
+            "why": "An oval face carries most shapes. A slight lift at the outer corner echoes how your cheekbones lift when you smile, and medium weight matches your defined brows without overpowering a slight frame.",
+            "evidence": "No glasses worn; oval face; defined medium-thick dark brows; rounded cheekbones that lift when smiling"
+          },
+          "hair": {
+            "what": "Keep the long centre-parted waves with volume through the lengths. For formal work, add a low sleek bun or half-up style that pulls the front sections back off your shoulders.",
+            "why": "Loose waves frame your oval face beautifully and bring softness to a slight frame. Pulling the front pieces back shows the collar or neckline and reads more polished in the office and in heat.",
+            "evidence": "Long, wavy, very deep black-brown hair, centre parting, front sections falling over both shoulders, full volume through the lengths, smooth at the crown"
+          },
+          "earrings_or_scale": {
+            "what": "Size your everyday hoops up to medium (2.5–3.5 cm). For festive events, wear jhumkas or drops that end between your earlobe and jaw, not on your shoulder.",
+            "why": "Small hoops get lost behind your full, dark waves, and a medium size holds its own beside your hair. On a slight frame, drops that stop above the jaw keep the scale right and won't tangle with hair worn forward.",
+            "evidence": "Small (one read: medium) silver-toned hoops; full-volume long hair falling in front of both shoulders; slight frame"
+          }
+        },
+        "body": {
+          "summary": "At your stated 165 cm you have a slight, balanced frame, with shoulders and hips in line and legs that read slightly longer than your torso. That gives you an easy, elongated line that tailoring shows off.",
+          "silhouettes": [
+            {
+              "what": "Tucked shirt or blouse with high-rise wide-leg trousers, as you wore here",
+              "why": "This is your strongest formal-work formula. The tuck marks your waist and the wide leg flows from it, lengthening your line without swamping a slight frame.",
+              "evidence": "Magenta blouse fully tucked into high-waisted wide-leg black trousers; one read notes the longer-leg look is helped by the high-rise waistband and tuck"
+            },
+            {
+              "what": "A straight-cut kurta, fitted at the shoulder and easing over the hip, worn with straight pants or a narrow palazzo",
+              "why": "Your balanced shoulders and hips mean a straight column sits cleanly. Keeping the shoulder fitted stops the kurta from overwhelming your slight frame.",
+              "evidence": "Slight frame; shoulders vs hips balanced"
+            },
+            {
+              "what": "For weddings: an anarkali or lehenga with a fitted bodice and the flare starting at your natural waist, or a saree draped with a fitted blouse",
+              "why": "A defined waist then volume below plays to your longer legs and shows the shape a slight frame can lose in loose layers.",
+              "evidence": "Torso vs legs: longer legs (two of three reads); high-rise waist works on you; stated occasions include weddings and festive"
+            },
+            {
+              "what": "A single-breasted blazer or Nehru jacket ending at the high hip, worn open over a tucked layer",
+              "why": "A shorter jacket keeps your leg length visible and adds structure at the shoulder for authority at work.",
+              "evidence": "Balanced proportions with longer legs; formality read as business/smart casual; office life"
+            }
+          ],
+          "rise_and_lengths": [
+            {
+              "what": "High-rise, sitting at your natural waist, for trousers, palazzos and lehenga skirts",
+              "why": "This rise already sits right on you and makes the most of your leg length.",
+              "evidence": "Trousers sit at the natural waist with waistband; stated height 165 cm; longer-legs read"
+            },
+            {
+              "what": "Wide-leg and palazzo hems should finish 1–2 cm off the floor in the shoe you will wear most with them",
+              "why": "Near-floor length gives your 165 cm a long, clean line. A hem that clears the floor stays crisp and doesn't pick up wet ground in a humid climate.",
+              "evidence": "Hem breaks over the boots, near floor length; stated height 165 cm; hot and humid climate"
+            },
+            {
+              "what": "Kurtas at the knee or just below, and tunics to mid-thigh over slim pants",
+              "why": "At 165 cm with longer legs, knee length balances your torso and leg. Calf-length kurtas can shorten you unless worn with a heel.",
+              "evidence": "Stated height 165 cm; torso vs legs longer legs"
+            },
+            {
+              "what": "Long sleeves ending at the wrist bone. In heat, choose three-quarter or elbow sleeves on kurtas and blouses.",
+              "why": "A clean sleeve finish keeps your hands and stacked rings on show. Shorter sleeves are cooler for daily office wear.",
+              "evidence": "Buttoned cuffs on long-sleeve blouse; stacked rings on right hand; hot and humid climate"
+            }
+          ],
+          "print_scale": {
+            "what": "Small to medium prints and motifs, roughly coin- to palm-sized: fine bandhani, small block prints, delicate buttis, narrow stripes",
+            "why": "Your slight frame is best served by prints that stay in proportion. Large-scale florals or wide borders would take over your outfit.",
+            "evidence": "Slight frame; average height impression; stated height 165 cm"
+          },
+          "accessory_scale": {
+            "what": "Fine to medium pieces: a delicate chain or one medium pendant, a structured medium bag, and festive sets with one statement piece (earrings or necklace, not both oversized)",
+            "why": "The fine pieces you already wear suit your frame. A single step up in one piece adds presence without overwhelming you.",
+            "evidence": "Fine chain necklace, small hoops, stacked rings; slight frame"
+          },
+          "fabric_weight": {
+            "what": "Light to mid-weight fabrics that drape: cotton, linen-blend, viscose crepe and cotton-silk for work; georgette, chanderi, organza and light silk for festive; tropical-weight suiting for trousers",
+            "why": "Fluid, lighter fabrics follow a slight frame instead of standing away from it, and they breathe in heat. Satin-finish silks can show heat marks, so crepe de chine or cotton-silk keep the same sheen with more comfort.",
+            "evidence": "Silk/satin blouse with soft sheen drapes well; wool crepe trousers; slight frame; stated climate hot and humid"
+          },
+          "fit_fixes": [
+            {
+              "what": "Keep the blouse tuck to a light, even blouse of 1–2 cm. If shirts gather more than that, have the side seams taken in slightly below the bust.",
+              "why": "A neat, small blouse keeps your waist defined. Excess fabric at the tuck adds bulk your slight frame doesn't need.",
+              "evidence": "Fabric drapes and blouses slightly at the waist above the tuck"
+            },
+            {
+              "what": "Hem wide-leg trousers to your chosen shoe height and stick to that heel height with them, so the front just grazes the shoe",
+              "why": "A hem that pools over boots shortens the leg line you are building with the high rise.",
+              "evidence": "Full-length hem that breaks over/covers most of the boots"
+            },
+            {
+              "what": "Have kurta and blazer shoulder seams set at your shoulder point, and take in the side seams if the body swings loose",
+              "why": "Ready-made sizes often fit length but run wide on a slight frame. A tailored shoulder makes budget pieces in the 1,500–4,000 range look custom.",
+              "evidence": "Slight frame; balanced shoulders; stated budget per item 1,500 to 4,000"
+            },
+            {
+              "what": "Have festive blouses (saree and lehenga cholis) stitched to measure, with the waist darts and armhole fitted closely",
+              "why": "A precise blouse is what makes drape and flare look intentional on a slight frame.",
+              "evidence": "Slight frame; stated occasions weddings and festive"
+            }
+          ]
+        }
+      },
+      "grooming": [
+        {
+          "area": "hair",
+          "verdict": "keep",
+          "what": "Keep the long, centre-parted soft waves. Use a light anti-humidity cream on the lengths and keep a sleek low bun as your formal-work alternative.",
+          "why": "The waves frame your face and suit your frame. A humidity product keeps the definition crisp in your climate.",
+          "evidence": "Long wavy very deep hair, centre part, defined waves from chin level, smooth at crown; stated climate hot and humid"
+        },
+        {
+          "area": "makeup",
+          "verdict": "keep",
+          "what": "Keep the defined brows and rosy-brown lip for daily wear. For festive events, switch to a clear raspberry or bright coral-pink lip.",
+          "why": "Your natural look is polished and right for the office. A clear, brighter lip echoes how well the saturated magenta sits on you, ideal for celebrations.",
+          "evidence": "Natural makeup, defined brows, rosy-brown lip; skin sits clearly against bright magenta #C21E6A without looking sallow"
+        },
+        {
+          "area": "skin",
+          "verdict": "keep",
+          "what": "Keep your skin finish even and luminous. A lightweight gel moisturiser and SPF suit the heat, with a little blotting on the T-zone rather than heavy powder.",
+          "why": "The golden sheen in daylight is an asset. Light layers protect it in humidity without dulling it.",
+          "evidence": "Even skin; slight golden sheen on face and hands in daylight; stated climate hot and humid"
+        },
+        {
+          "area": "jewellery",
+          "verdict": "change",
+          "what": "Keep the silver-toned pieces and the ring stack, but size your earrings up to medium hoops so they show through your hair",
+          "why": "The metal reads cleanly and crisp on you. The earrings are currently a step too small to compete with your full, dark waves.",
+          "evidence": "Silver-toned hoops, fine chain and stacked rings read crisp and clean against the skin; small hoops; full-volume long hair falling in front of shoulders"
+        }
+      ]
+    },
+    "plan": {
+      "outfits": [
+        {
+          "occasion": "formal work",
+          "name": "The Monday meeting",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Silk collared blouse, collar open, fully tucked",
+              "colour_name": "Bright magenta",
+              "hex": "#c2185b",
+              "cut": "Relaxed fit, concealed placket, two buttons undone, long sleeves to the wrist bone",
+              "fabric": "Silk with a soft sheen",
+              "from_photo": true
+            },
+            {
+              "slot": "bottom",
+              "item": "Pressed-crease wide-leg trousers",
+              "colour_name": "Ink navy",
+              "hex": "#1f2a44",
+              "cut": "High-rise at the natural waist, hem 1–2 cm off the floor in your boots",
+              "fabric": "Lightweight crepe",
+              "from_photo": false
+            },
+            {
+              "slot": "outerwear",
+              "item": "Single-breasted blazer, worn open",
+              "colour_name": "Ink navy",
+              "hex": "#1f2a44",
+              "cut": "Ends at the high hip, fitted at the shoulder",
+              "fabric": "Tropical-weight suiting",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Pointed-toe ankle boots with a low block heel",
+              "colour_name": "Black",
+              "hex": "#141414",
+              "cut": "Low heel, pointed toe",
+              "fabric": "Leather",
+              "from_photo": true
+            },
+            {
+              "slot": "jewellery",
+              "item": "Small hoop earrings",
+              "colour_name": "Silver (shown as the nearest neutral, warm ivory)",
+              "hex": "#f4eddc",
+              "cut": "Small, close to the ear",
+              "fabric": "Silver-toned metal",
+              "from_photo": true
+            }
+          ],
+          "why": "Your magenta silk blouse from the photo stays exactly as it is, because that bright, clear colour at your face is what makes your skin look golden; the one change is ink navy trousers in place of the black, which keeps the long tucked-in line but feels softer and more polished. Your black boots and silver hoops also come from the photo, and since silver sits outside the palette the hoops are logged against warm ivory, the nearest light neutral."
+        },
+        {
+          "occasion": "formal work, hot and humid",
+          "name": "Boardroom in the heat",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Crisp office shirt, tucked",
+              "colour_name": "Cobalt blue",
+              "hex": "#1f5bc6",
+              "cut": "Point collar worn open, elbow-length sleeves",
+              "fabric": "Cotton-silk",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Wide-leg trousers with a front crease",
+              "colour_name": "Ink navy",
+              "hex": "#1f2a44",
+              "cut": "High-rise, hem 1–2 cm off the floor in your sandals",
+              "fabric": "Linen-viscose blend",
+              "from_photo": false
+            },
+            {
+              "slot": "outerwear",
+              "item": "Lightweight summer blazer, worn open",
+              "colour_name": "Warm ivory",
+              "hex": "#f4eddc",
+              "cut": "Single-breasted, ending at the high hip",
+              "fabric": "Linen blend, half-lined",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Block-heel sandals",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Low block heel, slim straps",
+              "fabric": "Leather",
+              "from_photo": false
+            },
+            {
+              "slot": "bag",
+              "item": "Structured work tote",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Fits a laptop, flat base",
+              "fabric": "Leather",
+              "from_photo": false
+            }
+          ],
+          "why": "Cobalt under an open ivory blazer gives you the clear, bright contrast your bright spring colouring wants, while the linen blends let air move on humid days. The high-rise trousers and high-hip blazer repeat the tucked, elongated line you already wear so well, which is exactly the polished ease you are going for."
+        },
+        {
+          "occasion": "office, hot and humid",
+          "name": "Sticky Tuesday at your desk",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Breathable shirt, half-tucked at the front",
+              "colour_name": "Coral pink",
+              "hex": "#f27468",
+              "cut": "Soft V with two buttons undone, elbow sleeves",
+              "fabric": "Linen",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Wide-leg trousers",
+              "colour_name": "Warm ivory",
+              "hex": "#f4eddc",
+              "cut": "High-rise, easy through the leg, hem just off the floor",
+              "fabric": "Linen-viscose blend",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Flat slide sandals",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Square toe, wide strap",
+              "fabric": "Leather",
+              "from_photo": false
+            },
+            {
+              "slot": "bag",
+              "item": "Soft shoulder bag",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Medium, top zip",
+              "fabric": "Woven leather",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Fine chain necklace at the collarbone",
+              "colour_name": "Gold tone (shown as light camel)",
+              "hex": "#c99a66",
+              "cut": "Fine, sitting in the open neckline",
+              "fabric": "Gold-toned metal",
+              "from_photo": false
+            }
+          ],
+          "why": "Coral pink near your face brings the same warmth the magenta does in your photo, just lighter and more breezy for hot office days. Ivory and camel keep it polished without the heaviness of black, and the high rise still gives you that long leg line."
+        },
+        {
+          "occasion": "office",
+          "name": "Kurta day, straight to lunch",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Straight-cut kurta with a V-placket",
+              "colour_name": "Clear emerald",
+              "hex": "#009a5b",
+              "cut": "Fitted at the shoulder, easing over the hip, knee length, elbow sleeves",
+              "fabric": "Cotton-silk with small buttis",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Straight pants",
+              "colour_name": "Warm ivory",
+              "hex": "#f4eddc",
+              "cut": "High-rise, straight leg to the ankle",
+              "fabric": "Cotton",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Kolhapuri sandals",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Flat, toe loop",
+              "fabric": "Leather",
+              "from_photo": false
+            },
+            {
+              "slot": "bag",
+              "item": "Structured top-handle bag",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Medium, flat base",
+              "fabric": "Leather",
+              "from_photo": false
+            }
+          ],
+          "why": "Clear emerald is one of your strongest colours, and a kurta that is fitted at the shoulder and eases over the hip follows your balanced frame without adding bulk. Small buttis keep the print at the coin-sized scale that suits you, and the V-placket opens your face the way your open shirt collar does in the photo."
+        },
+        {
+          "occasion": "weddings and festive",
+          "name": "Wedding guest, evening",
+          "pieces": [
+            {
+              "slot": "dress",
+              "item": "Anarkali with a sweetheart neckline",
+              "colour_name": "Warm coral red",
+              "hex": "#e2453c",
+              "cut": "Fitted bodice, flare starting at your natural waist, floor length, three-quarter sleeves",
+              "fabric": "Georgette",
+              "from_photo": false
+            },
+            {
+              "slot": "layer",
+              "item": "Dupatta draped over one shoulder",
+              "colour_name": "Marigold",
+              "hex": "#f0a202",
+              "cut": "Full length with a fine gota edge",
+              "fabric": "Organza",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Jhumka earrings",
+              "colour_name": "Gold tone (shown as light camel)",
+              "hex": "#c99a66",
+              "cut": "Medium, with hair worn back",
+              "fabric": "Gold-toned metal",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Embroidered juttis",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Flat, closed toe",
+              "fabric": "Leather with zari work",
+              "from_photo": false
+            },
+            {
+              "slot": "bag",
+              "item": "Potli bag",
+              "colour_name": "Bright magenta",
+              "hex": "#c2185b",
+              "cut": "Small, drawstring",
+              "fabric": "Silk",
+              "from_photo": false
+            }
+          ],
+          "why": "Coral red and marigold are warm, clear and saturated, so they light up your skin the same way the magenta does in your photo, and a magenta potli ties straight back to the colour you already own. The flare starting at your natural waist keeps your balanced proportions, and the sweetheart neck suits your oval face for a joyful, festive mood."
+        },
+        {
+          "occasion": "weddings and festive",
+          "name": "Mehendi, daytime",
+          "pieces": [
+            {
+              "slot": "top",
+              "item": "Silk kurta with a V-neck",
+              "colour_name": "Marigold",
+              "hex": "#f0a202",
+              "cut": "Straight-cut, just below the knee, elbow sleeves",
+              "fabric": "Chanderi silk",
+              "from_photo": false
+            },
+            {
+              "slot": "bottom",
+              "item": "Narrow palazzo",
+              "colour_name": "Clear turquoise",
+              "hex": "#00a3a1",
+              "cut": "High-rise, hem 1–2 cm off the floor in flats",
+              "fabric": "Cotton-silk",
+              "from_photo": false
+            },
+            {
+              "slot": "layer",
+              "item": "Fine bandhani dupatta",
+              "colour_name": "Bright magenta",
+              "hex": "#c2185b",
+              "cut": "Full length, loosely draped",
+              "fabric": "Georgette",
+              "from_photo": false
+            },
+            {
+              "slot": "shoes",
+              "item": "Juttis",
+              "colour_name": "Light camel",
+              "hex": "#c99a66",
+              "cut": "Flat, closed toe",
+              "fabric": "Leather",
+              "from_photo": false
+            },
+            {
+              "slot": "jewellery",
+              "item": "Stacked rings and small jhumkas, mixing silver and gold",
+              "colour_name": "Mixed metals (shown as light camel)",
+              "hex": "#c99a66",
+              "cut": "Stacked on one hand, like your photo",
+              "fabric": "Silver- and gold-toned metal",
+              "from_photo": false
+            }
+          ],
+          "why": "Marigold, turquoise and magenta together are joyful without clashing, because they are all clear and bright like your colouring, and the fine bandhani stays at the small print scale you suit. The stacked rings echo the ones you wore in the photo, and since you suit both metals you can mix silver with gold here freely."
+        }
+      ],
+      "built_for": {
+        "settings": [
+          "office",
+          "hot and humid",
+          "formal work",
+          "weddings and festive"
+        ],
+        "source": "stated"
+      },
+      "audit": {
+        "keep": [
+          {
+            "item": "Bright magenta silk button-front blouse with point collar, worn open and tucked",
+            "why": "This is your strongest piece. Clear, bright colour at your face makes your skin look golden and alive, and the open collar suits your oval face. In some shots it reads slightly pinker, but it sits right on your bright magenta, so keep it exactly as it is."
+          },
+          {
+            "item": "Black leather pointed-toe ankle boots with a low block heel",
+            "why": "Black kept below the waist works for you, and the pointed toe carries on the long line your wide-leg trousers make. They finish the Monday meeting outfit as they are."
+          },
+          {
+            "item": "Small silver-toned hoop earrings",
+            "why": "You suit both metals, and small hoops close to the ear keep the attention on your face and that magenta collar."
+          },
+          {
+            "item": "Fine silver-toned chain necklace at the collarbone",
+            "why": "It sits neatly in the open neckline and adds polish without crowding your face. Wear it with every open-collar shirt."
+          },
+          {
+            "item": "Stacked silver-toned rings on your right hand",
+            "why": "They add a joyful, personal note. For festive days you can mix them with gold, as in the mehendi outfit."
+          }
+        ],
+        "retire": [
+          {
+            "item": "Black high-rise wide-leg wool-crepe trousers",
+            "why": "The cut is spot on, but heavy black wool crepe sits right next to that bright magenta and is too warm for hot, humid office days. Ink navy keeps the same contrast and feels softer.",
+            "instead": "The same high-rise, wide-leg, pressed-crease cut in ink navy lightweight crepe or a linen-viscose blend"
+          }
+        ]
+      },
+      "buy": [
+        {
+          "priority": 1,
+          "item": "Pressed-crease wide-leg trousers",
+          "search_terms": "navy high waisted wide leg trousers crepe pressed crease full length",
+          "colour_name": "Ink navy",
+          "hex": "#1f2a44",
+          "fabric": "Lightweight crepe or linen-viscose blend",
+          "cut": "High-rise at the natural waist, wide leg, front crease, slant pockets",
+          "length_or_fit": "Hem 1–2 cm off the floor in your ankle boots",
+          "wear_with": "Your magenta silk blouse, and a cobalt cotton-silk shirt",
+          "unlocks": "The Monday meeting, Boardroom in the heat",
+          "budget_tier": "mid"
+        },
+        {
+          "priority": 2,
+          "item": "Structured leather work tote",
+          "search_terms": "tan leather structured tote bag laptop flat base",
+          "colour_name": "Light camel",
+          "hex": "#c99a66",
+          "fabric": "Leather",
+          "cut": "Structured, flat base, top handles plus shoulder straps",
+          "length_or_fit": "Fits a laptop and sits under the arm",
+          "wear_with": "Your magenta silk blouse, and the emerald straight-cut kurta",
+          "unlocks": "Boardroom in the heat, Kurta day straight to lunch, Sticky Tuesday at your desk",
+          "budget_tier": "investment"
+        },
+        {
+          "priority": 3,
+          "item": "Embroidered juttis",
+          "search_terms": "tan leather embroidered juttis zari flat closed toe",
+          "colour_name": "Light camel",
+          "hex": "#c99a66",
+          "fabric": "Leather with zari work",
+          "cut": "Flat, closed toe",
+          "length_or_fit": "Snug at the heel, padded sole for long functions",
+          "wear_with": "Your stacked silver rings, and a coral red georgette anarkali",
+          "unlocks": "Wedding guest evening, Mehendi daytime",
+          "budget_tier": "basic"
+        },
+        {
+          "priority": 4,
+          "item": "Single-breasted blazer",
+          "search_terms": "navy single breasted blazer tropical weight women half lined",
+          "colour_name": "Ink navy",
+          "hex": "#1f2a44",
+          "fabric": "Tropical-weight suiting, half-lined",
+          "cut": "Single-breasted, fitted at the shoulder, worn open",
+          "length_or_fit": "Ends at the high hip, sleeves to the wrist bone",
+          "wear_with": "Your magenta silk blouse, and the ink navy wide-leg trousers",
+          "unlocks": "The Monday meeting",
+          "budget_tier": "investment"
+        },
+        {
+          "priority": 5,
+          "item": "Crisp office shirt",
+          "search_terms": "cobalt blue cotton silk shirt women point collar elbow sleeve",
+          "colour_name": "Cobalt blue",
+          "hex": "#1f5bc6",
+          "fabric": "Cotton-silk",
+          "cut": "Point collar worn open, relaxed body to tuck",
+          "length_or_fit": "Elbow-length sleeves, long enough to stay tucked",
+          "wear_with": "Your fine silver chain necklace, and the ink navy wide-leg trousers",
+          "unlocks": "Boardroom in the heat",
+          "budget_tier": "mid"
+        },
+        {
+          "priority": 6,
+          "item": "Wide-leg trousers",
+          "search_terms": "ivory linen viscose wide leg trousers high waisted women",
+          "colour_name": "Warm ivory",
+          "hex": "#f4eddc",
+          "fabric": "Linen-viscose blend",
+          "cut": "High-rise, easy through the leg",
+          "length_or_fit": "Hem just off the floor in flat sandals",
+          "wear_with": "Your magenta silk blouse, and a coral pink linen shirt",
+          "unlocks": "Sticky Tuesday at your desk",
+          "budget_tier": "mid"
+        },
+        {
+          "priority": 7,
+          "item": "Breathable linen shirt",
+          "search_terms": "coral pink linen shirt women relaxed elbow sleeve",
+          "colour_name": "Coral pink",
+          "hex": "#f27468",
+          "fabric": "Linen",
+          "cut": "Relaxed, soft V with two buttons undone",
+          "length_or_fit": "Elbow sleeves, half-tucked at the front",
+          "wear_with": "Your small silver hoops, and the warm ivory wide-leg trousers",
+          "unlocks": "Sticky Tuesday at your desk",
+          "budget_tier": "basic"
+        },
+        {
+          "priority": 8,
+          "item": "Block-heel sandals",
+          "search_terms": "tan leather block heel sandals low heel slim straps",
+          "colour_name": "Light camel",
+          "hex": "#c99a66",
+          "fabric": "Leather",
+          "cut": "Low block heel, slim straps",
+          "length_or_fit": "Comfortable for a full workday",
+          "wear_with": "Your stacked silver rings, and the ink navy wide-leg trousers",
+          "unlocks": "Boardroom in the heat",
+          "budget_tier": "mid"
+        }
+      ],
+      "stop_buying": [
+        {
+          "item": "Black trousers and suiting for hot office days",
+          "why": "Heavy black wool takes the softness out of your bright colours and traps heat. Ink navy in crepe or linen-viscose gives you the same polish."
+        },
+        {
+          "item": "Muted, greyed colours like dusty mauve, muted olive khaki and greige taupe",
+          "why": "Your colouring is clear and bright. These dull shades near your face drain the golden glow your magenta brings out."
+        },
+        {
+          "item": "Large, bold prints and heavy, stiff fabrics",
+          "why": "Your slight, balanced frame suits coin- to palm-sized motifs and fabrics that drape. Big prints and heavy cloth swamp you."
+        }
+      ],
+      "filters": [
+        "Keep clear, bright colour near your face, never dusty or greyed.",
+        "Default to ink navy, not black, for trousers and blazers.",
+        "Wear silver or gold freely, and mix them when you like.",
+        "Choose high-rise waists, with hems 1–2 cm off the floor.",
+        "Ask: does it feel polished, breezy and joyful at once?"
+      ],
+      "this_week": "Take your black wide-leg trousers shopping and find the same high-rise, pressed-crease cut in ink navy crepe. Try it on with your magenta blouse."
+    },
+    "text": {
+      "free": {
+        "headline": "You're a bright spring.",
+        "subline": "Clear colour. Polished metal. Waist on show.",
+        "working_lines": [
+          "The magenta works. Your skin stays golden next to it, not grey.",
+          "Keep the tucked shirt and high-rise wide leg. Your legs look long at 165 cm.",
+          "Keep the centre-parted waves. They soften the sharp collar and pressed creases."
+        ],
+        "change_line": "Swap the black wide-leg trousers for the same cut in ink navy crepe.",
+        "palette_caption": "Hold these near your face. Keep the muted shades away."
+      },
+      "report": {
+        "summary": {
+          "you_are": "You're a bright spring with a slight frame, an oval face and long legs.",
+          "five_lines": [
+            "Wear clear, saturated colour at your face. Skip anything dusty or greyed.",
+            "Swap black for ink navy. Silver and gold both work, polished only.",
+            "Tuck the top. Keep the trouser high-rise and wide, hem just off the floor.",
+            "Polished, breezy, joyful. Pressed lines in fabrics that breathe.",
+            "Find your wide-leg trouser in ink navy crepe. Try it with the magenta."
+          ]
+        },
+        "seen": {
+          "lead": "Three facts decide everything here. Your colouring is bright, your face is oval, and your frame is slight.",
+          "points": [
+            "Your skin is golden-brown with a neutral undertone. Magenta sits clean against it.",
+            "Your hair is deep black-brown and your eyes are dark. Contrast is medium.",
+            "Your face is oval with rounded cheekbones that lift when you smile.",
+            "You are 165 cm, slight, with balanced shoulders and hips. Your legs read longer than your torso.",
+            "You wore a magenta silk blouse, tucked, with black wide-leg trousers, pointed boots and silver jewellery."
+          ],
+          "detail": "In daylight the magenta read a touch pinker in some shots. It stayed clear and never turned ashy."
+        },
+        "colours": {
+          "lead": "Clear colours work on you. Dusty ones make you look tired.",
+          "points": [
+            "Wear magenta, turquoise, emerald, cobalt and coral near your face. Marigold and coral red suit festive days.",
+            "Use ink navy, warm ivory and light camel as your base. Keep black below the waist.",
+            "Clarity is the rule you cannot bend. Greyed or muddy shades flatten you in any temperature.",
+            "Undertone is the one you can bend. Move between warm coral and cool sapphire, as long as the colour stays clear.",
+            "Skip dusty mauve, muted olive khaki and greige taupe. They drain your skin and dull your eyes."
+          ],
+          "detail": "Hold the fabric under your chin at a window. If the shadows under your jaw stay warm brown and your brows look sharper, buy it. If your skin looks dusty, put it back."
+        },
+        "face": {
+          "lead": "Open the neckline. Your oval face suits almost every shape, so pick by mood.",
+          "points": [
+            "Wear open collars and soft V-necks. Undo two buttons, or choose a V-placket kurta.",
+            "Choose a sweetheart or deep U-neck on saree and lehenga blouses.",
+            "Keep boat necks just below the collarbone for formal tops.",
+            "Wear high, closed necks only on cool evenings, with your hair pulled back.",
+            "Keep point collars open and use slim mandarin collars with a short slit on kurtas.",
+            "Choose small to medium notch lapels. Wide ones crowd your shoulders.",
+            "In glasses, pick soft rectangles or gently upswept cat-eyes. Keep them no wider than your face.",
+            "Keep the long centre-parted waves. For formal work, add a low sleek bun.",
+            "Size your hoops up to 2.5 to 3.5 cm. Wear jhumkas that end between lobe and jaw."
+          ],
+          "detail": "An oval face is balanced, so you correct nothing. Your cheekbones lift when you smile, so curves and slight upsweeps echo them."
+        },
+        "body": {
+          "lead": "Tuck the top. Keep the trouser high and wide. Your waist is the line to show.",
+          "points": [
+            "Wear a tucked top with high-rise wide-leg trousers. For weddings, fit the bodice and start the flare at your waist.",
+            "Keep the rise at your natural waist. Finish wide hems 1 to 2 cm off the floor.",
+            "Wear kurtas at the knee or just below. Calf length shortens you without a heel.",
+            "Choose small to medium prints, coin to palm size. Skip big florals and wide borders.",
+            "Pick light, draping fabrics like cotton-silk, linen blends and crepe.",
+            "Keep the tuck neat at 1 to 2 cm. Take in the side seams if the shirt gathers more."
+          ],
+          "detail": "At a stated 165 cm with longer legs, a high rise and a near-floor hem add height. A slight frame needs fabric that follows it and prints in proportion."
+        },
+        "style": {
+          "lead": "You are Polished Ease, in three words: polished, breezy, joyful.",
+          "points": [
+            "The pressed creases, the neat tuck and the pointed boots prove polished.",
+            "Keep the magenta silk, the black boots, the silver hoops, the chain and the stacked rings.",
+            "Retire the black wool-crepe trousers. They are too heavy for your heat."
+          ],
+          "detail": "Check each piece against all three words. Polished means a crease or a clean tuck. Breezy means fabric that breathes in humidity. Joyful means clear colour you want near your face."
+        },
+        "outfits": {
+          "lead": "These six outfits cover your office days and your wedding season.",
+          "points": [
+            "Monday meeting: your magenta silk with ink navy trousers and blazer.",
+            "Boardroom in the heat: cobalt cotton-silk shirt under an open ivory blazer.",
+            "Sticky Tuesday: coral pink linen shirt with ivory linen-viscose trousers.",
+            "Kurta day: emerald cotton-silk kurta with ivory straight pants.",
+            "Wedding evening: coral red anarkali with a marigold organza dupatta.",
+            "Mehendi day: marigold silk kurta, turquoise palazzo, magenta bandhani dupatta."
+          ],
+          "detail": ""
+        },
+        "buy": {
+          "lead": "Buy the ink navy trousers first. They unlock two outfits and replace the black.",
+          "points": [
+            "Ink navy wide-leg trousers in crepe or linen-viscose.",
+            "Light camel leather work tote.",
+            "Embroidered juttis in tan leather.",
+            "Ink navy tropical-weight blazer.",
+            "Cobalt cotton-silk shirt with a point collar.",
+            "Warm ivory linen-viscose wide-leg trousers.",
+            "Coral pink linen shirt with a soft V.",
+            "Light camel block-heel sandals."
+          ],
+          "detail": "Paste the search terms into any shop. Check the colour under a window before you pay. Your budget of 1,500 to 4,000 covers most of these."
+        },
+        "grooming": {
+          "lead": "Size your earrings up. Everything else stays.",
+          "points": [
+            "Keep the long waves. Use a light anti-humidity cream on the lengths.",
+            "Keep the defined brows and rosy-brown lip. For festive days, wear a clear raspberry or coral-pink lip.",
+            "Use gel moisturiser and SPF. Blot the T-zone and skip heavy powder.",
+            "Wear medium hoops. Keep the silver chain and the ring stack."
+          ],
+          "detail": "Your skin has a golden sheen in daylight. Light layers protect it in the heat."
+        },
+        "week": {
+          "lead": "Take your black trousers shopping. Find the same cut in ink navy crepe.",
+          "points": [
+            "Keep clear, bright colour near your face. Never dusty or greyed.",
+            "Choose ink navy over black for trousers and blazers.",
+            "Wear silver or gold, polished. Mix them when you like.",
+            "Pick high-rise waists. Hem 1 to 2 cm off the floor.",
+            "Ask if it feels polished, breezy and joyful at once."
+          ],
+          "detail": "Clear colour at your face and a long tucked line are all you need to remember."
+        }
+      }
+    },
+    "card": {
+      "season": "Bright spring",
+      "palette": [
+        {
+          "name": "Bright magenta",
+          "hex": "#c2185b",
+          "use": "A silk shirt or blouse worn open at the neck, near the face"
+        },
+        {
+          "name": "Clear turquoise",
+          "hex": "#00a3a1",
+          "use": "A festive kurta or a silk saree blouse"
+        },
+        {
+          "name": "Warm coral red",
+          "hex": "#e2453c",
+          "use": "A wedding lehenga, saree or anarkali"
+        },
+        {
+          "name": "Marigold",
+          "hex": "#f0a202",
+          "use": "A festive dupatta or a silk kurta for day functions"
+        },
+        {
+          "name": "Clear emerald",
+          "hex": "#009a5b",
+          "use": "A silk saree or a statement work blouse"
+        },
+        {
+          "name": "Cobalt blue",
+          "hex": "#1f5bc6",
+          "use": "A crisp office shirt under a navy blazer"
+        },
+        {
+          "name": "Coral pink",
+          "hex": "#f27468",
+          "use": "A breathable cotton or linen shirt for hot office days"
+        },
+        {
+          "name": "Clear violet",
+          "hex": "#7b3fbf",
+          "use": "A festive kurta set or an evening silk top"
+        }
+      ],
+      "neutrals": [
+        {
+          "name": "Ink navy",
+          "hex": "#1f2a44",
+          "use": "Tailored wide-leg trousers, blazers and workday suiting"
+        },
+        {
+          "name": "Black",
+          "hex": "#141414",
+          "use": "Trousers, boots and bags kept below the waist, with colour at the face"
+        },
+        {
+          "name": "Warm ivory",
+          "hex": "#f4eddc",
+          "use": "Shirts, kurtas and a lightweight summer blazer"
+        },
+        {
+          "name": "Light camel",
+          "hex": "#c99a66",
+          "use": "Bags, belts, sandals and a linen jacket"
+        }
+      ],
+      "metal": "both",
+      "words": [
+        "polished",
+        "breezy",
+        "joyful"
+      ],
+      "filters": [
+        "Keep clear, bright colour near your face, never dusty or greyed.",
+        "Default to ink navy, not black, for trousers and blazers.",
+        "Wear silver or gold freely, and mix them when you like.",
+        "Choose high-rise waists, with hems 1–2 cm off the floor.",
+        "Ask: does it feel polished, breezy and joyful at once?"
+      ]
+    },
+    "visuals": [],
+    "verification": [
+      {
+        "claim": "Bright, clear colour at your face is already your strongest move. The magenta silk makes your skin look golden and alive.",
+        "relation": "supports",
+        "confidence": 0.98
+      },
+      {
+        "claim": "The high-rise, wide-leg trousers with your shirt fully tucked give you a long, clean leg line.",
+        "relation": "supports",
+        "confidence": 1
+      },
+      {
+        "claim": "Your long, centre-parted waves frame your oval face and soften the sharp tailoring.",
+        "relation": "supports",
+        "confidence": 1
+      },
+      {
+        "claim": "Swap the Black wool-crepe wide-leg trousers (worn in the photo) for same high-rise, wide-leg, pressed-crease cut in ink navy lightweight crepe or a linen-viscose blend (well within your 1,500 to 4,000 budget).",
+        "relation": "supports",
+        "confidence": 0.85
+      }
+    ],
+    "models": {
+      "observe": "claude-opus-5-5",
+      "judge": "claude-opus-5-5",
+      "write": "claude-sonnet-5-5",
+      "verify": "jev-latest"
+    },
+    "took_s": 211.2
+  },
+  "rewritten_at": "2026-10-10T10:03:28.183Z"
+}

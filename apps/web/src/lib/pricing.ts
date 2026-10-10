@@ -4,16 +4,16 @@ import type { Currency, PriceTier, Product } from "@fitso/core";
 
 /** Whole currency units (rupees, dollars). */
 export const LIST = {
-  report: { INR: 1499, USD: 24 },
+  report: { INR: 2499, USD: 29 },
   pro: { INR: 4999, USD: 79 },
 } as const;
 
 export const FINISH_TODAY = {
-  report: { INR: 999, USD: 15 },
+  report: { INR: 849, USD: 10 },
 } as const;
 
 export const FOUNDING = {
-  report: { INR: 499, USD: 10 },
+  report: { INR: 849, USD: 10 },
   pro: { INR: 1999, USD: 39 },
 } as const;
 
@@ -116,10 +116,9 @@ export function currencyFor(input: {
 }
 
 export function currencyFromHeaders(headers: { get(name: string): string | null }): Currency {
-  return currencyFor({
-    country: headers.get("x-vercel-ip-country") ?? headers.get("cf-ipcountry"),
-    acceptLanguage: headers.get("accept-language"),
-  });
+  // The site shows USD only. `currencyFor` stays for tests and a later return of INR.
+  void headers;
+  return "USD";
 }
 
 export function formatMoney(amountMinor: number, currency: Currency): string {

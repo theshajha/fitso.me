@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   FOUNDING_CAP_USD_CENTS,
   currencyFor,
+  currencyFromHeaders,
   finishTodayEndedLine,
   priceFor,
   toUsdCents,
@@ -17,8 +18,8 @@ describe("priceFor: founding", () => {
   it("charges the founding price while the counter is under the cap", () => {
     expect(priceFor("report", "INR", open, below, now)).toEqual({
       tier: "founding",
-      amount_minor: 49_900,
-      list_amount_minor: 149_900,
+      amount_minor: 84_900,
+      list_amount_minor: 249_900,
       expires_at: null,
     });
     expect(priceFor("report", "USD", open, below, now).amount_minor).toBe(1_000);
@@ -35,11 +36,11 @@ describe("priceFor: finish today", () => {
   it("applies to the report after the cap, before expiry", () => {
     const r = priceFor("report", "INR", open, atCap, now);
     expect(r.tier).toBe("finish_today");
-    expect(r.amount_minor).toBe(99_900);
+    expect(r.amount_minor).toBe(84_900);
     expect(r.expires_at).toBe("2026-10-11T12:00:00.000Z");
   });
-  it("uses USD 15", () => {
-    expect(priceFor("report", "USD", open, atCap, now).amount_minor).toBe(1_500);
+  it("uses USD 10", () => {
+    expect(priceFor("report", "USD", open, atCap, now).amount_minor).toBe(1_000);
   });
   it("never applies to pro", () => {
     expect(priceFor("pro", "INR", open, atCap, now).tier).toBe("list");
@@ -51,8 +52,8 @@ describe("priceFor: expired and list", () => {
     const r = priceFor("report", "INR", expired, atCap, now);
     expect(r).toEqual({
       tier: "list",
-      amount_minor: 149_900,
-      list_amount_minor: 149_900,
+      amount_minor: 249_900,
+      list_amount_minor: 249_900,
       expires_at: null,
     });
   });
@@ -61,7 +62,7 @@ describe("priceFor: expired and list", () => {
     expect(priceFor("report", "USD", edge, atCap, now).tier).toBe("list");
   });
   it("uses list with no quick win", () => {
-    expect(priceFor("report", "USD", null, atCap, now).amount_minor).toBe(2_400);
+    expect(priceFor("report", "USD", null, atCap, now).amount_minor).toBe(2_900);
   });
   it("words the ended line", () => {
     expect(finishTodayEndedLine("2026-10-09T12:00:00Z")).toBe(
@@ -82,6 +83,14 @@ describe("currency selection", () => {
     expect(currencyFor({ acceptLanguage: "en-IN,en;q=0.9" })).toBe("INR");
     expect(currencyFor({ acceptLanguage: "en-US,en;q=0.9" })).toBe("USD");
     expect(currencyFor({})).toBe("USD");
+  });
+});
+
+describe("currencyFromHeaders", () => {
+  it("always returns USD", () => {
+    const h = (m: Record<string, string>) => ({ get: (k: string) => m[k] ?? null });
+    expect(currencyFromHeaders(h({ "x-vercel-ip-country": "IN", "accept-language": "en-IN" }))).toBe("USD");
+    expect(currencyFromHeaders(h({}))).toBe("USD");
   });
 });
 

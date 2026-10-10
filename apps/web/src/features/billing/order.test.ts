@@ -18,17 +18,17 @@ describe("buildOrderRow", () => {
     const price = priceFor("report", "INR", qw(future), { founding_usd_cents: 0 });
     const row = buildOrderRow({ id: "o1", quickWinId: "q1", email: " A@B.com ", product: "report", currency: "INR", price });
     expect(row).toMatchObject({
-      status: "pending", price_tier: "founding", amount_minor: 49900, list_amount_minor: 149900, email: "a@b.com",
+      status: "pending", price_tier: "founding", amount_minor: 84900, list_amount_minor: 249900, email: "a@b.com",
     });
   });
   it("builds a finish-today order after the cap", () => {
     const price = priceFor("report", "USD", qw(future), { founding_usd_cents: 100_000 });
     const row = buildOrderRow({ id: "o2", quickWinId: "q1", email: "a@b.com", product: "report", currency: "USD", price });
-    expect(row).toMatchObject({ price_tier: "finish_today", amount_minor: 1500, list_amount_minor: 2400 });
+    expect(row).toMatchObject({ price_tier: "finish_today", amount_minor: 1000, list_amount_minor: 2900 });
   });
   it("builds a list order when finish-today has expired or no quick win exists", () => {
     const expired = priceFor("report", "USD", qw(past), { founding_usd_cents: 100_000 });
-    expect(buildOrderRow({ id: "o3", quickWinId: "q1", email: "a@b.com", product: "report", currency: "USD", price: expired })).toMatchObject({ price_tier: "list", amount_minor: 2400 });
+    expect(buildOrderRow({ id: "o3", quickWinId: "q1", email: "a@b.com", product: "report", currency: "USD", price: expired })).toMatchObject({ price_tier: "list", amount_minor: 2900 });
     const none = priceFor("pro", "INR", null, { founding_usd_cents: 100_000 });
     expect(buildOrderRow({ id: "o4", quickWinId: null, email: "a@b.com", product: "pro", currency: "INR", price: none })).toMatchObject({ price_tier: "list", amount_minor: 499900, quick_win_id: null });
   });

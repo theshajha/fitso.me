@@ -10,7 +10,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ t
       <h1>Checkout cancelled</h1>
       <p>Nothing was charged.</p>
       <p>
-        <Button href={safe ? `/r/${safe}` : "/pricing"}>{safe ? "Back to your result" : "Back to pricing"}</Button>
+        <Button href={safe ? `/r/${safe}` : "/#pricing"}>{safe ? "Back to your result" : "Back to pricing"}</Button>
       </p>
     </Section>
   );
