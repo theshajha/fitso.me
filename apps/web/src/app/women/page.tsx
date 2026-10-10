@@ -1,12 +1,14 @@
-import { Container } from "@/components/brand/Container";
+import type { Metadata } from "next";
+import { DoorLanding } from "@/components/brand/DoorLanding";
 
-// Placeholder. Filled by T5 (Landing and doors).
-export const metadata = { title: "Women" };
+export const metadata: Metadata = {
+  title: "Your palette, your shape, your occasions. For women",
+  description:
+    "Upload one selfie and answer five questions. Get your colour season, your three strengths and an honest answer before you buy. Photos deleted after the result.",
+  alternates: { canonical: "/women" },
+  openGraph: { url: "/women", title: "fitso for women: your palette, your shape, your occasions" },
+};
 
 export default function Page() {
-  return (
-    <Container className="section">
-      <h1>Women</h1>
-    </Container>
-  );
+  return <DoorLanding door="women" />;
 }
