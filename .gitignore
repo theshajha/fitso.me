@@ -1,23 +1,33 @@
-.next/
+# dependencies and build output
 node_modules/
+.next/
+.vercel/
 dist/
 build/
 out/
 
-package-lock.json
+# env and secrets
+.env
+.env.local
+.env*.local
+.dev.vars
+workers/.env
+workers/.dev.vars
+
+# cloudflare worker
+workers/.wrangler/
+workers/worker-configuration.d.ts
+
+# other package managers
 yarn.lock
 pnpm-lock.yaml
 bun.lockb
 bun.lock
 bun.lock.json
 bun.lock.yaml
-bun.lock.json
 
-.env
-.env.local
-.dev.vars
-workers/.env
-workers/.dev.vars
-
+# misc
 .DS_Store
 *.log
+*.tsbuildinfo
+next-env.d.ts
