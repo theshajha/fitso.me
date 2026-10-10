@@ -2,10 +2,10 @@ import type { Door } from "@fitso/core";
 import { colors } from "@/lib/tokens";
 
 const PROMISES = [
-  "Your photo is deleted after the result.",
-  "No face scores. No percentiles.",
-  "A verdict can say no.",
-  "Links only on a yes.",
+  "Your colour season, with the palette.",
+  "Three things already working for you.",
+  "The one change that lifts everything.",
+  "A clear yes or no before you buy.",
 ] as const;
 
 type Tile = { bg: string; fg: string; border?: string };
@@ -31,16 +31,16 @@ const TILES: Record<"shared" | Door, Tile[]> = {
   ],
 };
 
-/** Four promises as colour blocks on an ink band. Titles are large bold text for contrast. */
+/** What the customer gets, as four colour blocks on an ink band. Titles are large bold text for contrast. */
 export function Honesty({ door }: { door?: Door }) {
   const tiles = TILES[door ?? "shared"];
   return (
     <section className="section" style={{ background: "var(--ink)", color: "var(--paper)" }}>
       <div className="container">
         <p className="label" style={{ margin: 0, color: "var(--paper)" }}>
-          Honest, by design
+          What you get
         </p>
-        <h2 style={{ color: "var(--paper)", margin: "12px 0 0" }}>Four promises. We keep them.</h2>
+        <h2 style={{ color: "var(--paper)", margin: "12px 0 0" }}>In 90 seconds, you know:</h2>
         <ul className="m-0 mt-10 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4">
           {PROMISES.map((p, i) => (
             <li
@@ -63,6 +63,7 @@ export function Honesty({ door }: { door?: Door }) {
             </li>
           ))}
         </ul>
+        <p style={{ margin: "20px 0 0", color: "var(--paper)", opacity: 0.8 }}>Your photo is looked at once, then deleted.</p>
       </div>
     </section>
   );

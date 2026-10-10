@@ -131,7 +131,7 @@ export function PriceBlock({
       </div>
 
       <hr style={{ border: 0, borderTop: "1px solid var(--line)", margin: "28px 0 20px" }} />
-      <p style={{ margin: "0 0 12px" }}>Pro opens in month 3. Founding members lock their price.</p>
+      <p style={{ margin: "0 0 12px" }}>Pro opens in January 2027. Founding members lock their price.</p>
       <Button door={door} variant="secondary" disabled={busy !== null} onClick={() => void checkout("pro")}>
         Lock my Pro price
       </Button>

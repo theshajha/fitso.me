@@ -28,7 +28,7 @@ const splineMono = Spline_Sans_Mono({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const description =
-  "Upload one selfie. Find out which colours and clothes are actually working for you. Honest verdicts, no fake scores.";
+  "Upload one selfie. Find out which colours and clothes are actually working for you. A clear yes or no before you buy.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

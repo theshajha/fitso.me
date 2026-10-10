@@ -103,7 +103,7 @@ export default async function ToolPage({ params }: { params: Promise<{ slug: str
       {tool.honesty && (
         <Section className="!pt-0">
           <div className="rounded-2xl p-6" style={{ border: "2px solid var(--ink)", background: "#fff" }}>
-            <p className="label" style={{ margin: 0, color: "var(--ink-2)" }}>Our honesty promise</p>
+            <p className="label" style={{ margin: 0, color: "var(--ink-2)" }}>What this tool will and will not tell you</p>
             <p style={{ margin: "0.5rem 0 0", fontSize: "1.125rem" }}>{tool.honesty}</p>
           </div>
         </Section>

@@ -10,7 +10,7 @@ type CounterData = {
 
 const POLL_MS = 30_000;
 
-/** "USD 612 of 1,000 founding" with a thin progress bar. Renders nothing at cap. */
+/** "First wave: 61% claimed" with a thin progress bar. The number is real founding revenue against the cap, shown as a share. Renders nothing at cap. */
 export function Counter({ className = "" }: { className?: string }) {
   const [data, setData] = useState<CounterData | null>(null);
 
@@ -36,21 +36,21 @@ export function Counter({ className = "" }: { className?: string }) {
 
   if (!data || !data.founding_active || data.founding_usd_cents >= data.cap_usd_cents) return null;
 
-  const raised = Math.floor(data.founding_usd_cents / 100);
-  const cap = Math.floor(data.cap_usd_cents / 100);
+  const raised = data.founding_usd_cents;
+  const cap = data.cap_usd_cents;
   const pct = Math.min(100, Math.max(0, (data.founding_usd_cents / data.cap_usd_cents) * 100));
 
   return (
     <div className={className}>
       <p className="label" style={{ margin: 0 }}>
-        USD {raised.toLocaleString("en-US")} of {cap.toLocaleString("en-US")} founding
+        First wave: {Math.floor(pct)}% claimed
       </p>
       <div
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={cap}
         aria-valuenow={raised}
-        aria-label="Founding revenue"
+        aria-label="First wave claimed"
         style={{ height: 4, borderRadius: 2, background: "var(--line)", marginTop: 8, overflow: "hidden" }}
       >
         <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)" }} />

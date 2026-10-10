@@ -48,8 +48,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ o
           </div>
           <p>
             {order.product === "report"
-              ? "Your Style Report ships in month 2 (by 2026-12-14). We'll email you the moment it's ready."
-              : "Pro opens in month 3. Your founding price is locked."}
+              ? "Your Style Report ships by 14 December 2026. We'll email you the moment it's ready."
+              : "Pro opens in January 2027. Your founding price is locked."}
           </p>
         </>
       ) : (

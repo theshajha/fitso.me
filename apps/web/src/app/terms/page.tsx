@@ -26,16 +26,15 @@ export default function Page() {
         The Style Report and Pro are paid products.
       </p>
       <p>
-        The Style Report is built in month 2. If you buy it before it ships, we tell you the delivery date at
-        checkout. Pro opens in month 3, and your founding price is locked.
+        The Style Report ships by 14 December 2026. If you buy it before it ships, we tell you the delivery date at
+        checkout. Pro opens in January 2027, and your founding price is locked.
       </p>
 
       <h2 style={{ margin: "48px 0 16px" }}>Pricing</h2>
       <ul>
         <li>
           <strong>Founding price.</strong> The Style Report is INR 499 (USD 10) and Pro is INR 1,999 (USD 39). The
-          founding price runs until founding sales reach USD 1,000 in total. The counter on the site shows how far we
-          are.
+          founding price runs until founding sales reach USD 1,000 in total, then it ends for good.
         </li>
         <li>
           <strong>Finish-today price.</strong> After founding ends, the Style Report is INR 999 (USD 15) for 24 hours

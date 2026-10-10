@@ -37,7 +37,7 @@ export default function Home() {
       </section>
 
       <Section id="doors" className="!pt-10 md:!pt-14">
-        <h2 className="sr-only">Pick your door</h2>
+        <h2 className="sr-only">Choose women or men</h2>
         <div className="grid gap-10 md:grid-cols-2 md:gap-8">
           <DoorCard door="men" />
           <DoorCard door="women" />

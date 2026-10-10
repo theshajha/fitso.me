@@ -1,15 +1,14 @@
 import type { Door } from "@fitso/core";
 import { Button } from "./Button";
-import { Counter } from "./Counter";
 import { Section } from "./Section";
 
-/** Founding price block: live counter, one price line, CTA to /pricing. */
+/** Founding price block: the price, what it buys, CTA to /pricing. */
 export function DoorFounding({ door }: { door?: Door }) {
   return (
     <Section>
       <div
         data-door={door}
-        className="grid gap-8 p-7 md:grid-cols-[1.4fr_1fr] md:items-center md:p-12"
+        className="grid gap-8 p-7 md:p-12"
         style={{ border: "3px solid var(--ink)", borderRadius: 32, background: "var(--paper)" }}
       >
         <div className="flex flex-col gap-4">
@@ -18,10 +17,10 @@ export function DoorFounding({ door }: { door?: Door }) {
               Founding
             </span>
           </div>
-          <h2 style={{ margin: 0 }}>Founding price</h2>
+          <h2 style={{ margin: 0 }}>Your full Style Report. INR 499.</h2>
           <p style={{ margin: 0, fontSize: "1.1875rem" }}>
-            The Style Report costs INR 499 (USD 10) until the first USD 1,000 is raised. Then it is INR 999
-            (USD 15) if you finish within 24 hours of your result, and INR 1,499 (USD 24) after that.
+            Founding price for early members, usually INR 1,499. Pay once. Your season and palette, your fit
+            notes, and the list of what your wardrobe needs. Ships by 14 December 2026.
           </p>
           <div>
             <Button href="/pricing" variant="secondary" size="md">
@@ -29,7 +28,6 @@ export function DoorFounding({ door }: { door?: Door }) {
             </Button>
           </div>
         </div>
-        <Counter />
       </div>
     </Section>
   );

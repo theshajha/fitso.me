@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import type { Currency, Product } from "@fitso/core";
-import { Button, Counter, Stamp } from "@/components/brand";
+import { Button, Stamp } from "@/components/brand";
 import { track } from "@/lib/posthog";
 import { FOUNDING, LIST, formatMoney } from "@/lib/pricing";
 
@@ -136,10 +136,7 @@ export function PricingTiers() {
         {founding ? (
           <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
             <Stamp kind="founding" />
-            <span>
-              Founding price until fitso has earned its first USD 1,000.
-            </span>
-            <Counter />
+            <span>Founding price for early members.</span>
           </div>
         ) : (
           <span>The founding price has ended. These are the list prices.</span>
@@ -172,7 +169,7 @@ export function PricingTiers() {
             ) : null}
           </p>
           <p style={{ margin: 0 }}>
-            Your full report: palette, fit, and what your wardrobe needs. It ships in month 2 (by 2026-12-14). We email you the moment it is ready.
+            Your full report: palette, fit, and what your wardrobe needs. It ships by 14 December 2026. We email you the moment it is ready.
           </p>
           <BuyForm product="report" currency={currency} tier={tier} />
         </article>
@@ -189,7 +186,7 @@ export function PricingTiers() {
             ) : null}
           </p>
           <p style={{ margin: 0 }}>
-            Everything in the Report, plus ongoing verdicts and wardrobe planning. Pro opens in month 3. A founding member keeps the founding price on every renewal.
+            Everything in the Report, plus ongoing verdicts and wardrobe planning. Pro opens in January 2027. A founding member keeps the founding price on every renewal.
           </p>
           <BuyForm product="pro" currency={currency} tier={tier} />
         </article>
