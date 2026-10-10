@@ -48,7 +48,7 @@ export function Button({
     );
   }
   return (
-    <button type="button" className={cls} style={merged} {...rest}>
+    <button type="button" className={cls} style={merged} onClick={onClick} {...rest}>
       {children}
     </button>
   );
