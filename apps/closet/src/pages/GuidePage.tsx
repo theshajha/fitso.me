@@ -47,6 +47,11 @@ function Logo({ size = 'sm' }: { size?: 'sm' | 'md' | 'lg' }) {
 }
 
 export default function GuidePage() {
+  const { slug: redirectSlug } = useParams<{ slug: string }>();
+  useEffect(() => {
+    window.location.replace(`https://fitso.me/guides/${redirectSlug ?? ''}-men`);
+  }, [redirectSlug]);
+
   const { slug } = useParams<{ slug: string }>();
   const guide = slug ? getGuideBySlug(slug) : null;
   const relatedGuides = guide ? getRelatedGuides(guide) : [];

@@ -1,4 +1,116 @@
 {
+    "redirects": [
+        {
+            "source": "/guides",
+            "destination": "https://fitso.me/guides",
+            "permanent": true
+        },
+        {
+            "source": "/guides/bali-packing-guide",
+            "destination": "https://fitso.me/guides/bali-packing-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/capsule-wardrobe-guide",
+            "destination": "https://fitso.me/guides/capsule-wardrobe-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/christmas-outfit-ideas",
+            "destination": "https://fitso.me/guides/christmas-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/diwali-outfit-ideas",
+            "destination": "https://fitso.me/guides/diwali-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/dubai-packing-guide",
+            "destination": "https://fitso.me/guides/dubai-packing-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/durga-puja-outfit-ideas",
+            "destination": "https://fitso.me/guides/durga-puja-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/eid-outfit-ideas",
+            "destination": "https://fitso.me/guides/eid-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/first-date-outfit-ideas",
+            "destination": "https://fitso.me/guides/first-date-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/goa-packing-guide",
+            "destination": "https://fitso.me/guides/goa-packing-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/holi-outfit-ideas",
+            "destination": "https://fitso.me/guides/holi-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/indian-wedding-guest-outfits",
+            "destination": "https://fitso.me/guides/indian-wedding-guest-outfits-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/jaipur-packing-guide",
+            "destination": "https://fitso.me/guides/jaipur-packing-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/ladakh-packing-guide",
+            "destination": "https://fitso.me/guides/ladakh-packing-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/monsoon-fashion-guide",
+            "destination": "https://fitso.me/guides/monsoon-fashion-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/navratri-outfit-ideas",
+            "destination": "https://fitso.me/guides/navratri-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/new-year-party-outfits",
+            "destination": "https://fitso.me/guides/new-year-party-outfits-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/office-wear-guide",
+            "destination": "https://fitso.me/guides/office-wear-guide-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/onam-outfit-ideas",
+            "destination": "https://fitso.me/guides/onam-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/pongal-outfit-ideas",
+            "destination": "https://fitso.me/guides/pongal-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/rakhi-outfit-ideas",
+            "destination": "https://fitso.me/guides/rakhi-outfit-ideas-men",
+            "permanent": true
+        },
+        {
+            "source": "/guides/thailand-packing-guide",
+            "destination": "https://fitso.me/guides/thailand-packing-guide-men",
+            "permanent": true
+        }
+    ],
     "rewrites": [
         {
             "source": "/((?!assets/).*)",

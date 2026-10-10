@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import { AnalyticsProvider } from './components/AnalyticsProvider'
+import { NewHomeBanner } from './components/NewHomeBanner'
 import { DemoBanner } from './components/DemoBanner'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Sidebar } from './components/Sidebar'
@@ -45,6 +46,15 @@ function AppLayout({ children, isDemo }: { children: React.ReactNode; isDemo: bo
 }
 
 export default function App() {
+    return (
+        <>
+            <NewHomeBanner />
+            <AppRoutes />
+        </>
+    )
+}
+
+function AppRoutes() {
     const location = useLocation()
     const isLandingPage = location.pathname === '/'
     const isAuthPage = location.pathname.startsWith('/auth') || location.pathname === '/profile-setup'

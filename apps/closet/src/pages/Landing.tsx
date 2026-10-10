@@ -25,10 +25,8 @@ import { sendMagicLink } from '@/lib/auth/supabase-auth';
 import { enterDemoMode, type DemoType } from '@/lib/demo';
 import {
   ArrowRight,
-  BookOpen,
   CheckCircle,
   ChevronDown,
-  ChevronRight,
   FlaskConical,
   Loader2,
   Lock,
@@ -39,13 +37,6 @@ import {
 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  CATEGORY_META,
-  getFestivalGuides,
-  getLifestyleGuides,
-  replaceYearPlaceholder,
-} from '@/lib/guides';
 
 // Fitso.me Logo
 function Logo({ size = 'lg' }: { size?: 'sm' | 'md' | 'lg' | 'xl' }) {
@@ -219,7 +210,7 @@ export default function Landing() {
                 onClick={handleGetStarted}
                 className="text-lg px-8 py-7 gap-3 bg-gradient-to-r from-amber-500 via-pink-500 to-violet-600 hover:from-amber-400 hover:via-pink-400 hover:to-violet-500 text-white font-bold shadow-2xl shadow-pink-500/20 hover:shadow-pink-500/40 hover:scale-105 transition-all duration-300"
               >
-                Build Your Wardrobe — Free
+                Open your closet
                 <ArrowRight className="h-5 w-5" />
               </Button>
 
@@ -234,6 +225,14 @@ export default function Landing() {
                 </span>
               </button>
             </div>
+
+            <p className="text-sm text-white/40">
+              Looking for the stylist? That's at{' '}
+              <a href="https://fitso.me" className="underline underline-offset-4 hover:text-white/70 transition-colors">
+                fitso.me
+              </a>
+              .
+            </p>
 
             {/* Trust Indicators */}
             <div className="flex items-center justify-center gap-6 pt-4 text-sm text-white/40">
@@ -386,22 +385,6 @@ export default function Landing() {
               </div>
             </div>
           </div>
-
-          {/* Coming Soon */}
-          <div className="text-center">
-            <p className="text-white/40 text-sm mb-4">More integrations coming soon</p>
-            <div className="flex items-center justify-center gap-6 opacity-30">
-              <div className="px-6 py-3 rounded-lg border border-white/10 text-sm font-medium text-white/60">
-                Amazon
-              </div>
-              <div className="px-6 py-3 rounded-lg border border-white/10 text-sm font-medium text-white/60">
-                Flipkart
-              </div>
-              <div className="px-6 py-3 rounded-lg border border-white/10 text-sm font-medium text-white/60">
-                Zara
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -551,110 +534,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Style Guides Section */}
-      <section className="relative z-10 py-32 px-6 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent">
-        <div className="max-w-6xl mx-auto">
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-violet-500/10 border border-violet-500/20 backdrop-blur-sm mb-6">
-              <BookOpen className="h-4 w-4 text-violet-400" />
-              <span className="text-sm text-violet-300 font-medium">Style Guides</span>
-            </div>
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-6">
-              Know what to wear for{' '}
-              <span className="bg-gradient-to-r from-amber-400 via-pink-400 to-violet-400 bg-clip-text text-transparent">
-                every occasion
-              </span>
-            </h2>
-            <p className="text-lg text-white/50 max-w-2xl mx-auto">
-              Expert outfit ideas for festivals, travel, work, and special moments.
-              Never second-guess your outfit choices again.
-            </p>
-          </div>
-
-          {/* Featured Guides Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-            {/* Festival Guides */}
-            {getFestivalGuides().slice(0, 3).map((guide) => {
-              const meta = CATEGORY_META[guide.category];
-              return (
-                <Link
-                  key={guide.slug}
-                  to={`/guides/${guide.slug}`}
-                  className="group"
-                >
-                  <Card className={`bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07] transition-all h-full`}>
-                    <CardContent className="p-5">
-                      <div className="flex items-start gap-4">
-                        <span className="text-3xl flex-shrink-0">{guide.emoji}</span>
-                        <div className="flex-1 min-w-0">
-                          <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${meta.color} bg-white/5 mb-2`}>
-                            {meta.label}
-                          </div>
-                          <h3 className="font-semibold group-hover:text-amber-400 transition-colors line-clamp-2">
-                            {replaceYearPlaceholder(guide.title).split(':')[0]}
-                          </h3>
-                          <p className="text-sm text-white/50 mt-1.5 line-clamp-2">
-                            {guide.metaDescription}
-                          </p>
-                        </div>
-                        <ChevronRight className="h-5 w-5 text-white/20 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
-
-            {/* Lifestyle Guides */}
-            {getLifestyleGuides().slice(0, 3).map((guide) => {
-              const meta = CATEGORY_META[guide.category];
-              return (
-                <Link
-                  key={guide.slug}
-                  to={`/guides/${guide.slug}`}
-                  className="group"
-                >
-                  <Card className={`bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/[0.07] transition-all h-full`}>
-                    <CardContent className="p-5">
-                      <div className="flex items-start gap-4">
-                        <span className="text-3xl flex-shrink-0">{guide.emoji}</span>
-                        <div className="flex-1 min-w-0">
-                          <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium ${meta.color} bg-white/5 mb-2`}>
-                            {meta.label}
-                          </div>
-                          <h3 className="font-semibold group-hover:text-amber-400 transition-colors line-clamp-2">
-                            {replaceYearPlaceholder(guide.title).split(':')[0]}
-                          </h3>
-                          <p className="text-sm text-white/50 mt-1.5 line-clamp-2">
-                            {guide.metaDescription}
-                          </p>
-                        </div>
-                        <ChevronRight className="h-5 w-5 text-white/20 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* View All Link */}
-          <div className="text-center">
-            <Link to="/guides">
-              <Button
-                variant="outline"
-                className="gap-2 border-white/20 text-white hover:bg-white/10"
-              >
-                <BookOpen className="h-4 w-4" />
-                View All Style Guides
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Final CTA */}
       <section className="relative z-10 py-32 px-6">
         <div className="max-w-3xl mx-auto text-center">
@@ -699,9 +578,6 @@ export default function Landing() {
           <div className="flex items-center gap-6 text-sm text-white/40">
             <Link to="/privacy" className="hover:text-white/70 transition-colors">
               Privacy
-            </Link>
-            <Link to="/guides" className="hover:text-white/70 transition-colors">
-              Style Guides
             </Link>
             <a href="mailto:shashank@fitso.me" className="hover:text-white/70 transition-colors">
               Contact

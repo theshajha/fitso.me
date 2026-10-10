@@ -78,6 +78,10 @@ const CATEGORY_ORDER: GuideCategory[] = [
 ];
 
 export default function GuidesIndex() {
+  useEffect(() => {
+    window.location.replace('https://fitso.me/guides');
+  }, []);
+
   const groupedGuides = groupGuidesByCategory(allGuides);
 
   useEffect(() => {
