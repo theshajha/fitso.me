@@ -56,38 +56,63 @@ export const ColourPage = z.looseObject({
 });
 export type ColourPage = z.infer<typeof ColourPage>;
 
-/** content/archetypes.json holds Archetype[] (eight per door). */
+/** One archetype. content/archetypes.json is { men: Archetype[], women: Archetype[] }. */
 export const Archetype = z.looseObject({
-  door: Door,
+  key: z.string(),
   name: z.string(),
-  description: z.string(),
-  signature_pieces: z.array(z.string()).length(3),
+  one_line: z.string(),
   /** The vibe answer this archetype maps to. */
-  vibe: z.string(),
+  vibe_answer: z.string(),
+  signature_pieces: z.array(z.string()).length(3),
+  avoid_list: z.array(z.string()).optional(),
+  famous_for: z.string().optional(),
 });
 export type Archetype = z.infer<typeof Archetype>;
 
-/** content/seasons.json holds SeasonContent[] (four seasons, depth variants). */
+export const ArchetypesFile = z.object({
+  men: z.array(Archetype),
+  women: z.array(Archetype),
+});
+export type ArchetypesFile = z.infer<typeof ArchetypesFile>;
+
+/** One season. content/seasons.json is { spring, summer, autumn, winter }: SeasonContent. */
 export const SeasonContent = z.looseObject({
-  season: Season,
+  key: Season,
+  name: z.string(),
+  one_line: z.string(),
   undertone: z.enum(['warm', 'cool', 'neutral']),
-  depths: z.array(z.string()),
+  depth_variants: z.array(z.string()),
   palette: z.array(z.string().regex(/^#[0-9a-f]{6}$/i)).length(12),
-  wear_more: z.record(Door, z.array(z.string())),
-  wear_less: z.record(Door, z.array(z.string())),
+  neutrals: z.array(z.string()).optional(),
+  metal: z.string().optional(),
+  wear_more: z.object({ men: z.array(z.string()), women: z.array(z.string()) }),
+  wear_less: z.object({ men: z.array(z.string()), women: z.array(z.string()) }),
+  indian_skin_notes: z.string().optional(),
 });
 export type SeasonContent = z.infer<typeof SeasonContent>;
 
-/** content/tools/<slug>.json. */
+export const SeasonsFile = z.object({
+  spring: SeasonContent,
+  summer: SeasonContent,
+  autumn: SeasonContent,
+  winter: SeasonContent,
+});
+export type SeasonsFile = z.infer<typeof SeasonsFile>;
+
+/** content/tools/<slug>.json. Extra keys (sample, checklist, how_it_works, ...) are kept. */
 export const ToolPage = z.looseObject({
   slug: z.string(),
   title: z.string(),
   description: z.string(),
-  headline: z.string().optional(),
+  headline: z.string(),
+  sub: z.string().optional(),
   intro: z.string().optional(),
-  sections: z.array(GuideSection).optional(),
-  faq: z.array(Faq).optional(),
-  cta: Cta.optional(),
-  keywords: z.array(z.string()).optional(),
+  how_it_works: z.array(z.string()).optional(),
+  what_you_get: z.array(z.string()).optional(),
+  tips: z.array(z.string()).optional(),
+  honesty: z.string().optional(),
+  faq: z.array(Faq),
+  cta: z.object({ label: z.string(), href: z.string() }),
+  keywords: z.array(z.string()),
 });
 export type ToolPage = z.infer<typeof ToolPage>;
