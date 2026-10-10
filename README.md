@@ -57,3 +57,17 @@ Set "Include source files outside of the Root Directory" on, so `packages/core` 
 
 - Spec: `docs/superpowers/specs/2026-10-10-month-1-build-design.md`
 - Plan: `docs/superpowers/plans/2026-10-10-month-1-build.md`
+
+## Deployment
+
+| App | Vercel project (team webloom) | Root directory | Domain |
+|---|---|---|---|
+| `apps/web` | `fitso` | `apps/web` | fitso.me (www redirects to apex) |
+| `apps/closet` | `wardrobe` | `apps/closet` | closet.fitso.me |
+
+DNS for fitso.me lives in Cloudflare (DNS only, not proxied). Both projects deploy from `main`.
+The root `postinstall` runs `scripts/build-core.mjs`, which skips the `packages/core` build when
+zod is not installed (Vercel installs only the target workspace's dependencies).
+
+`v2.pen` in the repo root is the brand file for pen.dev: tokens, type, the drape fan, verdict
+stamps, buttons, the desktop landing page and the 1080x1920 share story.
