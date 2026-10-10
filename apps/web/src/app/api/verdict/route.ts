@@ -103,6 +103,7 @@ export async function POST(request: Request) {
     verdict: verdict.verdict,
     reasons: verdict.reasons,
     item: verdict.item,
+    condition: verdict.verdict === "yes_if" ? verdict.condition : null,
     saved_amount_inr: verdict.verdict === "no" ? verdict.saved_amount_inr : null,
   });
   if (error) {

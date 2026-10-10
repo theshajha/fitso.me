@@ -34,6 +34,7 @@ create table verdicts (
   verdict verdict_kind not null,
   reasons jsonb not null,            -- string[]
   item jsonb not null,               -- {name, brand, category, colour, price_guess}
+  condition text,                    -- for yes_if
   saved_amount_inr int
 );
 

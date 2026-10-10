@@ -8,7 +8,6 @@ import { HowItWorks } from "@/components/brand/HowItWorks";
 import { SampleCard } from "@/components/brand/SampleCard";
 import { SAMPLE_CARDS } from "@/components/brand/SampleCard.data";
 import { Section } from "@/components/brand/Section";
-import { Wordmark } from "@/components/brand/Wordmark";
 
 export const metadata: Metadata = {
   title: { absolute: "fitso: know what's working for you" },
@@ -23,7 +22,6 @@ export default function Home() {
       <section className="pt-10 md:pt-16">
         <Container className="grid items-center gap-10 md:grid-cols-[1.5fr_1fr]">
           <div className="flex flex-col gap-6">
-            <Wordmark size={22} />
             <h1 style={{ margin: 0, fontSize: "clamp(2.5rem, 7.4vw, 6rem)", letterSpacing: "-0.045em" }}>
               Know what&apos;s working for you.
             </h1>

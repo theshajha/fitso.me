@@ -73,7 +73,8 @@ export function DrapeFan({
           <span
             className="label"
             style={{
-              fontSize: Math.max(8, size * 0.07),
+              fontSize: Math.max(c.key === "you" ? 19 : 8, size * 0.07),
+              fontWeight: 700,
               writingMode: "vertical-rl",
               transform: "rotate(180deg)",
               letterSpacing: "0.08em",

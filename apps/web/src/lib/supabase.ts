@@ -32,7 +32,7 @@ const DEFAULTS: Record<string, () => Row> = {
     verdict_credits: 1,
     user_id: null,
   }),
-  verdicts: () => ({ id: randomUUID(), created_at: nowIso(), input_url: null, saved_amount_inr: null }),
+  verdicts: () => ({ id: randomUUID(), created_at: nowIso(), input_url: null, condition: null, saved_amount_inr: null }),
   orders: () => ({
     id: randomUUID(),
     created_at: nowIso(),

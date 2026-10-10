@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type React from "react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { Door } from "@fitso/core";
 import { doorAccent } from "@/lib/tokens";
@@ -27,6 +28,7 @@ export function Button({
   children,
   className = "",
   style,
+  onClick,
   ...rest
 }: Props) {
   const accent = door ? doorAccent(door) : "var(--accent)";
@@ -40,7 +42,7 @@ export function Button({
   const merged = { ...look, ...style };
   if (href) {
     return (
-      <Link href={href} className={cls} style={merged}>
+      <Link href={href} className={cls} style={merged} onClick={onClick as unknown as React.MouseEventHandler<HTMLAnchorElement>}>
         {children}
       </Link>
     );
