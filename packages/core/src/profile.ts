@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Door } from './enums';
+import { Door } from './enums.js';
 
 export const Season = z.enum(['spring', 'summer', 'autumn', 'winter']);
 export type Season = z.infer<typeof Season>;

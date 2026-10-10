@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { Door } from './enums';
-import { Season } from './profile';
+import { Door } from './enums.js';
+import { Season } from './profile.js';
 
 const Look = z.object({
   name: z.string(),
