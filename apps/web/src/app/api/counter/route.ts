@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
-import { FOUNDING_CAP_USD_CENTS } from "@/lib/pricing";
+import { counterPayload, readFoundingCents } from "@/features/billing/counter";
 
-// Stub counter (T0). T2 (Billing) replaces this with the real count from the counters table.
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const founding_usd_cents = 0;
-  return NextResponse.json({
-    founding_usd_cents,
-    cap_usd_cents: FOUNDING_CAP_USD_CENTS,
-    founding_active: founding_usd_cents < FOUNDING_CAP_USD_CENTS,
+  let cents = 0;
+  try {
+    cents = await readFoundingCents();
+  } catch (err) {
+    console.error("[fitso] counter read failed", err);
+  }
+  return NextResponse.json(counterPayload(cents), {
+    headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30" },
   });
 }

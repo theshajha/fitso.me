@@ -1,12 +1,17 @@
-import { Container } from "@/components/brand/Container";
+import { Button, Section } from "@/components/brand";
 
-// Placeholder. Filled by T2 (Billing).
-export const metadata = { title: "Checkout cancelled" };
+export const metadata = { title: "Checkout cancelled", robots: { index: false } };
 
-export default function Page() {
+export default async function Page({ searchParams }: { searchParams: Promise<{ token?: string }> }) {
+  const { token } = await searchParams;
+  const safe = token && /^[0-9a-z]{10}$/.test(token) ? token : null;
   return (
-    <Container className="section">
+    <Section>
       <h1>Checkout cancelled</h1>
-    </Container>
+      <p>Nothing was charged.</p>
+      <p>
+        <Button href={safe ? `/r/${safe}` : "/pricing"}>{safe ? "Back to your result" : "Back to pricing"}</Button>
+      </p>
+    </Section>
   );
 }
